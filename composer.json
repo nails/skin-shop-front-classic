@@ -1,0 +1,22 @@
+{
+	"name": "shed/nails-classic-shop-skin",
+	"keywords": ["Nails"],
+	"homepage": "http://skins.nailsapp.co.uk/shop/classic",
+	"description": "The Classic skin for the Nails Shop module",
+	"license":"MIT",
+	"authors": [
+		{
+			"name": "Pablo de la Pena",
+			"email": "p@shedcollective.org",
+			"homepage": "http://shedcollective.org",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "hello@shedcollective.org"
+	},
+	"require":
+	{
+		"shed/nails": "dev-develop"
+	}
+}
