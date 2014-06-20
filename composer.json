@@ -1,8 +1,8 @@
 {
-	"name": "shed/nails-classic-shop-skin",
-	"keywords": ["Nails"],
-	"homepage": "http://skins.nailsapp.co.uk/shop/classic",
-	"description": "The Classic skin for the Nails Shop module",
+	"name": "nailsapp/skin-blog-classic",
+	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
+	"homepage": "http://nailsapp.co.uk/skins/blog/classic",
+	"description": "The Classic skin for the Nails Blog module",
 	"license":"MIT",
 	"authors": [
 		{
@@ -17,6 +17,6 @@
 	},
 	"require":
 	{
-		"shed/nails": "dev-develop"
+		"nailsapp/common": "dev-master"
 	}
 }

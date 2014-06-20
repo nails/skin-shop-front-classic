@@ -1,8 +1,11 @@
 {
 	"name" : "Classic",
-	"description": "This is a bare bones shop skin levereging Twitter Bootstrap.",
-	"license":"",
-	"authors": [
+	"description" : "This is a bare bones shop skin levereging Twitter Bootstrap.",
+	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
+	"homepage": "http://nailsapp.co.uk/skins/shop/classic",
+	"license" :"MIT",
+	"version" : "0.1.0",
+	"authors" : [
 		{
 			"name": "Pablo de la Pena",
 			"email": "p@shedcollective.org",
@@ -12,8 +15,5 @@
 	],
 	"support": {
 		"email": "hello@shedcollective.org"
-	},
-	"require" : {
-		"nails" : ""
 	}
 }
