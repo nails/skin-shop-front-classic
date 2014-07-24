@@ -52,7 +52,7 @@
 			// --------------------------------------------------------------------------
 
 			//	Extra small and Small breakpoints
-			echo '<div class="hidden-md hidden-lg">';
+			echo '<div class="hidden-md hidden-lg clearfix">';
 
 				echo '<div class="row" style="margin-bottom:1.5em;">';
 
@@ -115,7 +115,7 @@
 			echo '</div>';
 
 			//	Medium and Large breakpoints
-			echo '<div class="hidden-sm hidden-xs">';
+			echo '<div class="hidden-sm hidden-xs clearfix">';
 
 				echo '<div class="text-center" style="margin-bottom:1.5em;">';
 
@@ -158,6 +158,111 @@
 				echo '</div>';
 
 			echo '</div>';
+
+			// --------------------------------------------------------------------------
+
+			//	Tags
+			if ( ! empty( $product->tags ) ) :
+
+				echo '<hr />';
+				echo '<h4>Tags</h4>';
+				echo '<ul class="list-inline">';
+
+				foreach( $product->tags AS $tag ) :
+
+					echo '<li>';
+						echo anchor( $this->shop_tag_model->format_url( $tag->slug ), '<span class="badge">' . $tag->label . '</span>' );
+					echo '</li>';
+
+				endforeach;
+
+				echo '</ul>';
+
+			endif;
+
+			// --------------------------------------------------------------------------
+
+			//	Categories
+			if ( ! empty( $product->categories ) ) :
+
+				echo '<hr />';
+				echo '<h4>Categories</h4>';
+				echo '<ul class="list-unstyled">';
+
+				foreach( $product->categories AS $category ) :
+
+					echo '<li>';
+						echo anchor( $this->shop_category_model->format_url( $category->slug ), $category->label );
+					echo '</li>';
+
+				endforeach;
+
+				echo '</ul>';
+
+			endif;
+
+			// --------------------------------------------------------------------------
+
+			//	Brands
+			if ( ! empty( $product->brands ) ) :
+
+				echo '<hr />';
+				echo '<h4>Brands</h4>';
+				echo '<ul class="list-unstyled">';
+
+				foreach( $product->brands AS $brand ) :
+
+					echo '<li>';
+						echo anchor( $this->shop_brand_model->format_url( $brand->slug ), $brand->label );
+					echo '</li>';
+
+				endforeach;
+
+				echo '</ul>';
+
+			endif;
+
+			// --------------------------------------------------------------------------
+
+			//	Ranges
+			if ( ! empty( $product->collections ) ) :
+
+				echo '<hr />';
+				echo '<h4>Collections</h4>';
+				echo '<ul class="list-unstyled">';
+
+				foreach( $product->collections AS $collection ) :
+
+					echo '<li>';
+						echo anchor( $this->shop_collection_model->format_url( $collection->slug ), $collection->label );
+					echo '</li>';
+
+				endforeach;
+
+				echo '</ul>';
+
+			endif;
+
+			// --------------------------------------------------------------------------
+
+			//	Ranges
+			if ( ! empty( $product->ranges ) ) :
+
+				echo '<hr />';
+				echo '<h4>Ranges</h4>';
+				echo '<ul class="list-unstyled">';
+
+				foreach( $product->ranges AS $range ) :
+
+					echo '<li>';
+						echo anchor( $this->shop_range_model->format_url( $range->slug ), $range->label );
+					echo '</li>';
+
+				endforeach;
+
+				echo '</ul>';
+
+			endif;
 
 		echo '</div>';
 
@@ -259,7 +364,9 @@
 											echo form_open( app_setting( 'url', 'shop' ) . 'basket/remove', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
-												echo form_submit( 'submit', 'Remove from Basket', 'class="btn btn-xs btn-danger pull-right"' );
+												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right"' );
+												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right" style="margin-right:0.5em;"' );
 											echo form_close();
 
 										endif;
@@ -278,12 +385,26 @@
 										echo '<p style="margin-bottom:0;">' . $variant->user_price_formatted->price . '</p>';
 									echo '</td>';
 									echo '<td>';
-										echo form_open( app_setting( 'url', 'shop' ) . 'basket/add', 'method="GET"' );
-											echo form_hidden( 'return', $product->url );
-											echo form_hidden( 'variant_id', $variant->id );
-											echo form_dropdown( 'quantity', $_range );
-											echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
-										echo form_close();
+
+										if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
+
+											echo form_open( app_setting( 'url', 'shop' ) . 'basket/add', 'method="GET"' );
+												echo form_hidden( 'return', $product->url );
+												echo form_hidden( 'variant_id', $variant->id );
+												echo form_dropdown( 'quantity', $_range );
+												echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
+											echo form_close();
+
+										else :
+
+											echo form_open( app_setting( 'url', 'shop' ) . 'basket/remove', 'method="GET"' );
+												echo form_hidden( 'return', $product->url );
+												echo form_hidden( 'variant_id', $variant->id );
+												echo form_submit( 'submit', 'Remove from Basket', 'class="btn btn-xs btn-danger pull-right"' );
+											echo form_close();
+
+										endif;
+
 									echo '</td>';
 
 								break;
@@ -319,37 +440,96 @@
 			// --------------------------------------------------------------------------
 
 			//	Attributes
-			echo '<hr />';
-			echo '<h4>Attributes</h4>';
-			dump($product->attributes);
+			if ( ! empty( $product->attributes ) ) :
+
+				echo '<table class="table table-bordered table-striped">';
+					echo '<thead>';
+						echo '<tr>';
+							echo '<th>Attribute</th>';
+							echo '<th>Value</th>';
+						echo '</tr>';
+					echo '</thead>';
+					echo '<tbody>';
+
+						foreach ( $product->attributes AS $attribute ) :
+
+							echo '<tr>';
+								echo '<td>' . $attribute->label . '</td>';
+								echo '<td>' . $attribute->value . '</td>';
+							echo '</tr>';
+
+						endforeach;
+
+					echo '</tbody>';
+
+				echo '</table>';
+
+			endif;
 
 			// --------------------------------------------------------------------------
 
-			//	Brands
+			//	Reviews
 			echo '<hr />';
-			echo '<h4>Brands</h4>';
-			dump($product->brands);
-
-			// --------------------------------------------------------------------------
-
-			//	Categories
-			echo '<hr />';
-			echo '<h4>Categories</h4>';
-			dump($product->categories);
-
-			// --------------------------------------------------------------------------
-
-			//	Collections
-			echo '<hr />';
-			echo '<h4>Collections</h4>';
-			dump($product->collections);
-
-			// --------------------------------------------------------------------------
-
-			//	Ranges
-			echo '<hr />';
-			echo '<h4>Ranges</h4>';
-			dump($product->ranges);
+			echo '<h4>Customer Reviews</h4>';
+			?>
+			<p class="alert alert-warning">
+				<strong>TODO:</strong> Customer reviews, maybe?
+			</p>
+			<div class="well">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="http://placekitten.com/250/250" class="img-responsive img-thumbnail img-circle" />
+					</div>
+					<div class="col-xs-10">
+						<h5>Jimmy Jimmerson</h5>
+						<p>
+							<span class="ion-ios7-star"></span>
+							<span class="ion-ios7-star"></span>
+							<span class="ion-ios7-star-half"></span>
+						</p>
+						<hr />
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+						<p>
+							<small><em><?=user_datetime( time() )?></em></small>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="well">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="http://placekitten.com/240/240" class="img-responsive img-thumbnail img-circle" />
+					</div>
+					<div class="col-xs-10">
+						<h5>Sarah Screwdriver</h5>
+						<p>
+							<span class="ion-ios7-star"></span>
+							<span class="ion-ios7-star"></span>
+							<span class="ion-ios7-star-half"></span>
+						</p>
+						<hr />
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+						<p>
+							<small><em><?=user_datetime( time() )?></em></small>
+						</p>
+					</div>
+				</div>
+			</div>
+			<?php
 
 		echo '</div>';
 
