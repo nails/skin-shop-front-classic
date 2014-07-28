@@ -15,5 +15,16 @@
 	],
 	"support": {
 		"email": "hello@shedcollective.org"
+	},
+	"assets": {
+		"css" : [
+			"styles.css"
+		],
+		"js" : [
+			"shop.min.js"
+		],
+		"js_inline" : [
+			"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
+		]
 	}
 }

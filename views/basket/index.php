@@ -61,16 +61,20 @@
 						<th colspan="3"></th>
 					</tr>
 					<tr>
-						<th colspan="2" class="text-right">Shipping</th>
-						<th class="text-center">£XXX.XX</th>
+						<th colspan="2" class="text-right">Sub Total</th>
+						<th class="text-center"><?=$basket->totals->user_formatted->item?></th>
 					</tr>
 					<tr>
-						<th colspan="2" class="text-right">TAX</th>
-						<th class="text-center">£XXX.XX</th>
+						<th colspan="2" class="text-right">Shipping</th>
+						<th class="text-center"><?=$basket->totals->user_formatted->shipping?></th>
+					</tr>
+					<tr>
+						<th colspan="2" class="text-right">Tax</th>
+						<th class="text-center"><?=$basket->totals->user_formatted->tax?></th>
 					</tr>
 					<tr>
 						<th colspan="2" class="text-right">Total</th>
-						<th class="text-center">£XXX.XX</th>
+						<th class="text-center"><?=$basket->totals->user_formatted->grand?></th>
 					</tr>
 				</tfoot>
 			</table>
