@@ -22,7 +22,7 @@
 			if ( $product->featured_img ) :
 
 				$_featured_img['url']	= cdn_serve( $product->featured_img );
-				$_featured_img['thumb']	= cdn_thumb( $product->featured_img, 800, 800 );
+				$_featured_img['thumb']	= cdn_thumb( $product->featured_img, 500, 500 );
 
 			else :
 
@@ -36,15 +36,9 @@
 			$_gallery = array();
 			foreach ( $product->gallery AS $object_id ) :
 
-				if ( $product->featured_img == $object_id ) :
-
-					continue;
-
-				endif;
-
 				$_gallery[] = array(
 					'url'	=> cdn_serve( $object_id ),
-					'thumb'	=> cdn_thumb( $object_id, 250, 250 )
+					'thumb'	=> cdn_thumb( $object_id, 500, 500 )
 				);
 
 			endforeach;
@@ -52,7 +46,7 @@
 			// --------------------------------------------------------------------------
 
 			//	Extra small and Small breakpoints
-			echo '<div class="hidden-md hidden-lg clearfix">';
+			echo '<div class="hidden-md hidden-lg clearfix" id="featured-image-xs-md">';
 
 				echo '<div class="row" style="margin-bottom:1.5em;">';
 
@@ -68,11 +62,11 @@
 
 						if ( ! empty( $_featured_img['url'] ) ) :
 
-							echo '<a href="' . $_featured_img['url'] . '" rel="product-image-xs-sm" class="fancybox">';
+							echo '<a href="' . $_featured_img['url'] . '" rel="product-image-xs-sm" class="featured-link">';
 
 						endif;
 
-						echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail' ) );
+						echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img' ) );
 
 						if ( ! empty( $_featured_img['url'] ) ) :
 
@@ -117,15 +111,15 @@
 			//	Medium and Large breakpoints
 			echo '<div class="hidden-sm hidden-xs clearfix">';
 
-				echo '<div class="text-center" style="margin-bottom:1.5em;">';
+				echo '<div class="text-center" id="featured-image-md-lg" style="margin-bottom:1.5em;">';
 
 					if ( ! empty( $_featured_img['url'] ) ) :
 
-						echo '<a href="' . $_featured_img['url'] . '" rel="product-image-md-lg" class="fancybox">';
+						echo '<a href="' . $_featured_img['url'] . '" rel="product-image-md-lg" class="featured-img-link" target="_blank" style="display:block;">';
 
 					endif;
 
-					echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail' ) );
+					echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img' ) );
 
 					if ( ! empty( $_featured_img['url'] ) ) :
 
@@ -135,17 +129,17 @@
 
 				echo '</div>';
 
-				echo '<div class="text-center">';
+				echo '<div class="row text-center" id="gallery-md-lg">';
 				foreach ( $_gallery AS $item ) :
 
-					echo '<div class="col-md-6 col-lg-6" style="margin-bottom:1.5em;">';
+					echo '<div class="col-md-4 col-lg-4" style="margin-bottom:1.5em;">';
 					if ( ! empty( $item['url'] ) ) :
 
-						echo '<a href="' . $item['url'] . '" rel="product-image-md-lg" class="fancybox">';
+						echo '<a href="' . $item['url'] . '" rel="product-image-md-lg" class="gallery-link" target="_blank">';
 
 					endif;
 
-					echo img( array( 'src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail' ) );
+					echo img( array( 'src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img' ) );
 
 					if ( ! empty( $item['url'] ) ) :
 
@@ -356,8 +350,8 @@
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small">';
-													echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '<p style="margin-bottom:0;" class="small text-muted">';
+													echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
 												echo '</p>';
 
 											endif;
@@ -370,8 +364,8 @@
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small">';
-													echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '<p style="margin-bottom:0;" class="small text-muted">';
+													echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
 												echo '</p>';
 
 											endif;
@@ -410,7 +404,7 @@
 
 									echo '<td>';
 										echo '<p style="margin-bottom:0;">' . $variant->label . '</p>';
-										echo '<p style="margin-bottom:0;" class="small">';
+										echo '<p style="margin-bottom:0;" class="small text-muted">';
 											echo '<em>Lead time: ' . $variant->lead_time . '</em>';
 										echo '</p>';
 									echo '</td>';
@@ -425,8 +419,8 @@
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small">';
-													echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '<p style="margin-bottom:0;" class="small text-muted">';
+													echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
 												echo '</p>';
 
 											endif;
@@ -439,8 +433,8 @@
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small">';
-													echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '<p style="margin-bottom:0;" class="small text-muted">';
+													echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
 												echo '</p>';
 
 											endif;

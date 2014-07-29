@@ -79,7 +79,31 @@
 									?>
 									</td>
 									<td class="vertical-align-middle text-center">
-										<?=$item->variant->price->price->user_formatted->value_ex_tax?>
+									<?php
+
+										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+											echo $item->variant->price->price->user_formatted->value_ex_tax;
+
+											if ( $item->variant->price->price->user->value_tax > 0 ) :
+
+												echo '<br /><small class="text-muted">(' . $item->variant->price->price->user_formatted->value_inc_tax . ' inc. tax)</small>';
+
+											endif;
+
+										else :
+
+											echo $item->variant->price->price->user_formatted->value_inc_tax;
+
+											if ( $item->variant->price->price->user->value_tax > 0 ) :
+
+												echo '<br /><small class="text-muted">(' . $item->variant->price->price->user_formatted->value_ex_tax . ' ex. tax)</small>';
+
+											endif;
+
+										endif;
+
+									?>
 									</td>
 								</tr>
 								<?php
@@ -108,8 +132,28 @@
 
 							<?php if ( ! empty( $basket->totals->user->tax ) ) : ?>
 							<tr>
-								<th colspan="2" class="text-right">Tax</th>
-								<th class="text-center"><?=$basket->totals->user_formatted->tax?></th>
+								<th colspan="2" class="text-right">
+								<?php
+
+									if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+										echo 'Tax';
+
+									else :
+
+										echo 'Tax (included)';
+
+									endif;
+
+								?>
+								</th>
+								<th class="text-center">
+								<?php
+
+									echo $basket->totals->user_formatted->tax;
+
+								?>
+								</th>
 							</tr>
 							<?php endif; ?>
 

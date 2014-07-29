@@ -16,15 +16,12 @@
 	"support": {
 		"email": "hello@shedcollective.org"
 	},
-	"assets": {
-		"css" : [
-			"styles.css"
-		],
-		"js" : [
-			"shop.min.js"
-		],
-		"js_inline" : [
+	"assets": [
+		"css/styles.css",
+		"bower_components/jquery-zoom/jquery.zoom.js",
+		"js/shop.min.js"
+	],
+	"js_inline" : [
 			"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
-		]
-	}
+	]
 }
