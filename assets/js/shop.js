@@ -5,19 +5,43 @@
 var _nails_skin_shop_classic;
 _nails_skin_shop_classic = function()
 {
+	this._product_single_image_gallery_inited_xssm = false;
+	this._product_single_image_gallery_inited_mdlg = false;
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Constructs the shop JS. Conditionally initiates items depending on the
+	 * actively viewed page.
+	 * @return void
+	 */
 	this.__construct = function()
 	{
+		//	Scope hack
+		var _this = this;
+
+		// --------------------------------------------------------------------------
+
 		//	Single product page malarky
 		if ( $( '.nails-skin-shop-classic.browse.product.single' ).length > 0 )
 		{
-			this._init_image_gallery();
-			this._init_image_zoomer();
+			this._product_single_image_gallery_init();
+			this._product_single_image_zoomer_init();
+
+			$(window).on( 'resize', function()
+			{
+				_this._product_single_image_gallery_init();
+			});
 		}
 	};
 
 	// --------------------------------------------------------------------------
 
-	this._init_image_zoomer = function()
+	/**
+	 * Sets up a new instance of the image zoomer
+	 * @return void
+	 */
+	this._product_single_image_zoomer_init = function()
 	{
 		if ( $.fn.zoom )
 		{
@@ -25,18 +49,11 @@ _nails_skin_shop_classic = function()
 
 			_breakpoint = this.get_current_bs_breakpoint();
 
-			//	Extra small and Small breakpoints
-			if ( _breakpoint === 'xs' || _breakpoint === 'sm' )
-			{
-			} /* End breakpoint xs/sm check */
-
-			// --------------------------------------------------------------------------
-
 			//	Medium and Large breakpoints
 			if ( _breakpoint === 'md' || _breakpoint === 'lg' )
 			{
-				this._destroy_image_zoomer();
-				$( '#featured-image-md-lg .featured-img-link' ).zoom();
+				this._product_single_image_zoomer_destroy();
+				$( '.featured-image-md-lg .featured-img-link' ).zoom();
 
 			} /* End breakpoint md/lg check */
 		}
@@ -44,7 +61,11 @@ _nails_skin_shop_classic = function()
 
 	// --------------------------------------------------------------------------
 
-	this._destroy_image_zoomer = function()
+	/**
+	 * Destroys any instance of the image zoomer
+	 * @return void
+	 */
+	this._product_single_image_zoomer_destroy = function()
 	{
 		if ( $.fn.zoom )
 		{
@@ -52,17 +73,10 @@ _nails_skin_shop_classic = function()
 
 			_breakpoint = this.get_current_bs_breakpoint();
 
-			//	Extra small and Small breakpoints
-			if ( _breakpoint === 'xs' || _breakpoint === 'sm' )
-			{
-			} /* End breakpoint xs/sm check */
-
-			// --------------------------------------------------------------------------
-
 			//	Medium and Large breakpoints
 			if ( _breakpoint === 'md' || _breakpoint === 'lg' )
 			{
-				$( '#featured-image-md-lg .featured-img-link' ).trigger( 'zoom.destroy' );
+				$( '.featured-image-md-lg .featured-img-link' ).trigger( 'zoom.destroy' );
 
 			} /* End breakpoint md/lg check */
 		}
@@ -70,7 +84,7 @@ _nails_skin_shop_classic = function()
 
 	// --------------------------------------------------------------------------
 
-	this._init_image_gallery = function()
+	this._product_single_image_gallery_init = function()
 	{
 		var _this,_breakpoint, _featured, _gallery = [];
 
@@ -83,27 +97,84 @@ _nails_skin_shop_classic = function()
 		//	Extra small and Small breakpoints
 		if ( _breakpoint === 'xs' || _breakpoint === 'sm' )
 		{
+			if ( this._product_single_image_gallery_inited_xssm )
+			{
+				//	Already set this up
+				return;
+			}
+			else
+			{
+				this._product_single_image_gallery_inited_xssm = true;
+			}
 
-		} /* End breakpoint xs/sm check */
+			// --------------------------------------------------------------------------
 
-		//	Medium and Large breakpoints
-		if ( _breakpoint === 'md' || _breakpoint === 'lg' )
-		{
 			_featured = {
-				link : $( '#featured-image-md-lg .featured-img-link' ).attr( 'href' ),
-				link_el : $( '#featured-image-md-lg .featured-img-link' ),
-				img : $( '#featured-image-md-lg .featured-img-img' ).attr( 'src' ),
-				img_el : $( '#featured-image-md-lg .featured-img-img' )
+				link : $( '.featured-image-xs-sm .featured-img-link' ).attr( 'href' ),
+				link_el : $( '.featured-image-xs-sm .featured-img-link' ),
+				img : $( '.featured-image-xs-sm .featured-img-img' ).attr( 'src' ),
+				img_el : $( '.featured-image-xs-sm .featured-img-img' )
 			};
 
-			$( '#gallery-md-lg .gallery-link' ).each( function( index )
+			$( '.gallery-xs-sm .gallery-link' ).each( function( index )
 			{
 				_gallery[index]			= {};
 				_gallery[index].link	= $(this).attr( 'href' );
 				_gallery[index].link_el	= $(this);
 			});
 
-			$( '#gallery-md-lg .gallery-img' ).each( function( index )
+			$( '.gallery-xs-sm .gallery-img' ).each( function( index )
+			{
+				_gallery[index].img		= $(this).attr( 'src' );
+				_gallery[index].img_el	= $(this);
+			});
+
+			// --------------------------------------------------------------------------
+
+			$(_gallery).each( function()
+			{
+				var _gallery_item = $(this).get(0);
+
+				_gallery_item.link_el.on( 'click', function()
+				{
+					_featured.img_el.attr( 'src', _gallery_item.img );
+					_featured.link_el.attr( 'href', _gallery_item.link );
+
+					return false;
+				});
+			});
+		} /* End breakpoint xs/sm check */
+
+		//	Medium and Large breakpoints
+		if ( _breakpoint === 'md' || _breakpoint === 'lg' )
+		{
+			if ( this._product_single_image_gallery_inited_mdlg )
+			{
+				//	Already set this up
+				return;
+			}
+			else
+			{
+				this._product_single_image_gallery_inited_mdlg = true;
+			}
+
+			// --------------------------------------------------------------------------
+
+			_featured = {
+				link : $( '.featured-image-md-lg .featured-img-link' ).attr( 'href' ),
+				link_el : $( '.featured-image-md-lg .featured-img-link' ),
+				img : $( '.featured-image-md-lg .featured-img-img' ).attr( 'src' ),
+				img_el : $( '.featured-image-md-lg .featured-img-img' )
+			};
+
+			$( '.gallery-md-lg .gallery-link' ).each( function( index )
+			{
+				_gallery[index]			= {};
+				_gallery[index].link	= $(this).attr( 'href' );
+				_gallery[index].link_el	= $(this);
+			});
+
+			$( '.gallery-md-lg .gallery-img' ).each( function( index )
 			{
 				_gallery[index].img		= $(this).attr( 'src' );
 				_gallery[index].img_el	= $(this);
@@ -118,7 +189,7 @@ _nails_skin_shop_classic = function()
 				{
 					//	Open up a fancybox gallery
 					var _fancybox_gallery	= [];
-					var _featured_link		= $( '#featured-image-md-lg .featured-img-link' ).attr( 'href' );
+					var _featured_link		= $( '.featured-image-md-lg .featured-img-link' ).attr( 'href' );
 
 					//	The target image goes first
 					_fancybox_gallery.push({
@@ -168,7 +239,7 @@ _nails_skin_shop_classic = function()
 					_featured.link_el.attr( 'href', _gallery_item.link );
 
 					//	Re-init the zoomer
-					_this._init_image_zoomer();
+					_this._product_single_image_zoomer_init();
 
 					return false;
 				});

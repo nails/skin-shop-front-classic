@@ -3,8 +3,8 @@
 
 	if ( ! empty( $category ) ) :
 
-		echo '<h3 class="text-center hidden-md hidden-lg" style="margin-bottom:1em;">' . $category->label . '</h3>';
-		echo '<h3 class="hidden-xs hidden-sm">' . $category->label . '</h3>';
+		echo '<h3 class="products-label text-center hidden-md hidden-lg">' . $category->label . '</h3>';
+		echo '<h3 class="products-label hidden-xs hidden-sm">' . $category->label . '</h3>';
 		echo '<ol class="breadcrumb">';
 
 			echo '<li>';
@@ -32,8 +32,8 @@
 
 	else :
 
-		echo '<h3 class="text-center hidden-md hidden-lg" style="margin-bottom:1em;">' . app_setting( 'name', 'shop' ) . '</h3>';
-		echo '<h3 class="hidden-xs hidden-sm">' . app_setting( 'name', 'shop' ) . '</h3>';
+		echo '<h3 class="products-label text-center hidden-md hidden-lg">' . app_setting( 'name', 'shop' ) . '</h3>';
+		echo '<h3 class="products-label hidden-xs hidden-sm">' . app_setting( 'name', 'shop' ) . '</h3>';
 
 	endif;
 
@@ -76,7 +76,7 @@
 
 				endif;
 
-				echo '<div style="margin-bottom:0.75em;">';
+				echo '<div class="product-image">';
 					echo anchor( $product->url, img( array( 'src' => $_url, 'class' => 'img-responsive img-thumbnail center-block' ) ) );
 				echo '</div>';
 

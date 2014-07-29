@@ -14,6 +14,25 @@
 
 		// --------------------------------------------------------------------------
 
+		//	Products grid
+		.products
+		{
+			.products-label
+			{
+				&.hidden-md.hidden-lg
+				{
+					margin-bottom:1em;
+				}
+			}
+
+			.product-image
+			{
+				margin-bottom: 0.75em;
+			}
+		}
+
+		// --------------------------------------------------------------------------
+
 		//	Brand listing pages
 		&.brand
 		{
@@ -29,6 +48,8 @@
 		//	Category listing pages
 		&.category
 		{
+
+
 			//	Single category pages
 			&.single
 			{
@@ -92,7 +113,83 @@
 			//	Single product pages
 			&.single
 			{
+				.featured-image-xs-md,
+				.featured-image-md-lg
+				{
+					margin-bottom:1.5em
+				}
 
+				.featured-image-xs-sm
+				{
+					position:relative;
+
+					.gallery-scroll
+					{
+						position: absolute;
+						overflow: auto;
+						top:0;
+						bottom:0;
+						right:0;
+						width:25%;
+
+						.gallery-item
+						{
+							margin-bottom:0.5em;
+						}
+					}
+				}
+
+				.featured-image-md-lg
+				{
+					.featured-img-link
+					{
+						display:block;
+
+						.zoomImg
+						{
+							cursor:zoom-in;
+						}
+					}
+				}
+
+				.gallery-md-lg
+				{
+					.gallery-item
+					{
+						margin-bottom: 1em;
+					}
+				}
+
+				.table-variants
+				{
+					margin-bottom:0;
+
+					tbody
+					{
+						tr
+						{
+							td
+							{
+								vertical-align: middle;
+
+								p
+								{
+									margin-bottom:0.25em;
+								}
+
+								p:last-of-type
+								{
+									margin-bottom:0;
+								}
+
+								.btn-remove
+								{
+									margin-right:0.5em;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

@@ -46,9 +46,9 @@
 			// --------------------------------------------------------------------------
 
 			//	Extra small and Small breakpoints
-			echo '<div class="hidden-md hidden-lg clearfix" id="featured-image-xs-md">';
+			echo '<div class="hidden-md hidden-lg clearfix">';
 
-				echo '<div class="row" style="margin-bottom:1.5em;">';
+				echo '<div class="row featured-image-xs-sm">';
 
 					if ( $_gallery ) :
 
@@ -62,11 +62,11 @@
 
 						if ( ! empty( $_featured_img['url'] ) ) :
 
-							echo '<a href="' . $_featured_img['url'] . '" rel="product-image-xs-sm" class="featured-link">';
+							echo '<a href="' . $_featured_img['url'] . '" class="featured-img-link">';
 
 						endif;
 
-						echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img' ) );
+						echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img' ) );
 
 						if ( ! empty( $_featured_img['url'] ) ) :
 
@@ -77,19 +77,19 @@
 					echo '</div>';
 
 					if ( $_gallery ) :
-					echo '<div class="col-xs-3" style="position: absolute;max-height: 100%;overflow: auto;right: 0;">';
+					echo '<div class="gallery-scroll gallery-xs-sm">';
 
 						foreach ( $_gallery AS $item ) :
 
-							echo '<div class="text-center" style="margin-bottom:0.5em;">';
+							echo '<div class="text-center gallery-item">';
 
 							if ( ! empty( $item['url'] ) ) :
 
-								echo '<a href="' . $item['url'] . '" rel="product-image-xs-sm" class="fancybox">';
+								echo '<a href="' . $item['url'] . '" class="gallery-link">';
 
 							endif;
 
-							echo img( array( 'src' => $item['thumb'], 'class' => 'center-block img-responsive img-thumbnail' ) );
+							echo img( array( 'src' => $item['thumb'], 'class' => 'center-block img-responsive img-thumbnail gallery-img' ) );
 
 							if ( ! empty( $item['url'] ) ) :
 
@@ -111,11 +111,11 @@
 			//	Medium and Large breakpoints
 			echo '<div class="hidden-sm hidden-xs clearfix">';
 
-				echo '<div class="text-center" id="featured-image-md-lg" style="margin-bottom:1.5em;">';
+				echo '<div class="text-center featured-image-md-lg">';
 
 					if ( ! empty( $_featured_img['url'] ) ) :
 
-						echo '<a href="' . $_featured_img['url'] . '" rel="product-image-md-lg" class="featured-img-link" target="_blank" style="display:block;">';
+						echo '<a href="' . $_featured_img['url'] . '" class="featured-img-link" target="_blank">';
 
 					endif;
 
@@ -129,13 +129,13 @@
 
 				echo '</div>';
 
-				echo '<div class="row text-center" id="gallery-md-lg">';
+				echo '<div class="row text-center gallery-md-lg">';
 				foreach ( $_gallery AS $item ) :
 
-					echo '<div class="col-md-4 col-lg-4" style="margin-bottom:1.5em;">';
+					echo '<div class="col-md-4 col-lg-4 gallery-item">';
 					if ( ! empty( $item['url'] ) ) :
 
-						echo '<a href="' . $item['url'] . '" rel="product-image-md-lg" class="gallery-link" target="_blank">';
+						echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
 
 					endif;
 
@@ -273,7 +273,7 @@
 			//	Controls
 			echo '<div class="well well-sm">';
 
-				echo '<table class="table">';
+				echo '<table class="table table-variants">';
 					echo '<thead>';
 						echo '<tr>';
 							echo '<th>Item</th>';
@@ -337,35 +337,39 @@
 								case 'IN_STOCK' :
 
 									echo '<td>';
-										echo '<p style="margin-bottom:0;">' . $variant->label . '</p>';
+										echo '<p>' . $variant->label . '</p>';
 									echo '</td>';
 									echo '<td>';
 
 										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
 
 											//	Product prices include taxes
-											echo '<p style="margin-bottom:0;">';
+											echo '<p>';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small text-muted">';
-													echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '<p class="text-muted">';
+													echo '<small>';
+														echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+													echo '</small>';
 												echo '</p>';
 
 											endif;
 
 										else :
 
-											echo '<p style="margin-bottom:0;">';
+											echo '<p>';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small text-muted">';
-													echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '<p class="text-muted">';
+													echo '<small>';
+														echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+													echo '</small>';
 												echo '</p>';
 
 											endif;
@@ -390,8 +394,8 @@
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right"' );
-												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right" style="margin-right:0.5em;"' );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right btn-checkout"' );
+												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
 										endif;
@@ -403,9 +407,11 @@
 								case 'TO_ORDER' :
 
 									echo '<td>';
-										echo '<p style="margin-bottom:0;">' . $variant->label . '</p>';
-										echo '<p style="margin-bottom:0;" class="small text-muted">';
-											echo '<em>Lead time: ' . $variant->lead_time . '</em>';
+										echo '<p>' . $variant->label . '</p>';
+										echo '<p class="text-muted">';
+											echo '<small>';
+												echo '<em>Lead time: ' . $variant->lead_time . '</em>';
+											echo '</small>';
 										echo '</p>';
 									echo '</td>';
 									echo '<td>';
@@ -413,28 +419,32 @@
 										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
 
 											//	Product prices include taxes
-											echo '<p style="margin-bottom:0;">';
+											echo '<p>';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small text-muted">';
-													echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '<p class="text-muted">';
+													echo '<small>';
+														echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+													echo '</small>';
 												echo '</p>';
 
 											endif;
 
 										else :
 
-											echo '<p style="margin-bottom:0;">';
+											echo '<p>';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
 											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
-												echo '<p style="margin-bottom:0;" class="small text-muted">';
-													echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '<p class="text-muted">';
+													echo '<small>';
+														echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+													echo '</small>';
 												echo '</p>';
 
 											endif;
@@ -459,8 +469,8 @@
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right"' );
-												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right" style="margin-right:0.5em;"' );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right btn-checkout"' );
+												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
 										endif;
@@ -472,15 +482,15 @@
 								case 'OUT_OF_STOCK' :
 
 									echo '<td>';
-										echo '<p style="margin-bottom:0;"><strike>' . $variant->label . '</strike></p>';
+										echo '<p><strike>' . $variant->label . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;"><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
+										echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;">';
+										echo '<p>';
 											echo '<em>Out of Stock!</em>';
-											echo anchor( app_setting( 'url', 'shop' ) . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-fancybox-type="iframe"' );
+											echo anchor( app_setting( 'url', 'shop' ) . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right" data-fancybox-type="iframe"' );
 										echo '</p>';
 									echo '</td>';
 
@@ -528,68 +538,68 @@
 
 			// --------------------------------------------------------------------------
 
-			//	Reviews
-			echo '<hr />';
-			echo '<h4>Customer Reviews</h4>';
-			?>
-			<p class="alert alert-warning">
-				<strong>TODO:</strong> Customer reviews, maybe?
-			</p>
-			<div class="well">
-				<div class="row">
-					<div class="col-xs-2">
-						<img src="http://placekitten.com/250/250" class="img-responsive img-thumbnail img-circle" />
-					</div>
-					<div class="col-xs-10">
-						<h5>Jimmy Jimmerson</h5>
-						<p>
-							<span class="ion-ios7-star"></span>
-							<span class="ion-ios7-star"></span>
-							<span class="ion-ios7-star-half"></span>
-						</p>
-						<hr />
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-						<p>
-							<small><em><?=user_datetime( time() )?></em></small>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="well">
-				<div class="row">
-					<div class="col-xs-2">
-						<img src="http://placekitten.com/240/240" class="img-responsive img-thumbnail img-circle" />
-					</div>
-					<div class="col-xs-10">
-						<h5>Sarah Screwdriver</h5>
-						<p>
-							<span class="ion-ios7-star"></span>
-							<span class="ion-ios7-star"></span>
-							<span class="ion-ios7-star-half"></span>
-						</p>
-						<hr />
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-						<p>
-							<small><em><?=user_datetime( time() )?></em></small>
-						</p>
-					</div>
-				</div>
-			</div>
-			<?php
+			/**
+			 * TODOMarkup here because I think it looks OK and can be used when product
+			 * reviews get implemented (if they get implemented)
+			 */
+			if ( ! empty( $product_reviews ) ) :
+
+				//	Reviews
+				echo '<hr />';
+				echo '<h4>Customer Reviews</h4>';
+
+				foreach( $product_reviews AS $review ) :
+
+					echo '<div class="well">';
+						echo '<div class="row">';
+							echo '<div class="col-xs-2">';
+
+								if ( $review->user->profile_img ) :
+
+									$_url = cdn_thumb( $review->user->profile_img, 250, 250 );
+
+								else :
+
+									$_url = cdn_blank_avatar( 250, 250, $review->user->gender );
+
+								endif;
+
+								echo img( array( 'src' => $_url, 'class="img-responsive img-thumbnail img-circle"' ) );
+
+							echo '</div>';
+							echo '<div class="col-xs-10">';
+								echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
+								echo '<p>';
+
+									foreach ( $reviw->stars AS $star ) :
+
+										if ( $star->is_half ) :
+
+											echo '<span class="ion-ios7-star-half"></span>';
+
+										else :
+
+											echo '<span class="ion-ios7-star"></span>';
+
+										endif;
+
+									endforeach;
+
+								echo '</p>';
+								echo '<hr />';
+								echo auto_typography( $review->body );
+								echo '<p>';
+									echo '<small>';
+										echo '<em>' . user_datetime( $review->created ) . '</em>';
+									echo '</small>';
+								echo '</p>';
+							echo '</div>';
+						echo '</div>';
+					echo '</div>';
+
+				endforeach;
+
+			endif;
 
 		echo '</div>';
 
