@@ -72,7 +72,9 @@
 
 										echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="ion-minus-circled"></span>', 'class="pull-left"' );
 
-										echo number_format( $item->quantity );
+										echo '<span class="variant-quantity-' . $item->variant_id . '">';
+											echo number_format( $item->quantity );
+										echo '</span>';
 
 										echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="ion-plus-circled"></span>', 'class="pull-right"' );
 
@@ -83,21 +85,37 @@
 
 										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
 
-											echo $item->variant->price->price->user_formatted->value_ex_tax;
+											echo '<span class="variant-unit-price-ex-tax-' . $item->variant_id . '">';
+												echo $item->variant->price->price->user_formatted->value_ex_tax;
+											echo '</span>';
 
 											if ( $item->variant->price->price->user->value_tax > 0 ) :
 
-												echo '<br /><small class="text-muted">(' . $item->variant->price->price->user_formatted->value_inc_tax . ' inc. tax)</small>';
+												echo '<br />';
+												echo '<small class="text-muted">';
+													echo '<span class="variant-unit-price-inc-tax-' . $item->variant_id . '">';
+														echo $item->variant->price->price->user_formatted->value_inc_tax;
+													echo '</span>';
+													echo ' inc. tax';
+												echo '</small>';
 
 											endif;
 
 										else :
 
-											echo $item->variant->price->price->user_formatted->value_inc_tax;
+										echo '<span class="variant-unit-price-inc-tax-' . $item->variant_id . '">';
+												echo $item->variant->price->price->user_formatted->value_inc_tax;
+											echo '</span>';
 
 											if ( $item->variant->price->price->user->value_tax > 0 ) :
 
-												echo '<br /><small class="text-muted">(' . $item->variant->price->price->user_formatted->value_ex_tax . ' ex. tax)</small>';
+												echo '<br />';
+												echo '<small class="text-muted">';
+													echo '<span class="variant-unit-price-ex-tax-' . $item->variant_id . '">';
+														echo $item->variant->price->price->user_formatted->value_ex_tax;
+													echo '</span>';
+													echo ' ex. tax';
+												echo '</small>';
 
 											endif;
 
@@ -116,22 +134,29 @@
 							<tr>
 								<th colspan="3"></th>
 							</tr>
-							<?php if ( ! empty( $basket->totals->user->item ) ) : ?>
-							<tr>
-								<th colspan="2" class="text-right">Sub Total</th>
-								<th class="text-center"><?=$basket->totals->user_formatted->item?></th>
-							</tr>
-							<?php endif; ?>
 
-							<?php if ( ! empty( $basket->totals->user->shipping ) ) : ?>
-							<tr>
-								<th colspan="2" class="text-right">Shipping</th>
-								<th class="text-center"><?=$basket->totals->user_formatted->shipping?></th>
+							<!-- Item Total -->
+							<tr class="basket-total-item" <?=empty( $basket->totals->user->item ) ? 'style="display:none"' : '' ?>>
+								<th colspan="2" class="text-right">
+									Sub Total
+								</th>
+								<th class="text-center value">
+									<?=$basket->totals->user_formatted->item?>
+								</th>
 							</tr>
-							<?php endif; ?>
 
-							<?php if ( ! empty( $basket->totals->user->tax ) ) : ?>
-							<tr>
+							<!-- Shipping Total -->
+							<tr class="basket-total-shipping" <?=empty( $basket->totals->user->shipping ) ? 'style="display:none"' : '' ?>>
+								<th colspan="2" class="text-right">
+									Shipping
+								</th>
+								<th class="text-center value">
+									<?=$basket->totals->user_formatted->shipping?>
+								</th>
+							</tr>
+
+							<!-- Tax Total -->
+							<tr class="basket-total-tax" <?=empty( $basket->totals->user->tax ) ? 'style="display:none"' : '' ?>>
 								<th colspan="2" class="text-right">
 								<?php
 
@@ -147,7 +172,7 @@
 
 								?>
 								</th>
-								<th class="text-center">
+								<th class="text-center value">
 								<?php
 
 									echo $basket->totals->user_formatted->tax;
@@ -155,11 +180,15 @@
 								?>
 								</th>
 							</tr>
-							<?php endif; ?>
 
-							<tr>
-								<th colspan="2" class="text-right">Total</th>
-								<th class="text-center"><?=$basket->totals->user_formatted->grand?></th>
+							<!-- Grand Total -->
+							<tr class="basket-total-grand" <?=empty( $basket->totals->user->grand ) ? 'style="display:none"' : '' ?>>
+								<th colspan="2" class="text-right">
+									Total
+								</th>
+								<th class="text-center value">
+									<?=$basket->totals->user_formatted->grand?>
+								</th>
 							</tr>
 						</tfoot>
 					</table>

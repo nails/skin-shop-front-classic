@@ -394,7 +394,7 @@
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right btn-checkout"' );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
@@ -469,7 +469,7 @@
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right btn-checkout"' );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
