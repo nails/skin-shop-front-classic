@@ -22,6 +22,22 @@ _nails_skin_shop_classic = function()
 
 		// --------------------------------------------------------------------------
 
+		//	Product sorter
+		if ( $( '.nails-skin-shop-classic .product-sort' ).length > 0 )
+		{
+			this._browse_sorter_init();
+		}
+
+		// --------------------------------------------------------------------------
+
+		//	Sidebar filter
+		if ( $( '.nails-skin-shop-classic .sidebar-filter' ).length > 0 )
+		{
+			this._browse_sidebar_filter_init();
+		}
+
+		// --------------------------------------------------------------------------
+
 		//	Single product page malarky
 		if ( $( '.nails-skin-shop-classic.browse.product.single' ).length > 0 )
 		{
@@ -33,6 +49,48 @@ _nails_skin_shop_classic = function()
 				_this._product_single_image_gallery_init();
 			});
 		}
+	};
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Binds events to the sidebar filter
+	 * @return void
+	 */
+	this._browse_sidebar_filter_init = function()
+	{
+		$( '.nails-skin-shop-classic .sidebar-filter .filter-list' ).hover(
+			function()
+			{
+				var _orig_max_height = parseInt( $(this).css( 'max-height' ), 10 );
+
+				$(this).attr( 'data-orig-max-height', _orig_max_height );
+
+				var _new_max_height = _orig_max_height * 1.5;
+
+				$(this).stop().animate( { 'max-height' : _new_max_height } );
+			},
+			function()
+			{
+				var _orig_max_height = $(this).attr( 'data-orig-max-height' );
+				$(this).stop().animate( { 'max-height' : _orig_max_height } );
+			}
+		);
+	};
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Binds events to the product sorter
+	 * @return void
+	 */
+	this._browse_sorter_init = function()
+	{
+		$( '.nails-skin-shop-classic .product-sort select' ).on( 'change', function()
+		{
+			$( '.nails-skin-shop-classic .product-sort' ).addClass( 'submitting' );
+			$(this).closest( 'form' ).submit();
+		});
 	};
 
 	// --------------------------------------------------------------------------

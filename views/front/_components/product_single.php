@@ -1,4 +1,4 @@
-<div class="product col-md-9 col-md-push-3 ">
+<div class="product col-xs-12">
 <?php
 
 	echo '<h3 class="text-center hidden-md hidden-lg">';
@@ -22,11 +22,11 @@
 			if ( $product->featured_img ) :
 
 				$_featured_img['url']	= cdn_serve( $product->featured_img );
-				$_featured_img['thumb']	= cdn_thumb( $product->featured_img, 500, 500 );
+				$_featured_img['thumb']	= cdn_thumb( $product->featured_img, 800, 800 );
 
 			else :
 
-				$_featured_img['thumb']	= cdn_placeholder( 500, 500 );
+				$_featured_img['thumb']	= $skin->url . 'assets/img/product-no-image.png';
 
 			endif;
 
@@ -38,7 +38,7 @@
 
 				$_gallery[] = array(
 					'url'	=> cdn_serve( $object_id ),
-					'thumb'	=> cdn_thumb( $object_id, 500, 500 )
+					'thumb'	=> cdn_thumb( $object_id, 800, 800 )
 				);
 
 			endforeach;
@@ -276,9 +276,9 @@
 				echo '<table class="table table-variants">';
 					echo '<thead>';
 						echo '<tr>';
-							echo '<th>Item</th>';
-							echo '<th>Price</th>';
-							echo '<th>Quantity</th>';
+							echo '<th class="col-xs-6">Item</th>';
+							echo '<th class="col-xs-3">Price</th>';
+							echo '<th class="col-xs-3">Quantity</th>';
 						echo '</tr>';
 					echo '</thead>';
 					echo '<tbody>';
