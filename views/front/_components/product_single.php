@@ -353,18 +353,28 @@
 											echo '<p style="margin-bottom:0;">';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
-											echo '<p style="margin-bottom:0;" class="small">';
-												echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-											echo '</p>';
+
+											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+
+												echo '<p style="margin-bottom:0;" class="small">';
+													echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '</p>';
+
+											endif;
 
 										else :
 
 											echo '<p style="margin-bottom:0;">';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
-											echo '<p style="margin-bottom:0;" class="small">';
-												echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-											echo '</p>';
+
+											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+
+												echo '<p style="margin-bottom:0;" class="small">';
+													echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '</p>';
+
+											endif;
 
 										endif;
 
@@ -412,18 +422,28 @@
 											echo '<p style="margin-bottom:0;">';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
-											echo '<p style="margin-bottom:0;" class="small">';
-												echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-											echo '</p>';
+
+											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+
+												echo '<p style="margin-bottom:0;" class="small">';
+													echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+												echo '</p>';
+
+											endif;
 
 										else :
 
 											echo '<p style="margin-bottom:0;">';
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
-											echo '<p style="margin-bottom:0;" class="small">';
-												echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-											echo '</p>';
+
+											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+
+												echo '<p style="margin-bottom:0;" class="small">';
+													echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+												echo '</p>';
+
+											endif;
 
 										endif;
 
@@ -461,7 +481,7 @@
 										echo '<p style="margin-bottom:0;"><strike>' . $variant->label . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;"><strike>' . $variant->price->user_formatted->price . '</strike></p>';
+										echo '<p style="margin-bottom:0;"><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
 										echo '<p style="margin-bottom:0;">';
