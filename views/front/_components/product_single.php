@@ -346,7 +346,28 @@
 										echo '<p style="margin-bottom:0;">' . $variant->label . '</p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;">' . $variant->user_price_formatted->price . '</p>';
+
+										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+											//	Product prices include taxes
+											echo '<p style="margin-bottom:0;">';
+												echo $variant->price->price->user_formatted->value;
+											echo '</p>';
+											echo '<p style="margin-bottom:0;" class="small">';
+												echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+											echo '</p>';
+
+										else :
+
+											echo '<p style="margin-bottom:0;">';
+												echo $variant->price->price->user_formatted->value;
+											echo '</p>';
+											echo '<p style="margin-bottom:0;" class="small">';
+												echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+											echo '</p>';
+
+										endif;
+
 									echo '</td>';
 									echo '<td>';
 
@@ -379,10 +400,33 @@
 
 									echo '<td>';
 										echo '<p style="margin-bottom:0;">' . $variant->label . '</p>';
-										echo '<p style="margin-bottom:0;" class="small"><em>Lead time: ' . $variant->lead_time . '</em></p>';
+										echo '<p style="margin-bottom:0;" class="small">';
+											echo '<em>Lead time: ' . $variant->lead_time . '</em>';
+										echo '</p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;">' . $variant->user_price_formatted->price . '</p>';
+
+										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+											//	Product prices include taxes
+											echo '<p style="margin-bottom:0;">';
+												echo $variant->price->price->user_formatted->value;
+											echo '</p>';
+											echo '<p style="margin-bottom:0;" class="small">';
+												echo '<em>Inc-Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+											echo '</p>';
+
+										else :
+
+											echo '<p style="margin-bottom:0;">';
+												echo $variant->price->price->user_formatted->value;
+											echo '</p>';
+											echo '<p style="margin-bottom:0;" class="small">';
+												echo '<em>Ex-Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+											echo '</p>';
+
+										endif;
+
 									echo '</td>';
 									echo '<td>';
 
@@ -400,7 +444,9 @@
 											echo form_open( app_setting( 'url', 'shop' ) . 'basket/remove', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
-												echo form_submit( 'submit', 'Remove from Basket', 'class="btn btn-xs btn-danger pull-right"' );
+												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'Checkout', 'class="btn btn-xs btn-success pull-right"' );
+												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right" style="margin-right:0.5em;"' );
 											echo form_close();
 
 										endif;
@@ -415,7 +461,7 @@
 										echo '<p style="margin-bottom:0;"><strike>' . $variant->label . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
-										echo '<p style="margin-bottom:0;"><strike>' . $variant->user_price_formatted->price . '</strike></p>';
+										echo '<p style="margin-bottom:0;"><strike>' . $variant->price->user_formatted->price . '</strike></p>';
 									echo '</td>';
 									echo '<td>';
 										echo '<p style="margin-bottom:0;">';

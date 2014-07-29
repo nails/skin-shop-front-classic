@@ -82,15 +82,7 @@
 
 				echo '<p>' . anchor( $product->url, $product->label ) . '</p>';
 				echo '<p>';
-				if ( $product->user_price->max_price > $product->user_price->min_price ) :
-
-					echo '<span class="badge">From ' . $product->user_price_formatted->min_price . '</span>';
-
-				else :
-
-					echo '<span class="badge">' . $product->user_price_formatted->min_price . '</span>';
-
-				endif;
+					echo '<span class="badge">' . $product->price->user_formatted->price_string . '</span>';
 				echo '</p>';
 				echo '<hr class="hidden-sm hidden-md hidden-lg" />';
 			echo '</div>';
