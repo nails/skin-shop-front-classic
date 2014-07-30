@@ -494,7 +494,7 @@
 									echo '<td>';
 										echo '<p>';
 											echo '<em>Out of Stock!</em>';
-											echo anchor( app_setting( 'url', 'shop' ) . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right" data-fancybox-type="iframe"' );
+											echo anchor( app_setting( 'url', 'shop' ) . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
 										echo '</p>';
 									echo '</td>';
 
