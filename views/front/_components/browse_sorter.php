@@ -7,15 +7,36 @@
 
 		echo form_open( NULL, 'method="GET"' );
 
+			//	Maintain any other get params
+			$_get = array_filter( (array) $this->input->get() );
+
+			unset( $_get['perpage'] );
+			unset( $_get['sort'] );
+
+			$_get = http_build_query( $_get );
+			$_get = explode( '&', $_get );
+
+			foreach ( $_get AS $param ) :
+
+				$_param = explode( '=', $param );
+
+				if ( count( $_param ) == 2 ) :
+
+					echo form_hidden( urldecode( $_param[0] ), urldecode( $_param[1] ) );
+
+				endif;
+
+			endforeach;
+
+			// --------------------------------------------------------------------------
+
 			echo '<div class="pull-left">';
 
 				$_options			= array();
-				$_options['5']		= '5';
 				$_options['10']		= '10';
 				$_options['25']		= '25';
 				$_options['50']		= '50';
 				$_options['100']	= '100';
-				$_options['all']	= 'All';
 
 				echo form_dropdown( 'perpage', $_options, $product_sort->perpage );
 

@@ -1,13 +1,15 @@
-<div class="product col-xs-12">
+	<div class="product col-xs-12">
 <?php
 
-	echo '<h3 class="text-center hidden-md hidden-lg">';
-		echo $product->label;
-	echo '</h3>';
+	echo '<div class="product-label">';
+		echo '<h3 class="text-center hidden-md hidden-lg">';
+			echo $product->label;
+		echo '</h3>';
 
-	echo '<h3 class="hidden-xs hidden-sm">';
-		echo $product->label;
-	echo '</h3>';
+		echo '<h3 class="hidden-xs hidden-sm">';
+			echo $product->label;
+		echo '</h3>';
+	echo '</div>';
 
 	echo '<hr />';
 
@@ -266,11 +268,13 @@
 		echo '<div class="col-md-8">';
 
 			//	Description
-			echo $product->description;
+			echo '<div class="product-description">';
+				echo $product->description;
+			echo '</div>';
 
 			// --------------------------------------------------------------------------
 
-			//	Controls
+			//	Variants
 			echo '<div class="well well-sm">';
 
 				echo '<table class="table table-variants">';
@@ -512,7 +516,7 @@
 			//	Attributes
 			if ( ! empty( $product->attributes ) ) :
 
-				echo '<table class="table table-bordered table-striped">';
+				echo '<table class="table table-bordered table-striped product-attributes">';
 					echo '<thead>';
 						echo '<tr>';
 							echo '<th>Attribute</th>';
@@ -545,59 +549,63 @@
 			if ( ! empty( $product_reviews ) ) :
 
 				//	Reviews
-				echo '<hr />';
-				echo '<h4>Customer Reviews</h4>';
+				echo '<div class="product-reviews">';
 
-				foreach( $product_reviews AS $review ) :
+					echo '<hr />';
+					echo '<h4>Customer Reviews</h4>';
 
-					echo '<div class="well">';
-						echo '<div class="row">';
-							echo '<div class="col-xs-2">';
+					foreach( $product_reviews AS $review ) :
 
-								if ( $review->user->profile_img ) :
+						echo '<div class="well">';
+							echo '<div class="row">';
+								echo '<div class="col-xs-2">';
 
-									$_url = cdn_thumb( $review->user->profile_img, 250, 250 );
+									if ( $review->user->profile_img ) :
 
-								else :
+										$_url = cdn_thumb( $review->user->profile_img, 250, 250 );
 
-									$_url = cdn_blank_avatar( 250, 250, $review->user->gender );
+									else :
 
-								endif;
+										$_url = cdn_blank_avatar( 250, 250, $review->user->gender );
 
-								echo img( array( 'src' => $_url, 'class="img-responsive img-thumbnail img-circle"' ) );
+									endif;
 
-							echo '</div>';
-							echo '<div class="col-xs-10">';
-								echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
-								echo '<p>';
+									echo img( array( 'src' => $_url, 'class="img-responsive img-thumbnail img-circle"' ) );
 
-									foreach ( $reviw->stars AS $star ) :
+								echo '</div>';
+								echo '<div class="col-xs-10">';
+									echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
+									echo '<p>';
 
-										if ( $star->is_half ) :
+										foreach ( $reviw->stars AS $star ) :
 
-											echo '<span class="ion-ios7-star-half"></span>';
+											if ( $star->is_half ) :
 
-										else :
+												echo '<span class="ion-ios7-star-half"></span>';
 
-											echo '<span class="ion-ios7-star"></span>';
+											else :
 
-										endif;
+												echo '<span class="ion-ios7-star"></span>';
 
-									endforeach;
+											endif;
 
-								echo '</p>';
-								echo '<hr />';
-								echo auto_typography( $review->body );
-								echo '<p>';
-									echo '<small>';
-										echo '<em>' . user_datetime( $review->created ) . '</em>';
-									echo '</small>';
-								echo '</p>';
+										endforeach;
+
+									echo '</p>';
+									echo '<hr />';
+									echo auto_typography( $review->body );
+									echo '<p>';
+										echo '<small>';
+											echo '<em>' . user_datetime( $review->created ) . '</em>';
+										echo '</small>';
+									echo '</p>';
+								echo '</div>';
 							echo '</div>';
 						echo '</div>';
-					echo '</div>';
 
-				endforeach;
+					endforeach;
+
+				echo '</div>';
 
 			endif;
 

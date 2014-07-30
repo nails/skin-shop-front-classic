@@ -11,16 +11,38 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/js\/shop.js": {
-		"fileType": 64,
+	"\/img\/checkout-cards.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/js\/shop.js",
-		"outputAbbreviatedPath": "\/js\/shop.min.js",
+		"initialSize": 2828,
+		"inputAbbreviatedPath": "\/img\/checkout-cards.png",
+		"outputAbbreviatedPath": "\/img\/checkout-cards.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"processed": 0
+		},
+	"\/img\/cover-default.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1319,
+		"inputAbbreviatedPath": "\/img\/cover-default.png",
+		"outputAbbreviatedPath": "\/img\/cover-default.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/product-no-image.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6871,
+		"inputAbbreviatedPath": "\/img\/product-no-image.png",
+		"outputAbbreviatedPath": "\/img\/product-no-image.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
 		},
 	"\/js\/shop.min.js": {
 		"fileType": 64,
