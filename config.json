@@ -1,11 +1,11 @@
 {
-	"name" : "Classic",
-	"description" : "This is a bare bones shop skin levereging Twitter Bootstrap.",
+	"name": "Classic",
+	"description": "This is a bare bones shop skin levereging Twitter Bootstrap.",
 	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
 	"homepage": "http://nailsapp.co.uk/skins/shop/classic",
-	"license" :"MIT",
-	"version" : "0.1.0",
-	"authors" : [
+	"license":"MIT",
+	"version": "0.1.0",
+	"authors": [
 		{
 			"name": "Pablo de la Pena",
 			"email": "p@shedcollective.org",
@@ -21,7 +21,15 @@
 		"bower_components/jquery-zoom/jquery.zoom.js",
 		"js/shop.min.js"
 	],
-	"js_inline" : [
+	"js_inline": [
 			"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
+	],
+	"settings": [
+		{
+			"key": "omit_variant_tax_pricing",
+			"label": "Omit Variant Tax Detail",
+			"tip": "Hides the small text beneath a variant's price which shows the price excluding/including tax.",
+			"type": "boolean"
+		}
 	]
 }

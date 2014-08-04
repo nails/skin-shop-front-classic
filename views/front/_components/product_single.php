@@ -352,7 +352,7 @@
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
-											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
 												echo '<p class="text-muted">';
 													echo '<small>';
@@ -368,7 +368,7 @@
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
-											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
 												echo '<p class="text-muted">';
 													echo '<small>';
@@ -427,7 +427,7 @@
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
-											if ( $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
 
 												echo '<p class="text-muted">';
 													echo '<small>';
@@ -443,7 +443,7 @@
 												echo $variant->price->price->user_formatted->value;
 											echo '</p>';
 
-											if ( $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
 
 												echo '<p class="text-muted">';
 													echo '<small>';
