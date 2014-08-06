@@ -581,11 +581,11 @@
 
 											if ( $star->is_half ) :
 
-												echo '<span class="ion-ios7-star-half"></span>';
+												echo '<span class="fa fa-star-half"></span>';
 
 											else :
 
-												echo '<span class="ion-ios7-star"></span>';
+												echo '<span class="fa fa-star></span>';
 
 											endif;
 

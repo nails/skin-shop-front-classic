@@ -3,7 +3,7 @@
 	echo '<ol class="breadcrumb">';
 
 		echo '<li class="crumb home">';
-			echo '<span class="ion-home text-muted"></span>';
+			echo '<span class="fa fa-home text-muted"></span>';
 			echo anchor( app_setting( 'url', 'shop' ), app_setting( 'name', 'shop' ) );
 		echo '</li>';
 

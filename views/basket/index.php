@@ -70,13 +70,13 @@
 									<td class="vertical-align-middle text-center">
 									<?php
 
-										echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="ion-minus-circled"></span>', 'class="pull-left"' );
+										echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="fa fa-minus-circle"></span>', 'class="pull-left"' );
 
 										echo '<span class="variant-quantity-' . $item->variant_id . '">';
 											echo number_format( $item->quantity );
 										echo '</span>';
 
-										echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="ion-plus-circled"></span>', 'class="pull-right"' );
+										echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="fa fa-plus-circle"></span>', 'class="pull-right"' );
 
 									?>
 									</td>
