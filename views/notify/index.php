@@ -18,6 +18,10 @@
 
 				$_url = cdn_thumb( $variant->featured_img, 800, 800 );
 
+			elseif ( $product->featured_img ) :
+
+				$_url = cdn_thumb( $product->featured_img, 800, 800 );
+
 			else :
 
 				$_url = $skin->url . 'assets/img/product-no-image.png';

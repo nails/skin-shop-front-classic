@@ -274,15 +274,36 @@
 
 			// --------------------------------------------------------------------------
 
+			//	Collection only items?
+			foreach ( $product->variations AS $variant ) :
+
+				if ( $variant->shipping->collection_only ) :
+
+					echo '<p class="alert alert-warning">';
+						echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
+						if ( app_setting( 'warehouse_collection_delivery_enquiry', 'shop' ) ) :
+
+							echo anchor( app_setting( 'url', 'shop' ) . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
+
+						endif;
+					echo '</p>';
+					break;
+
+				endif;
+
+			endforeach;
+
+			// --------------------------------------------------------------------------
+
 			//	Variants
 			echo '<div class="well well-sm">';
 
 				echo '<table class="table table-variants">';
 					echo '<thead>';
 						echo '<tr>';
-							echo '<th class="col-xs-6">Item</th>';
+							echo '<th class="col-xs-5">Item</th>';
 							echo '<th class="col-xs-3">Price</th>';
-							echo '<th class="col-xs-3">Quantity</th>';
+							echo '<th class="col-xs-4">Quantity</th>';
 						echo '</tr>';
 					echo '</thead>';
 					echo '<tbody>';
@@ -341,7 +362,17 @@
 								case 'IN_STOCK' :
 
 									echo '<td>';
-										echo '<p>' . $variant->label . '</p>';
+										echo '<p>';
+
+											echo $variant->label;
+
+											if ( $variant->shipping->collection_only ) :
+
+												echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
+
+											endif;
+
+										echo '</p>';
 									echo '</td>';
 									echo '<td>';
 

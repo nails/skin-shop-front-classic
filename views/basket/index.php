@@ -21,7 +21,7 @@
 							foreach ( $basket->items AS $item ) :
 
 								?>
-								<tr>
+								<tr class="basket-item">
 									<td class="vertical-align-middle">
 										<?php
 
@@ -64,6 +64,17 @@
 											<small class="text-muted">
 												<em><?=$item->variant_sku?></em>
 											</small>
+											<?php
+
+												if ( $item->variant->shipping->collection_only ) :
+
+													echo '<div class="alert alert-warning">';
+														echo '<strong>Note:</strong> This item is collection only.';
+													echo '</div>';
+
+												endif;
+
+											?>
 										</div>
 
 									</td>
