@@ -97,7 +97,7 @@
 												echo $item->variant->price->price->user_formatted->value_ex_tax;
 											echo '</span>';
 
-											if ( $item->variant->price->price->user->value_tax > 0 ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $item->variant->price->price->user->value_tax > 0 ) :
 
 												echo '<br />';
 												echo '<small class="text-muted">';
@@ -111,11 +111,11 @@
 
 										else :
 
-										echo '<span class="variant-unit-price-inc-tax-' . $item->variant_id . '">';
+											echo '<span class="variant-unit-price-inc-tax-' . $item->variant_id . '">';
 												echo $item->variant->price->price->user_formatted->value_inc_tax;
 											echo '</span>';
 
-											if ( $item->variant->price->price->user->value_tax > 0 ) :
+											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $item->variant->price->price->user->value_tax > 0 ) :
 
 												echo '<br />';
 												echo '<small class="text-muted">';
