@@ -68,17 +68,25 @@
 
 									</td>
 									<td class="vertical-align-middle text-center">
-									<?php
+										<div class="row">
+										<?php
 
-										echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="fa fa-minus-circle"></span>', 'class="pull-left"' );
+											echo '<div class="col-xs-4">';
+											echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"' );
+											echo '</div>';
 
-										echo '<span class="variant-quantity-' . $item->variant_id . '">';
-											echo number_format( $item->quantity );
-										echo '</span>';
+											echo '<div class="col-xs-4">';
+											echo '<span class="variant-quantity-' . $item->variant_id . '">';
+												echo number_format( $item->quantity );
+											echo '</span>';
+											echo '</div>';
 
-										echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="fa fa-plus-circle"></span>', 'class="pull-right"' );
+											echo '<div class="col-xs-4">';
+											echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"' );
+											echo '</div>';
 
-									?>
+										?>
+										</div>
 									</td>
 									<td class="vertical-align-middle text-center">
 									<?php
