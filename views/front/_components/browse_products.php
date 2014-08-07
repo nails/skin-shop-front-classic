@@ -49,6 +49,27 @@
 
 					echo '<div class="product-image">';
 						echo anchor( $product->url, img( array( 'src' => $_url, 'class' => 'img-responsive img-thumbnail center-block' ) ) );
+
+						if ( count( $product->variations ) > 1 ) :
+
+							if ( app_setting( 'browse_product_ribbon_mode', 'shop-' . $skin->slug ) == 'corner' ) :
+
+								echo '<div class="ribbon corner">';
+									echo '<div class="ribbon-wrapper">';
+										echo '<div class="ribbon-text">' . count( $product->variations ) . ' options' . '</div>';
+									echo '</div>';
+								echo '</div>';
+
+							else :
+
+								echo '<div class="ribbon horizontal">';
+									echo count( $product->variations ) . ' options available';
+								echo '</div>';
+
+							endif;
+
+						endif;
+
 					echo '</div>';
 
 					echo '<p>' . anchor( $product->url, $product->label ) . '</p>';

@@ -30,6 +30,22 @@
 			"label": "Omit Variant Tax Detail",
 			"tip": "Hides the small text beneath a variant's price which shows the price excluding/including tax.",
 			"type": "boolean"
+		},
+		{
+			"key": "browse_product_ribbon_mode",
+			"label": "Product Ribbon Mode",
+			"tip": "When multiple variations are available a ribbon is displayed; choose the style.",
+			"type": "dropdown",
+			"options": [
+				{
+					"value": "horizontal",
+					"label": "Horizontal"
+				},
+				{
+					"value": "corner",
+					"label": "Corner"
+				}
+			]
 		}
 	]
 }
