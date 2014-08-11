@@ -283,7 +283,7 @@
 						echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
 						if ( app_setting( 'warehouse_collection_delivery_enquiry', 'shop' ) ) :
 
-							echo anchor( app_setting( 'url', 'shop' ) . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
+							echo anchor( $shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
 
 						endif;
 					echo '</p>';
@@ -416,7 +416,7 @@
 
 										if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
 
-											echo form_open( app_setting( 'url', 'shop' ) . 'basket/add', 'method="GET"' );
+											echo form_open( $shop_url . 'basket/add', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo form_dropdown( 'quantity', $_range );
@@ -425,11 +425,11 @@
 
 										else :
 
-											echo form_open( app_setting( 'url', 'shop' ) . 'basket/remove', 'method="GET"' );
+											echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
+												echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
@@ -491,7 +491,7 @@
 
 										if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
 
-											echo form_open( app_setting( 'url', 'shop' ) . 'basket/add', 'method="GET"' );
+											echo form_open( $shop_url . 'basket/add', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo form_dropdown( 'quantity', $_range );
@@ -500,11 +500,11 @@
 
 										else :
 
-											echo form_open( app_setting( 'url', 'shop' ) . 'basket/remove', 'method="GET"' );
+											echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
 												echo form_hidden( 'return', $product->url );
 												echo form_hidden( 'variant_id', $variant->id );
 												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( app_setting( 'url', 'shop' ) . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
+												echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 											echo form_close();
 
@@ -525,7 +525,7 @@
 									echo '<td>';
 										echo '<p>';
 											echo '<em>Out of Stock!</em>';
-											echo anchor( app_setting( 'url', 'shop' ) . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
+											echo anchor( $shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
 										echo '</p>';
 									echo '</td>';
 

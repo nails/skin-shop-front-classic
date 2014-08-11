@@ -7,7 +7,7 @@
 
 		//	Build the URL, if this s changed then we want to reset pagination
 		$_method	= $this->uri->rsegment( 2 ) && ! is_numeric( $this->uri->rsegment( 2 ) ) ? $this->uri->rsegment( 2 ) : 'index';
-		$_url		= app_setting( 'url', 'shop' ) ? app_setting( 'url', 'shop' ) : 'shop/';
+		$_url		= $shop_url;
 
 		switch( $_method ) :
 

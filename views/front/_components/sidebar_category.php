@@ -13,7 +13,7 @@
 
 					//	Home first
 					echo '<li class="level-' . $_indent . '">';
-						echo anchor( app_setting( 'url', 'shop' ), app_setting( 'name', 'shop' ) );
+						echo anchor( $shop_url, app_setting( 'name', 'shop' ) );
 					echo '</li>';
 
 					$_indent++;

@@ -4,7 +4,7 @@
 
 		echo '<li class="crumb home">';
 			echo '<span class="fa fa-home text-muted"></span>';
-			echo anchor( app_setting( 'url', 'shop' ), app_setting( 'name', 'shop' ) );
+			echo anchor( $shop_url, app_setting( 'name', 'shop' ) );
 		echo '</li>';
 
 		if ( ! empty( $category ) ) :

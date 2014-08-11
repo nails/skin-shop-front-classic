@@ -2,16 +2,56 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-12">
 					<h1>Checkout</h1>
-					<p>Checkout as a guest or register for a quicker checkout experience on your next visit</p>
 				</div>
-				<div class="col-md-3 cta">
-					<div class="well well-sm">
-						<a href="#" class="btn btn-primary btn-block">Login</a>
-						<a href="#" class="btn btn-primary btn-block">Register</a>
+			</div>
+			<div class="row">
+			<?php
+
+				echo  $this->user->is_logged_in() ? '<div class="col-md-12">' : '<div class="col-md-10">';
+
+					$_intro_text = cms_render_block( 'shop_checkout_intro' );
+
+					if ( ! empty( $_intro_text ) ) :
+
+						echo $_intro_text;
+
+					else :
+
+						echo '<p>Simply complete the forms below and then click or tap the "Confirm &amp; Pay" button.</p>';
+
+						if ( ! $this->user->is_logged_in() ) :
+
+							echo '<p>You are welcome to checkout as a guest, however we recommend creating an account so that you can track your order and have a quicker checkout experience next time.</p>';
+
+						else :
+
+							echo '<p>';
+								echo 'You are currently logged in as: <strong>' . active_user( 'first_name,last_name' ) . ' (' . active_user( 'email' ) . ')</strong>. ';
+								echo anchor( 'auth/logout', 'Not you?' );
+							echo '</p>';
+
+						endif;
+
+					endif;
+
+				echo '</div>';
+
+				if ( ! $this->user->is_logged_in() ) :
+
+					?>
+					<div class="col-md-2 cta">
+						<div class="well well-sm">
+							<a href="#" class="btn btn-primary btn-sm btn-block">Login</a>
+							<a href="#" class="btn btn-primary btn-sm btn-block">Register</a>
+						</div>
 					</div>
-				</div>
+					<?php
+
+				endif;
+
+			?>
 			</div>
 
 			<div class="progress">

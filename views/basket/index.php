@@ -43,7 +43,7 @@
 
 												echo '<div class="col-xs-2 hidden-xs hidden-sm">';
 
-													$_url = cdn_thumb( $_featured_img, 250, 250 );
+													$_url = cdn_thumb( $_featured_img, 175, 175 );
 													echo img( array( 'src' => $_url, 'class' => 'img-thumbnail' ) );
 
 												echo '</div>';
@@ -83,7 +83,7 @@
 										<?php
 
 											echo '<div class="col-xs-4">';
-											echo anchor( app_setting( 'url', 'shop' ) . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"' );
+											echo anchor( $shop_url . 'basket/decrement?variant_id=' . $item->variant_id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"' );
 											echo '</div>';
 
 											echo '<div class="col-xs-4">';
@@ -93,7 +93,7 @@
 											echo '</div>';
 
 											echo '<div class="col-xs-4">';
-											echo anchor( app_setting( 'url', 'shop' ) . 'basket/increment?variant_id=' . $item->variant_id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"' );
+											echo anchor( $shop_url . 'basket/increment?variant_id=' . $item->variant_id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"' );
 											echo '</div>';
 
 										?>
@@ -216,7 +216,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="well well-sm">
-							<?=form_open( app_setting( 'url', 'shop' ) . 'basket/add_voucher', 'class="add-voucher"' )?>
+							<?=form_open( $shop_url . 'basket/add_voucher', 'class="add-voucher"' )?>
 							<div class="row">
 								<div class="col-sm-10">
 									<?=form_input( 'voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control"' )?>
@@ -234,7 +234,7 @@
 				<hr />
 				<p class="text-center">
 					<?=anchor( $continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-primary"' )?>
-					<?=anchor( app_setting( 'url', 'shop' ) . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success"' )?>
+					<?=anchor( $shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success"' )?>
 				</p>
 				<hr />
 				<?php

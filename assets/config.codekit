@@ -33,17 +33,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/img\/product-no-image.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 6871,
-		"inputAbbreviatedPath": "\/img\/product-no-image.png",
-		"outputAbbreviatedPath": "\/img\/product-no-image.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
 	"\/js\/shop.js": {
 		"fileType": 64,
 		"ignore": 0,

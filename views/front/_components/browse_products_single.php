@@ -2,7 +2,7 @@
 
 	if ( $product->featured_img ) :
 
-		$_url = cdn_thumb( $product->featured_img, 800, 800 );
+		$_url = cdn_thumb( $product->featured_img, 360, 360 );
 
 	else :
 
