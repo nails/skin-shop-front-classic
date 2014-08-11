@@ -67,9 +67,9 @@
 		echo form_open( NULL, 'method="GET"' );
 
 			//	Hidden fields so preferences get maintained
-			if ( $this->input->get_post( 'perpage' ) ) :
+			if ( $this->input->get_post( 'per_page' ) ) :
 
-				echo form_hidden( 'perpage', $this->input->get_post( 'perpage' ) );
+				echo form_hidden( 'per_page', $this->input->get_post( 'per_page' ) );
 
 			endif;
 
@@ -116,9 +116,9 @@
 						$_get = array();
 
 						//	Hidden fields so preferences get maintained
-						if ( $this->input->get_post( 'perpage' ) ) :
+						if ( $this->input->get_post( 'per_page' ) ) :
 
-							$_get['perpage'] = $this->input->get_post( 'perpage' );
+							$_get['per_page'] = $this->input->get_post( 'per_page' );
 
 						endif;
 

@@ -5,12 +5,26 @@
 	<div class="panel-body small">
 	<?php
 
-		echo form_open( NULL, 'method="GET"' );
+		//	Build the URL, if this s changed then we want to reset pagination
+		$_method	= $this->uri->rsegment( 2 ) && ! is_numeric( $this->uri->rsegment( 2 ) ) ? $this->uri->rsegment( 2 ) : 'index';
+		$_url		= app_setting( 'url', 'shop' ) ? app_setting( 'url', 'shop' ) : 'shop/';
+
+		switch( $_method ) :
+
+			case 'category' :
+
+				$_url .= 'category/' . $category->slug;
+
+			break;
+
+		endswitch;
+
+		echo form_open( $_url, 'method="GET"' );
 
 			//	Maintain any other get params
 			$_get = array_filter( (array) $this->input->get() );
 
-			unset( $_get['perpage'] );
+			unset( $_get['per_page'] );
 			unset( $_get['sort'] );
 
 			$_get = http_build_query( $_get );
@@ -38,7 +52,7 @@
 				$_options['50']		= '50';
 				$_options['100']	= '100';
 
-				echo form_dropdown( 'perpage', $_options, $product_sort->perpage );
+				echo form_dropdown( 'per_page', $_options, $product_pagination->per_page );
 
 			echo '&nbsp;&nbsp;per page';
 			echo '</div>';
