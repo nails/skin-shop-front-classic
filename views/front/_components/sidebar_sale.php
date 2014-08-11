@@ -1,9 +1,7 @@
-<hr class="hidden-md hidden-lg" />
-<ul class="sidebar-filter col-md-3 col-md-pull-9 list-group">
-	<li class="list-group-item">
-		<h3 class="list-group-item-heading">Sidebar</h3>
-		<p class="list-group-item-text">
-			Browse by sale
-		</p>
-	</li>
-</ul>
+<div class="sidebar-filter col-md-3 col-md-pull-9 hidden-xs hidden-sm">
+<?php
+
+	$this->load->view( $skin->path . 'views/front/_components/sidebar_filters' );
+
+?>
+</div>

@@ -7,19 +7,19 @@
 			echo anchor( $shop_url, app_setting( 'name', 'shop' ) );
 		echo '</li>';
 
-		if ( ! empty( $category ) ) :
+		if ( ! empty( $crumbs ) ) :
 
-			foreach( $category->breadcrumbs AS $crumb ) :
+			foreach( $crumbs AS $crumb ) :
 
 				echo '<li class="crumb">';
 
-					if( $crumb->id == $category->id ) :
+					if ( $crumb['id'] == $active_id ) :
 
-						echo $crumb->label;
+						echo $crumb['label'];
 
 					else :
 
-						echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
+						echo anchor( $crumb['url'], $crumb['label'] );
 
 					endif;
 

@@ -21,7 +21,20 @@
 
 			// --------------------------------------------------------------------------
 
-			$this->load->view( $skin->path . 'views/front/_components/browse_breadcrumb' );
+			//	Prepare the breadcrumbs
+			$_crumbs = array();
+
+			foreach( $category->breadcrumbs AS $crumb ) :
+
+				$_crumbs[] = array(
+					'id'	=> $crumb->id,
+					'label'	=> $crumb->label,
+					'url'	=> $this->shop_category_model->format_url( $crumb->slug )
+				);
+
+			endforeach;
+
+			$this->load->view( $skin->path . 'views/front/_components/browse_breadcrumb', array( 'crumbs' => $_crumbs, 'active_id' => $category->id ) );
 
 			// --------------------------------------------------------------------------
 

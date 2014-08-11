@@ -5,19 +5,8 @@
 	<div class="panel-body small">
 	<?php
 
-		//	Build the URL, if this s changed then we want to reset pagination
-		$_method	= $this->uri->rsegment( 2 ) && ! is_numeric( $this->uri->rsegment( 2 ) ) ? $this->uri->rsegment( 2 ) : 'index';
-		$_url		= $shop_url;
-
-		switch( $_method ) :
-
-			case 'category' :
-
-				$_url .= 'category/' . $category->slug;
-
-			break;
-
-		endswitch;
+		//	Build the URL, remove any pagination malarky
+		$_url = site_url( preg_replace( '#/\\d+$#', '', uri_string() ) );
 
 		echo form_open( $_url, 'method="GET"' );
 

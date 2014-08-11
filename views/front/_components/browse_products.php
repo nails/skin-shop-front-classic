@@ -42,7 +42,7 @@
 				echo '</div>';
 
 
-				if ( $_counter%$_products_per_row['lg'] == $_products_per_row['lg']-1 ) :
+				if ( $_counter % $_products_per_row['lg'] == $_products_per_row['lg'] - 1 ) :
 
 					$_row_open = FALSE;
 					echo '</div>';
@@ -68,7 +68,9 @@
 
 		else :
 
-			echo 'No products found';
+			echo '<p class="alert alert-warning">';
+				echo '<strong>Sorry,</strong> no products were found.';
+			echo '</p>';
 
 		endif;
 
