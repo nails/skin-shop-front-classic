@@ -180,128 +180,6 @@
 
 		// --------------------------------------------------------------------------
 
-		//	Products grid
-		.product-browser
-		{
-			.product-sort
-			{
-				position:relative;
-
-				.mask
-				{
-					display:none;
-					background:rgba(255, 255, 255, 0.75);
-					color:rgba(0, 0, 0, 0.5);
-					position:absolute;
-					top:0;
-					left:0;
-					bottom:0;
-					right:0;
-					text-align:center;
-					font-size:1.5em;
-					line-height:48px;
-				}
-
-				&.submitting
-				{
-					.mask
-					{
-						display:block;
-					}
-				}
-			}
-
-
-			.product-image
-			{
-				margin-bottom: 0.75em;
-				position: relative;
-
-				.ribbon
-				{
-					&.horizontal
-					{
-						position: absolute;
-						bottom:4px;
-						left:0px;
-						right:0px;
-						background:rgba(0,0,0,0.75);
-						color:#FFF;
-						padding:3px;
-						text-align:center;
-					}
-
-					&.corner
-					{
-						.ribbon-wrapper
-						{
-							width: 85px;
-							height: 88px;
-							overflow: hidden;
-							position: absolute;
-							top: -3px;
-							right: -3px;
-
-							.ribbon-text
-							{
-								font: bold 1em Sans-Serif;
-								color: #333;
-								text-align: center;
-								// text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
-								-webkit-transform: rotate(45deg);
-								-moz-transform:    rotate(45deg);
-								-ms-transform:     rotate(45deg);
-								-o-transform:      rotate(45deg);
-								position: relative;
-								padding: 7px 0;
-								left: -5px;
-								top: 15px;
-								width: 120px;
-								opacity:0.75;
-
-								@gradient_from: #000000;
-								@gradient_to: #292929;
-
-								background-color: @gradient_from;
-								background-image: -webkit-gradient(linear, left top, left bottom, from(@gradient_from), to(@gradient_to));
-								background-image: -webkit-linear-gradient(top, @gradient_from, @gradient_to);
-								background-image:    -moz-linear-gradient(top, @gradient_from, @gradient_to);
-								background-image:     -ms-linear-gradient(top, @gradient_from, @gradient_to);
-								background-image:      -o-linear-gradient(top, @gradient_from, @gradient_to);
-								color: #FFF;
-								-webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
-								-moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
-								box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
-
-								&:before,
-								&:after
-								{
-									content: "";
-									border-top:   3px solid @gradient_from;
-									border-left:  3px solid transparent;
-									border-right: 3px solid transparent;
-									position:absolute;
-									bottom: -3px;
-								}
-
-								&:before
-								{
-									left: 0;
-								}
-
-								&:after
-								{
-									right: 0;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// --------------------------------------------------------------------------
-
 		//	Brand listing pages
 		&.brand
 		{
@@ -509,6 +387,127 @@
 		.terms
 		{
 			margin: 11px 0 0 0;
+		}
+	}
+
+	// --------------------------------------------------------------------------
+
+	.product-browser
+	{
+		.product-sort
+		{
+			position:relative;
+
+			.mask
+			{
+				display:none;
+				background:rgba(255, 255, 255, 0.75);
+				color:rgba(0, 0, 0, 0.5);
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				text-align:center;
+				font-size:1.5em;
+				line-height:48px;
+			}
+
+			&.submitting
+			{
+				.mask
+				{
+					display:block;
+				}
+			}
+		}
+
+
+		.product-image
+		{
+			margin-bottom: 0.75em;
+			position: relative;
+
+			.ribbon
+			{
+				&.horizontal
+				{
+					position: absolute;
+					bottom:4px;
+					left:0px;
+					right:0px;
+					background:rgba(0,0,0,0.75);
+					color:#FFF;
+					padding:3px;
+					text-align:center;
+				}
+
+				&.corner
+				{
+					.ribbon-wrapper
+					{
+						width: 85px;
+						height: 88px;
+						overflow: hidden;
+						position: absolute;
+						top: -3px;
+						right: -3px;
+
+						.ribbon-text
+						{
+							font: bold 1em Sans-Serif;
+							color: #333;
+							text-align: center;
+							// text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+							-webkit-transform: rotate(45deg);
+							-moz-transform:    rotate(45deg);
+							-ms-transform:     rotate(45deg);
+							-o-transform:      rotate(45deg);
+							position: relative;
+							padding: 7px 0;
+							left: -5px;
+							top: 15px;
+							width: 120px;
+							opacity:0.75;
+
+							@gradient_from: #000000;
+							@gradient_to: #292929;
+
+							background-color: @gradient_from;
+							background-image: -webkit-gradient(linear, left top, left bottom, from(@gradient_from), to(@gradient_to));
+							background-image: -webkit-linear-gradient(top, @gradient_from, @gradient_to);
+							background-image:    -moz-linear-gradient(top, @gradient_from, @gradient_to);
+							background-image:     -ms-linear-gradient(top, @gradient_from, @gradient_to);
+							background-image:      -o-linear-gradient(top, @gradient_from, @gradient_to);
+							color: #FFF;
+							-webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+							-moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+							box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+
+							&:before,
+							&:after
+							{
+								content: "";
+								border-top:   3px solid @gradient_from;
+								border-left:  3px solid transparent;
+								border-right: 3px solid transparent;
+								position:absolute;
+								bottom: -3px;
+							}
+
+							&:before
+							{
+								left: 0;
+							}
+
+							&:after
+							{
+								right: 0;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

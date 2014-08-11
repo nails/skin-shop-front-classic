@@ -233,8 +233,10 @@
 				</div>
 				<hr />
 				<p class="text-center">
+					<?=anchor( $continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-primary"' )?>
 					<?=anchor( app_setting( 'url', 'shop' ) . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success"' )?>
 				</p>
+				<hr />
 				<?php
 
 			else :
@@ -251,4 +253,26 @@
 		?>
 		</div>
 	</div>
+	<?php if ( ! empty( $recently_viewed ) ) : ?>
+	<div class="row">
+		<div class="col-md-12">
+			<h4>Recently Viewed</h4>
+		</div>
+	</div>
+	<div class="row product-browser">
+	<?php
+
+		foreach( $recently_viewed AS $product ) :
+
+			echo '<div class="product col-sm-2">';
+
+				$this->load->view( $skin->path . 'views/front/_components/browse_products_single', array( 'product' => $product ) );
+
+			echo '</div>';
+
+		endforeach;
+
+	?>
+	</div>
+	<?php endif; ?>
 </div>
