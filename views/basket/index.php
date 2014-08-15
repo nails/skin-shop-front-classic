@@ -242,9 +242,11 @@
 			else :
 
 				?>
-				<p class="text-center">
-					Your basket is empty.
-				</p>
+				<div class="basket-empty well well-default">
+					<h3 class="text-center">
+						Your basket is empty
+					</h3>
+				</div>
 				<?php
 
 
