@@ -1,4 +1,5 @@
 <div class="nails-skin-shop-classic checkout">
+	<?=form_open( NULL, 'id="checkout-form"')?>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="row">
@@ -19,7 +20,7 @@
 
 					else :
 
-						echo '<p>Simply complete the forms below and then click or tap the "Confirm &amp; Pay" button.</p>';
+						echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Proceed to Payment" button.</p>';
 
 						if ( ! $this->user->is_logged_in() ) :
 
@@ -54,129 +55,220 @@
 			?>
 			</div>
 
-			<div class="progress">
-				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
-					Step 1 of 3
-				</div>
+			<div class="progress hidden" id="progress-bar">
+				<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
+			<hr id="progress-bar-hr" />
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" id="checkout-step-1">
 				<div class="panel-heading">
-					<h3 class="panel-title">Step 1 of 3: Contact &amp; Delivery Details</h3>
+					<h3 class="panel-title">
+						Step 1 of 2: Contact &amp; Delivery Details
+						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<div class="col-md-6">
 						<h4>Delivery address</h4>
 						<hr>
-						<form role="form">
-							<div class="form-group">
-								<label for="address_1">Address Line 1</label>
-								<input type="text" class="form-control" id="address_1" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_1">Address Line 2</label>
-								<input type="text" class="form-control" id="address_2" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_1">Address Line 2</label>
-								<input type="text" class="form-control" id="address_3" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_city">City</label>
-								<input type="text" class="form-control" id="city" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_region">Region</label>
-								<input type="text" class="form-control" id="region" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_postcode">Postal Code</label>
-								<input type="text" class="form-control" id="address_postcode" placeholder="">
-							</div>
-						</form>
+						<div role="form">
+						<?php
+
+							$_options	= array();
+							$_options[] = array(
+								'key'	=> 'delivery_address_line_1',
+								'label'	=> 'Address Line 1'
+							);
+							$_options[] = array(
+								'key'	=> 'delivery_address_line_2',
+								'label'	=> 'Address Line 2'
+							);
+							$_options[] = array(
+								'key'	=> 'delivery_address_town',
+								'label'	=> 'City/Town'
+							);
+							$_options[] = array(
+								'key'	=> 'delivery_address_state',
+								'label'	=> 'Region/State'
+							);
+							$_options[] = array(
+								'key'	=> 'delivery_address_postcode',
+								'label'	=> 'Postal Code'
+							);
+							$_options[] = array(
+								'key'	=> 'delivery_address_country',
+								'label'	=> 'Country'
+							);
+
+							foreach ( $_options AS $opt ) :
+
+								$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+								$_has_error			= $_error ? 'has-error' : '';
+								$_has_feedback		= $_error ? 'has-feedback' : '';
+								$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+								$_active_user		= active_user( $opt['key'] );
+								$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+								$_value				= set_value( $opt['key'], $_active_user );
+
+								echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+									echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+									echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+									echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+									echo $_error;
+								echo '</div>';
+
+							endforeach;
+
+						?>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<h4>Contact information</h4>
 						<hr>
-						<form role="form">
-							<div class="form-group">
-								<label for="first_name">First Name</label>
-								<input type="text" class="form-control" id="first_name" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="last_name">Surname</label>
-								<input type="text" class="form-control" id="last_name" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="email">Email address</label>
-								<input type="email" class="form-control" id="email" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="telephone">Telephone</label>
-								<input type="text" class="form-control" id="telephone" placeholder="">
-							</div>
-						</form>
+						<div role="form">
+						<?php
+
+							$_options	= array();
+							$_options[] = array(
+								'key'	=> 'first_name',
+								'label'	=> 'First Name'
+							);
+							$_options[] = array(
+								'key'	=> 'last_name',
+								'label'	=> 'Surname'
+							);
+							$_options[] = array(
+								'key'	=> 'email',
+								'label'	=> 'Email address'
+							);
+							$_options[] = array(
+								'key'	=> 'telephone',
+								'label'	=> 'Telephone'
+							);
+
+							foreach ( $_options AS $opt ) :
+
+								$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+								$_has_error			= $_error ? 'has-error' : '';
+								$_has_feedback		= $_error ? 'has-feedback' : '';
+								$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+								$_active_user		= active_user( $opt['key'] );
+								$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+								$_value				= set_value( $opt['key'], $_active_user );
+
+								echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+									echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+									echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+									echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+									echo $_error;
+								echo '</div>';
+
+							endforeach;
+
+						?>
+						</div>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<a href="#" class="btn btn-primary btn-success pull-right">Continue</a>
+				<div class="panel-footer hidden">
+					<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
 					<div class="clearfix"></div>
 				</div>
 			</div>
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" id="checkout-step-2">
 				<div class="panel-heading">
-					<h3 class="panel-title">Step 2 of 3: Billing Details</h3>
+					<h3 class="panel-title">
+						Step 2 of 2: Billing Details
+						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12">
 						<h4>Billing address</h4>
 						<hr>
-						<input type="checkbox" checked="checked"> My billing address is the same as my delivery address<br><br>
+						<label>
+							<input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
+							My billing address is the same as my delivery address
+						</label>
 
-						<hr class="billing-address">
-
-						<div class="row billing-address">
+						<div class="row billing-address" id="billing-address">
 							<div class="col-md-6">
-								<form role="form">
-									<div class="form-group">
-										<label for="address_1">Address Line 1</label>
-										<input type="text" class="form-control" id="address_1" placeholder="">
-									</div>
-									<div class="form-group">
-										<label for="address_1">Address Line 2</label>
-										<input type="text" class="form-control" id="address_2" placeholder="">
-									</div>
-									<div class="form-group">
-										<label for="address_1">Address Line 2</label>
-										<input type="text" class="form-control" id="address_3" placeholder="">
-									</div>
-									<div class="form-group">
-										<label for="address_city">City</label>
-										<input type="text" class="form-control" id="city" placeholder="">
-									</div>
-									<div class="form-group">
-										<label for="address_region">Region</label>
-										<input type="text" class="form-control" id="region" placeholder="">
-									</div>
-									<div class="form-group">
-										<label for="address_postcode">Postal Code</label>
-										<input type="text" class="form-control" id="address_postcode" placeholder="">
-									</div>
-								</form>
+								<hr />
+								<div role="form">
+								<?php
+
+									$_options	= array();
+									$_options[] = array(
+										'key'	=> 'billing_address_line_1',
+										'label'	=> 'Address Line 1'
+									);
+									$_options[] = array(
+										'key'	=> 'billing_address_line_2',
+										'label'	=> 'Address Line 2'
+									);
+									$_options[] = array(
+										'key'	=> 'billing_address_town',
+										'label'	=> 'City/Town'
+									);
+									$_options[] = array(
+										'key'	=> 'billing_address_state',
+										'label'	=> 'Region/State'
+									);
+									$_options[] = array(
+										'key'	=> 'billing_address_postcode',
+										'label'	=> 'Postal Code'
+									);
+									$_options[] = array(
+										'key'	=> 'billing_address_country',
+										'label'	=> 'Country'
+									);
+
+									foreach ( $_options AS $opt ) :
+
+										$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+										$_has_error			= $_error ? 'has-error' : '';
+										$_has_feedback		= $_error ? 'has-feedback' : '';
+										$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+										$_active_user		= active_user( $opt['key'] );
+										$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+										$_value				= set_value( $opt['key'], $_active_user );
+
+										echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+											echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+											echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+											echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+											echo $_error;
+										echo '</div>';
+
+									endforeach;
+
+								?>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
-					<a href="#" class="btn btn-primary btn-success pull-right">Continue</a>
+					<button class="btn action-back btn-primary btn-warning hidden">Back</button>
+					<button type="submit" class="btn action-continue btn-primary btn-primary pull-right">Place Order &amp; Proceed to Payment</button>
 					<div class="clearfix"></div>
 				</div>
 			</div>
 
-			<div class="panel panel-default">
+			<?php
+
+			//	Not being used now, but saving for later
+
+			/*
+			<div class="panel panel-default" id="checkout-step-3">
 				<div class="panel-heading">
-					<h3 class="panel-title">Step 3 of 3: Payment Details</h3>
+					<h3 class="panel-title">
+						Step 3 of 3: Payment Details
+						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12">
@@ -188,7 +280,7 @@
 						<hr>
 					</div>
 					<div class="col-md-6">
-						<form role="form">
+						<div role="form">
 							<div class="form-group">
 								<label for="address_1">Card Number</label>
 								<input type="text" class="form-control" id="card" placeholder="">
@@ -216,20 +308,24 @@
 									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="terms pull-left">
-						<input type="checkbox" checked="checked"> I have read and I agree to the <a href="#">terms and conditions</a>.
+						<input type="checkbox"> I have read and I agree to the <a href="#">terms and conditions</a>.
 					</div>
 					<a href="#" class="btn btn-primary btn-warning btn-lg pull-right">Confirm &amp; Pay</a>
 					<div class="clearfix"></div>
 				</div>
 			</div>
+			*/
+
+			?>
 
 
 		</div>
 
 	</div>
+	<?=form_close()?>
 </div>
