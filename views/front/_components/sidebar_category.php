@@ -20,6 +20,7 @@
 
 					foreach ( $category->breadcrumbs AS $crumb ) :
 
+
 						if ( $crumb->id == $category->id ) :
 
 							echo '<li class="level-' . $_indent . ' current">';
@@ -29,7 +30,7 @@
 						else :
 
 							echo '<li class="level-' . $_indent . '">';
-								echo anchor( $this->shop_category_model->format_url( $crumb->slug ),$crumb->label );
+								echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
 							echo '</li>';
 
 						endif;
@@ -39,6 +40,12 @@
 					endforeach;
 
 					foreach ( $category->children AS $crumb ) :
+
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $crumb->product_count ) ) :
+
+							continue;
+
+						endif;
 
 						echo '<li class="level-' . $_indent . '">';
 							echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
@@ -50,6 +57,12 @@
 					$_indent--;
 
 					foreach ( $category_siblings AS $crumb ) :
+
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $crumb->product_count ) ) :
+
+							continue;
+
+						endif;
 
 						echo '<li class="level-' . $_indent . '">';
 							echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );

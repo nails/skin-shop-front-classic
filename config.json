@@ -32,6 +32,12 @@
 			"type": "boolean"
 		},
 		{
+			"key": "hide_empty_categories",
+			"label": "Hide Empty Categories",
+			"tip": "Hides any categories which do not contain products.",
+			"type": "boolean"
+		},
+		{
 			"key": "browse_product_ribbon_mode",
 			"label": "Product Ribbon Mode",
 			"tip": "When multiple variations are available a ribbon is displayed; choose the style.",

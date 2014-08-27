@@ -11,6 +11,12 @@
 
 					foreach( $categories AS $category ) :
 
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $category->product_count ) ) :
+
+							continue;
+
+						endif;
+
 						echo '<li>';
 							echo anchor( $category->url, $category->label );
 						echo '</li>';
