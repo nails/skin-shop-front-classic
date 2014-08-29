@@ -38,6 +38,36 @@
 			"type": "boolean"
 		},
 		{
+			"key": "hide_empty_brands",
+			"label": "Hide Empty Brands",
+			"tip": "Hides any brands which do not contain products.",
+			"type": "boolean"
+		},
+		{
+			"key": "hide_empty_collections",
+			"label": "Hide Empty Collections",
+			"tip": "Hides any collections which do not contain products.",
+			"type": "boolean"
+		},
+		{
+			"key": "hide_empty_ranges",
+			"label": "Hide Empty Ranges",
+			"tip": "Hides any ranges which do not contain products.",
+			"type": "boolean"
+		},
+		{
+			"key": "hide_empty_sales",
+			"label": "Hide Empty Sales",
+			"tip": "Hides any sales which do not contain products.",
+			"type": "boolean"
+		},
+		{
+			"key": "hide_empty_tags",
+			"label": "Hide Empty Tags",
+			"tip": "Hides any tags which do not contain products.",
+			"type": "boolean"
+		},
+		{
 			"key": "browse_product_ribbon_mode",
 			"label": "Product Ribbon Mode",
 			"tip": "When multiple variations are available a ribbon is displayed; choose the style.",
