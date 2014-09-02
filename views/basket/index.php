@@ -155,7 +155,7 @@
 							</tr>
 
 							<!-- Item Total -->
-							<tr class="basket-total-item" <?=empty( $basket->totals->user->item ) ? 'style="display:none"' : '' ?>>
+							<tr class="basket-total-item">
 								<th colspan="2" class="text-right">
 									Sub Total
 								</th>
@@ -165,7 +165,7 @@
 							</tr>
 
 							<!-- Shipping Total -->
-							<tr class="basket-total-shipping" <?=empty( $basket->totals->user->shipping ) ? 'style="display:none"' : '' ?>>
+							<tr class="basket-total-shipping">
 								<th colspan="2" class="text-right">
 									Shipping
 								</th>
@@ -175,7 +175,7 @@
 							</tr>
 
 							<!-- Tax Total -->
-							<tr class="basket-total-tax" <?=empty( $basket->totals->user->tax ) ? 'style="display:none"' : '' ?>>
+							<tr class="basket-total-tax">
 								<th colspan="2" class="text-right">
 								<?php
 
@@ -201,7 +201,7 @@
 							</tr>
 
 							<!-- Grand Total -->
-							<tr class="basket-total-grand" <?=empty( $basket->totals->user->grand ) ? 'style="display:none"' : '' ?>>
+							<tr class="basket-total-grand">
 								<th colspan="2" class="text-right">
 									Total
 								</th>

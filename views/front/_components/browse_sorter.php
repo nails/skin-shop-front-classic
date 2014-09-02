@@ -36,10 +36,11 @@
 			echo '<div class="pull-left">';
 
 				$_options			= array();
-				$_options['10']		= '10';
-				$_options['25']		= '25';
-				$_options['50']		= '50';
+				$_options['20']		= '20';
+				$_options['40']		= '40';
+				$_options['80']		= '80';
 				$_options['100']	= '100';
+				$_options['all']	= 'All';
 
 				echo form_dropdown( 'per_page', $_options, $product_pagination->per_page );
 
