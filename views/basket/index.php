@@ -23,60 +23,82 @@
 								?>
 								<tr class="basket-item">
 									<td class="vertical-align-middle">
-										<?php
+									<?php
 
-											if ( ! empty( $item->variant->featured_img ) ) :
+										if ( ! empty( $item->variant->featured_img ) ) :
 
-												$_featured_img = $item->variant->featured_img;
+											$_featured_img = $item->variant->featured_img;
 
-											elseif ( ! empty( $item->product->featured_img ) ) :
+										elseif ( ! empty( $item->product->featured_img ) ) :
 
-												$_featured_img = $item->product->featured_img;
+											$_featured_img = $item->product->featured_img;
 
-											else :
+										else :
 
-												$_featured_img = FALSE;
+											$_featured_img = FALSE;
 
-											endif;
+										endif;
 
-											if ( $_featured_img ) :
+										if ( $_featured_img ) :
 
-												echo '<div class="col-xs-2 hidden-xs hidden-sm">';
+											echo '<div class="col-xs-2 hidden-xs hidden-sm">';
 
-													$_url = cdn_thumb( $_featured_img, 175, 175 );
-													echo img( array( 'src' => $_url, 'class' => 'img-thumbnail' ) );
+												$_url = cdn_thumb( $_featured_img, 175, 175 );
+												echo img( array( 'src' => $_url, 'class' => 'img-thumbnail' ) );
 
-												echo '</div>';
-												echo '<div class="col-sm-12 col-md-10">';
+											echo '</div>';
+											echo '<div class="col-sm-12 col-md-10">';
 
-											else :
+										else :
 
-												echo '<div class="col-sm-12">';
+											echo '<div class="col-sm-12">';
 
-											endif;
+										endif;
 
-											echo anchor( $item->product->url, '<strong>' . $item->product_label . '</strong>' );
+										// --------------------------------------------------------------------------
 
-											?>
-											<br />
-											<em><?=$item->variant_label?></em>
-											<br />
-											<small class="text-muted">
-												<em><?=$item->variant_sku?></em>
-											</small>
-											<?php
+										//	Label
+										echo anchor( $item->product->url, '<strong>' . $item->product_label . '</strong>' );
 
-												if ( $item->variant->shipping->collection_only ) :
+										if ( $item->variant_label !== $item->product_label ) :
 
-													echo '<div class="alert alert-warning">';
-														echo '<strong>Note:</strong> This item is collection only.';
-													echo '</div>';
+											echo '<br />';
+											echo '<em>' . $item->variant_label . '</em>';
 
-												endif;
+										endif;
 
-											?>
-										</div>
+										// --------------------------------------------------------------------------
 
+										//	SKU
+										if ( ! empty( $item->variant_sku ) ) :
+
+											echo '<br />';
+											echo '<small class="text-muted">';
+												echo '<em>' . $item->variant_sku . '</em>';
+											echo '</small>';
+
+										endif;
+
+										// --------------------------------------------------------------------------
+
+										//	Collection Only
+										if ( $item->variant->shipping->collection_only ) :
+
+											echo '<div class="alert alert-warning">';
+												echo '<strong>Note:</strong> This item is collection only.';
+											echo '</div>';
+
+										endif;
+
+										// --------------------------------------------------------------------------
+
+										if ( $_featured_img ) :
+
+											echo '</div>';
+
+										endif;
+
+									?>
 									</td>
 									<td class="vertical-align-middle text-center">
 										<div class="row">
