@@ -63,7 +63,24 @@
 							echo '<li>';
 								echo '<label class="clearfix">';
 
-									$_checked = ! empty( $_GET['f'][$filter->id] ) ? TRUE : FALSE;
+									if ( isset( $_GET['f'][$filter->id] ) && is_array( $_GET['f'][$filter->id] ) ) :
+
+										if ( array_search( $value->value, $_GET['f'][$filter->id] ) !== FALSE ) :
+
+											$_checked = TRUE;
+
+										else :
+
+											$_checked = FALSE;
+
+										endif;
+
+									else :
+
+										$_checked = FALSE;
+
+									endif;
+
 									echo form_checkbox( 'f[' . $filter->id . '][]', $value->value, $_checked );
 									echo '<span class="filter-text">' . $value->value . '</span>';
 									echo '<span class="filter-count pull-right">' . number_format( $value->product_count ) . '</span>';
