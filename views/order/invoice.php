@@ -146,6 +146,13 @@
 				border-top:1px solid #000;
 			}
 
+			#invoice-footer
+			{
+				padding-top:2em;
+				font-size:0.8em;
+				color:#555;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -309,6 +316,17 @@
 				</tfoot>
 
 			</table>
+			<?php
+
+				if ( app_setting( 'invoice_footer', 'shop' ) ) :
+
+					echo '<p id="invoice-footer">';
+						echo app_setting( 'invoice_footer', 'shop' );
+					echo '</p>';
+
+				endif;
+
+			?>
 		</div>
 	</body>
 </html>
