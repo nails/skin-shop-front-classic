@@ -275,23 +275,27 @@
 			// --------------------------------------------------------------------------
 
 			//	Collection only items?
-			foreach ( $product->variations AS $variant ) :
+			if ( ! $product->is_external ) :
 
-				if ( $variant->shipping->collection_only ) :
+				foreach ( $product->variations AS $variant ) :
 
-					echo '<p class="alert alert-warning">';
-						echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
-						if ( app_setting( 'warehouse_collection_delivery_enquiry', 'shop' ) ) :
+					if ( $variant->shipping->collection_only ) :
 
-							echo anchor( $shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
+						echo '<p class="alert alert-warning">';
+							echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
+							if ( app_setting( 'warehouse_collection_delivery_enquiry', 'shop' ) ) :
 
-						endif;
-					echo '</p>';
-					break;
+								echo anchor( $shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
 
-				endif;
+							endif;
+						echo '</p>';
+						break;
 
-			endforeach;
+					endif;
+
+				endforeach;
+
+			endif;
 
 			// --------------------------------------------------------------------------
 
@@ -312,225 +316,243 @@
 
 						echo '<tr>';
 
-							//	Calculate quantity ranges
-							$_max_per_order	= $product->type->max_per_order;
-							$_available		= $variant->quantity_available;
+							if ( $product->is_external ) :
 
-							//	Number of items to show if the quantity is "unlimited"
-							$_unlimited		= 10;
-
-							if ( is_null( $_available ) && empty( $_max_per_order ) ) :
-
-								//	Unlimited quantity available, with no maximum per order
-								$_range = array_combine( range( 1, $_unlimited ), range( 1, $_unlimited ) );
-
-							elseif ( is_null( $_available ) && ! empty( $_max_per_order ) ) :
-
-								//	Unlimited quantity available, with maximum per order
-								$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
-
-							elseif ( is_numeric( $_available ) && ! empty( $_max_per_order ) ) :
-
-								//	Limited quantity available, with maximum per order
-								if ( $_available >= $_max_per_order ) :
-
-									//	There are more available than the maximum per order
-									$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
-
-								else :
-
-									//	There are fewer available than the maximum per order
-									$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
-
-								endif;
-
-							elseif ( is_numeric( $_available ) && empty( $_max_per_order ) ) :
-
-								//	Limited quantity available, with no maximum per order
-								$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
+								echo '<td>';
+									echo '<p>' . $variant->label . '</p>';
+								echo '</td>';
+								echo '<td>';
+									echo '<p>' . $variant->price->price->user_formatted->value . '</p>';
+								echo '</td>';
+								echo '<td>';
+									echo '<p>';
+										echo anchor( $product->external_vendor_url, 'Go to Seller <b class="fa fa-external-link"></b>', 'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."' );
+									echo '</p>';
+								echo '</td>';
 
 							else :
 
-								//	Shouldn't happen.
-								$_range = array( 0 );
+								//	Calculate quantity ranges
+								$_max_per_order	= $product->type->max_per_order;
+								$_available		= $variant->quantity_available;
+
+								//	Number of items to show if the quantity is "unlimited"
+								$_unlimited		= 10;
+
+								if ( is_null( $_available ) && empty( $_max_per_order ) ) :
+
+									//	Unlimited quantity available, with no maximum per order
+									$_range = array_combine( range( 1, $_unlimited ), range( 1, $_unlimited ) );
+
+								elseif ( is_null( $_available ) && ! empty( $_max_per_order ) ) :
+
+									//	Unlimited quantity available, with maximum per order
+									$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
+
+								elseif ( is_numeric( $_available ) && ! empty( $_max_per_order ) ) :
+
+									//	Limited quantity available, with maximum per order
+									if ( $_available >= $_max_per_order ) :
+
+										//	There are more available than the maximum per order
+										$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
+
+									else :
+
+										//	There are fewer available than the maximum per order
+										$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
+
+									endif;
+
+								elseif ( is_numeric( $_available ) && empty( $_max_per_order ) ) :
+
+									//	Limited quantity available, with no maximum per order
+									$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
+
+								else :
+
+									//	Shouldn't happen.
+									$_range = array( 0 );
+
+								endif;
+
+								switch( $variant->stock_status ) :
+
+									case 'IN_STOCK' :
+
+										echo '<td>';
+											echo '<p>';
+
+												echo $variant->label;
+
+												if ( $variant->shipping->collection_only ) :
+
+													echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
+
+												endif;
+
+											echo '</p>';
+										echo '</td>';
+										echo '<td>';
+
+											if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+												//	Product prices include taxes
+												echo '<p>';
+													echo $variant->price->price->user_formatted->value;
+												echo '</p>';
+
+												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+
+													echo '<p class="text-muted">';
+														echo '<small>';
+															echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+														echo '</small>';
+													echo '</p>';
+
+												endif;
+
+											else :
+
+												echo '<p>';
+													echo $variant->price->price->user_formatted->value;
+												echo '</p>';
+
+												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+
+													echo '<p class="text-muted">';
+														echo '<small>';
+															echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+														echo '</small>';
+													echo '</p>';
+
+												endif;
+
+											endif;
+
+										echo '</td>';
+										echo '<td>';
+
+											if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
+
+												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
+													echo form_hidden( 'return', $product->url );
+													echo form_hidden( 'variant_id', $variant->id );
+													echo form_dropdown( 'quantity', $_range );
+													echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
+												echo form_close();
+
+											else :
+
+												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
+													echo form_hidden( 'return', $product->url );
+													echo form_hidden( 'variant_id', $variant->id );
+													echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
+													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
+												echo form_close();
+
+											endif;
+
+										echo '</td>';
+
+									break;
+
+									case 'TO_ORDER' :
+
+										echo '<td>';
+											echo '<p>' . $variant->label . '</p>';
+											echo '<p class="text-muted">';
+												echo '<small>';
+													echo '<em>Lead time: ' . $variant->lead_time . '</em>';
+												echo '</small>';
+											echo '</p>';
+										echo '</td>';
+										echo '<td>';
+
+											if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+
+												//	Product prices include taxes
+												echo '<p>';
+													echo $variant->price->price->user_formatted->value;
+												echo '</p>';
+
+												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+
+													echo '<p class="text-muted">';
+														echo '<small>';
+															echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+														echo '</small>';
+													echo '</p>';
+
+												endif;
+
+											else :
+
+												echo '<p>';
+													echo $variant->price->price->user_formatted->value;
+												echo '</p>';
+
+												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+
+													echo '<p class="text-muted">';
+														echo '<small>';
+															echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+														echo '</small>';
+													echo '</p>';
+
+												endif;
+
+											endif;
+
+										echo '</td>';
+										echo '<td>';
+
+											if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
+
+												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
+													echo form_hidden( 'return', $product->url );
+													echo form_hidden( 'variant_id', $variant->id );
+													echo form_dropdown( 'quantity', $_range );
+													echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
+												echo form_close();
+
+											else :
+
+												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
+													echo form_hidden( 'return', $product->url );
+													echo form_hidden( 'variant_id', $variant->id );
+													echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
+													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
+												echo form_close();
+
+											endif;
+
+										echo '</td>';
+
+									break;
+
+									case 'OUT_OF_STOCK' :
+
+										echo '<td>';
+											echo '<p><strike>' . $variant->label . '</strike></p>';
+										echo '</td>';
+										echo '<td>';
+											echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
+										echo '</td>';
+										echo '<td>';
+											echo '<p>';
+												echo '<em>Out of Stock!</em>';
+												echo anchor( $shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
+											echo '</p>';
+										echo '</td>';
+
+									break;
+
+								endswitch;
 
 							endif;
-
-							switch( $variant->stock_status ) :
-
-								case 'IN_STOCK' :
-
-									echo '<td>';
-										echo '<p>';
-
-											echo $variant->label;
-
-											if ( $variant->shipping->collection_only ) :
-
-												echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
-
-											endif;
-
-										echo '</p>';
-									echo '</td>';
-									echo '<td>';
-
-										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
-
-											//	Product prices include taxes
-											echo '<p>';
-												echo $variant->price->price->user_formatted->value;
-											echo '</p>';
-
-											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
-
-												echo '<p class="text-muted">';
-													echo '<small>';
-														echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-													echo '</small>';
-												echo '</p>';
-
-											endif;
-
-										else :
-
-											echo '<p>';
-												echo $variant->price->price->user_formatted->value;
-											echo '</p>';
-
-											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
-
-												echo '<p class="text-muted">';
-													echo '<small>';
-														echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-													echo '</small>';
-												echo '</p>';
-
-											endif;
-
-										endif;
-
-									echo '</td>';
-									echo '<td>';
-
-										if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
-
-											echo form_open( $shop_url . 'basket/add', 'method="GET"' );
-												echo form_hidden( 'return', $product->url );
-												echo form_hidden( 'variant_id', $variant->id );
-												echo form_dropdown( 'quantity', $_range );
-												echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
-											echo form_close();
-
-										else :
-
-											echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
-												echo form_hidden( 'return', $product->url );
-												echo form_hidden( 'variant_id', $variant->id );
-												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
-												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
-											echo form_close();
-
-										endif;
-
-									echo '</td>';
-
-								break;
-
-								case 'TO_ORDER' :
-
-									echo '<td>';
-										echo '<p>' . $variant->label . '</p>';
-										echo '<p class="text-muted">';
-											echo '<small>';
-												echo '<em>Lead time: ' . $variant->lead_time . '</em>';
-											echo '</small>';
-										echo '</p>';
-									echo '</td>';
-									echo '<td>';
-
-										if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
-
-											//	Product prices include taxes
-											echo '<p>';
-												echo $variant->price->price->user_formatted->value;
-											echo '</p>';
-
-											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
-
-												echo '<p class="text-muted">';
-													echo '<small>';
-														echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-													echo '</small>';
-												echo '</p>';
-
-											endif;
-
-										else :
-
-											echo '<p>';
-												echo $variant->price->price->user_formatted->value;
-											echo '</p>';
-
-											if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
-
-												echo '<p class="text-muted">';
-													echo '<small>';
-														echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-													echo '</small>';
-												echo '</p>';
-
-											endif;
-
-										endif;
-
-									echo '</td>';
-									echo '<td>';
-
-										if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
-
-											echo form_open( $shop_url . 'basket/add', 'method="GET"' );
-												echo form_hidden( 'return', $product->url );
-												echo form_hidden( 'variant_id', $variant->id );
-												echo form_dropdown( 'quantity', $_range );
-												echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
-											echo form_close();
-
-										else :
-
-											echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
-												echo form_hidden( 'return', $product->url );
-												echo form_hidden( 'variant_id', $variant->id );
-												echo $this->shop_basket_model->get_variant_quantity( $variant->id );
-												echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
-												echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
-											echo form_close();
-
-										endif;
-
-									echo '</td>';
-
-								break;
-
-								case 'OUT_OF_STOCK' :
-
-									echo '<td>';
-										echo '<p><strike>' . $variant->label . '</strike></p>';
-									echo '</td>';
-									echo '<td>';
-										echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
-									echo '</td>';
-									echo '<td>';
-										echo '<p>';
-											echo '<em>Out of Stock!</em>';
-											echo anchor( $shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
-										echo '</p>';
-									echo '</td>';
-
-								break;
-
-							endswitch;
 
 						echo '</tr>';
 

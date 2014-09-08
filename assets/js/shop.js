@@ -43,6 +43,7 @@ _nails_skin_shop_classic = function()
 		{
 			this._product_single_image_gallery_init();
 			this._product_single_image_zoomer_init();
+			this._popover_init();
 
 			$(window).on( 'resize', function()
 			{
@@ -718,6 +719,23 @@ _nails_skin_shop_classic = function()
 			}
 		}
 		return "";
+	};
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Initiates Bootstrap popovers
+	 * @return void
+	 */
+	this._popover_init = function()
+	{
+		if ( typeof( $.fn.popover ) === 'function' )
+		{
+			$('.shop-bs-popover').popover({
+				"trigger":"hover",
+				"placement":"left"
+			});
+		}
 	};
 
 	// --------------------------------------------------------------------------
