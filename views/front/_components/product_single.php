@@ -313,17 +313,16 @@
 						echo '<tr>';
 
 							//	Calculate quantity ranges
-							$_range					= array();
-							$_range['unlimited']	= array_combine(range(1,10),range(1,10));
-							$_range['limited']		= array_combine(range(1,10),range(1,10));
-
 							$_max_per_order	= $product->type->max_per_order;
 							$_available		= $variant->quantity_available;
+
+							//	Number of items to show if the quantity is "unlimited"
+							$_unlimited		= 10;
 
 							if ( is_null( $_available ) && empty( $_max_per_order ) ) :
 
 								//	Unlimited quantity available, with no maximum per order
-								$_range = array_combine( range( 1, 10 ), range( 1, 10 ) );
+								$_range = array_combine( range( 1, $_unlimited ), range( 1, $_unlimited ) );
 
 							elseif ( is_null( $_available ) && ! empty( $_max_per_order ) ) :
 
@@ -335,7 +334,7 @@
 								//	Limited quantity available, with maximum per order
 								if ( $_available >= $_max_per_order ) :
 
-									//	There are more available than the maximumper order
+									//	There are more available than the maximum per order
 									$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
 
 								else :
