@@ -314,7 +314,15 @@
 
 					foreach ( $product->variations AS $variant ) :
 
-						echo '<tr>';
+						if ( ! empty( $variant->gallery ) ) :
+
+ 							echo '<tr class="variant has-img" data-image="' . cdn_thumb( $variant->gallery[0], 800, 800 ) . '">';
+
+						else :
+
+							echo '<tr class="variant">';
+
+						endif;
 
 							if ( $product->is_external ) :
 

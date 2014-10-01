@@ -160,7 +160,7 @@ _nails_skin_shop_classic = function()
 		//	Current breakpoint
 		_breakpoint = this.get_current_bs_breakpoint();
 
-		//	Extra small and Small breakpoints
+		//	Extra Small and Small breakpoints
 		if ( _breakpoint === 'xs' || _breakpoint === 'sm' )
 		{
 			if ( this._product_single_image_gallery_inited_xssm )
@@ -310,12 +310,27 @@ _nails_skin_shop_classic = function()
 					return false;
 				});
 			});
+
+			// --------------------------------------------------------------------------
+
+			//	Variant hovers
+			$( 'table.table-variants tr.variant.has-img' ).on( 'mouseenter', function()
+			{
+				_this._product_single_image_variant_enter( $(this).data( 'image' ) );
+			});
 		} /* End breakpoint md/lg check */
 
 		// --------------------------------------------------------------------------
 
 		//	Listen for window size changes
 		//TODO
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._product_single_image_variant_enter = function( image )
+	{
+		$( 'a.featured-img-link img' ).attr( 'src', image );
 	};
 
 	// --------------------------------------------------------------------------
