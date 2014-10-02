@@ -245,7 +245,7 @@
 			<table class="styled products" style="width:100%;">
 				<thead>
 					<tr>
-						<th class="barcode">Barcode</th>
+						<th class="barcode">SKU</th>
 						<th class="quantity">Quantity</th>
 						<th class="product">Product</th>
 						<th class="unit-cost">Unit Cost</th>
@@ -264,7 +264,9 @@
 
 							if ( ! empty( $item->sku ) ) :
 
-								echo img( array( 'src' => 'barcode/' . $item->sku, 'class' => 'barcode' ) );
+								//	TODO: Get barcodes working
+								//echo img( array( 'src' => 'barcode/' . $item->sku, 'class' => 'barcode' ) );
+								echo $item->sku;
 
 							else :
 
