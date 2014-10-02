@@ -1,10 +1,16 @@
 {
 	"name": "nailsapp/skin-shop-classic",
-	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
+	"keywords":
+	[
+		"Nails",
+		"Twitter Bootstrap",
+		"Bootstrap"
+	],
 	"homepage": "http://nailsapp.co.uk/skins/shop/classic",
 	"description": "The Classic skin for the Nails Shop module",
-	"license":"MIT",
-	"authors": [
+	"license": "MIT",
+	"authors":
+	[
 		{
 			"name": "Pablo de la Pena",
 			"email": "p@shedcollective.org",
@@ -12,8 +18,11 @@
 			"role": "Developer"
 		}
 	],
-	"support": {
+	"support":
+	{
 		"email": "hello@shedcollective.org"
 	},
-	"require":{}
+	"require":
+	{
+	}
 }
