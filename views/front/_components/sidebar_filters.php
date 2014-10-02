@@ -82,7 +82,7 @@
 									endif;
 
 									echo form_checkbox( 'f[' . $filter->id . '][]', $value->value, $_checked );
-									echo '<span class="filter-text">' . $value->value . '</span>';
+									echo '<span class="filter-text">' . $value->label . '</span>';
 									echo '<span class="filter-count pull-right">' . number_format( $value->product_count ) . '</span>';
 
 								echo '</label>';
