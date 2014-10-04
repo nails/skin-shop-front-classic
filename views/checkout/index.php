@@ -98,7 +98,8 @@
 							);
 							$_options[] = array(
 								'key'	=> 'delivery_address_country',
-								'label'	=> 'Country'
+								'label'	=> 'Country',
+								'select' => $countries_flat
 							);
 
 							foreach ( $_options AS $opt ) :
@@ -113,7 +114,25 @@
 
 								echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
 									echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
-									echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+									if ( ! empty( $opt['select'] ) ) :
+
+										echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+										echo '<option value="">Please Choose...</option>';
+										foreach( $opt['select'] AS $value => $label ) :
+
+											$_selected = $value == $_value ? 'selected="selected"' : '';
+											echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
+
+										endforeach;
+										echo '</select>';
+
+									else :
+
+										echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+									endif;
+
 									echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
 									echo $_error;
 								echo '</div>';
@@ -222,7 +241,8 @@
 									);
 									$_options[] = array(
 										'key'	=> 'billing_address_country',
-										'label'	=> 'Country'
+										'label'	=> 'Country',
+										'select' => $countries_flat
 									);
 
 									foreach ( $_options AS $opt ) :
@@ -237,7 +257,25 @@
 
 										echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
 											echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
-											echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+											if ( ! empty( $opt['select'] ) ) :
+
+												echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+												echo '<option value="">Please Choose...</option>';
+												foreach( $opt['select'] AS $value => $label ) :
+
+													$_selected = $value == $_value ? 'selected="selected"' : '';
+													echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
+
+												endforeach;
+												echo '</select>';
+
+											else :
+
+												echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+											endif;
+
 											echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
 											echo $_error;
 										echo '</div>';

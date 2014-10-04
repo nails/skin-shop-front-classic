@@ -531,6 +531,25 @@ _nails_skin_shop_classic = function()
 
 		// --------------------------------------------------------------------------
 
+		//	Country
+		_value = $( 'select[name=delivery_address_country]' ).val();
+		_value = $.trim( _value );
+
+		//	Reset
+		$( 'select[name=delivery_address_country]' ).closest( '.form-group' ).removeClass( 'has-error has-feedback' );
+		$( 'select[name=delivery_address_country]' ).next( '.help-block' ).remove();
+		$( 'select[name=delivery_address_country]' ).siblings( '.form-control-feedback' ).addClass( 'hidden' );
+
+		if ( _value.replace( /\s/g, '' ).length === 0 )
+		{
+			_valid = false;
+			$( 'select[name=delivery_address_country]' ).closest( '.form-group' ).addClass( 'has-error has-feedback' );
+			$( 'select[name=delivery_address_country]' ).after( '<p class="help-block">This field is required.</p>' );
+			$( 'select[name=delivery_address_country]' ).siblings( '.form-control-feedback' ).removeClass( 'hidden' );
+		}
+
+		// --------------------------------------------------------------------------
+
 		//	First name
 		_value = $( 'input[name=first_name]' ).val();
 		_value = $.trim( _value );
@@ -687,6 +706,26 @@ _nails_skin_shop_classic = function()
 				$( 'input[name=billing_address_postcode]' ).after( '<p class="help-block">This field is required.</p>' );
 				$( 'input[name=billing_address_postcode]' ).siblings( '.form-control-feedback' ).removeClass( 'hidden' );
 			}
+
+			// --------------------------------------------------------------------------
+
+			//	Country
+			_value = $( 'select[name=billing_address_country]' ).val();
+			_value = $.trim( _value );
+
+			//	Reset
+			$( 'select[name=billing_address_country]' ).closest( '.form-group' ).removeClass( 'has-error has-feedback' );
+			$( 'select[name=billing_address_country]' ).next( '.help-block' ).remove();
+			$( 'select[name=billing_address_country]' ).siblings( '.form-control-feedback' ).addClass( 'hidden' );
+
+			if ( _value.replace( /\s/g, '' ).length === 0 )
+			{
+				_valid = false;
+				$( 'select[name=billing_address_country]' ).closest( '.form-group' ).addClass( 'has-error has-feedback' );
+				$( 'select[name=billing_address_country]' ).after( '<p class="help-block">This field is required.</p>' );
+				$( 'select[name=billing_address_country]' ).siblings( '.form-control-feedback' ).removeClass( 'hidden' );
+			}
+
 		}
 
 		// --------------------------------------------------------------------------
