@@ -17,12 +17,16 @@
 		"email": "hello@shedcollective.org"
 	},
 	"assets": [
+		"bower_components/skeuocard/styles/skeuocard.css",
 		"css/styles.css",
-		"bower_components/jquery-zoom/jquery.zoom.js",
+		"bower_components/jquery-zoom/jquery.zoom.min.js",
+		"bower_components/skeuocard/javascripts/skeuocard.js",
+		["nails.api.min.js","NAILS"],
 		"js/shop.min.js"
 	],
 	"js_inline": [
-			"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
+		"var _nails_api = new NAILS_API();",
+		"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
 	],
 	"settings": [
 		{
@@ -66,6 +70,18 @@
 			"label": "Hide Empty Tags",
 			"tip": "Hides any tags which do not contain products.",
 			"type": "boolean"
+		},
+		{
+			"key": "thankyou_title",
+			"label": "\"Thanks for your Order\" title",
+			"tip": "This title is shown on the order processing page when an order is confirmed as paid.",
+			"type": "text"
+		},
+		{
+			"key": "thankyou_text",
+			"label": "\"Thanks for your Order\" text",
+			"tip": "This text is shown on the order processing page when an order is confirmed as paid.",
+			"type": "wysiwyg"
 		},
 		{
 			"key": "browse_product_ribbon_mode",

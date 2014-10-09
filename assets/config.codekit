@@ -11,17 +11,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/img\/checkout-cards.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 2828,
-		"inputAbbreviatedPath": "\/img\/checkout-cards.png",
-		"outputAbbreviatedPath": "\/img\/checkout-cards.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
 	"\/img\/cover-default.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -266,7 +255,7 @@
 	"javascriptCreateSourceMap": 1,
 	"javascriptOutputStyle": 1,
 	"javascriptSyntaxCheckerStyle": 1,
-	"jsCheckerReservedNamesString": "",
+	"jsCheckerReservedNamesString": "Skeuocard,Stripe,_nails_api",
 	"jsHintFlags2": {
 		"asi": {
 			"active": 0,

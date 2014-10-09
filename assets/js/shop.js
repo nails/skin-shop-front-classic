@@ -7,6 +7,7 @@ _nails_skin_shop_classic = function()
 {
 	this._product_single_image_gallery_inited_xssm = false;
 	this._product_single_image_gallery_inited_mdlg = false;
+	this._checkout_skeuocard = null;
 
 	// --------------------------------------------------------------------------
 
@@ -56,6 +57,13 @@ _nails_skin_shop_classic = function()
 		if ( $( '.nails-skin-shop-classic.checkout' ).length > 0 )
 		{
 			this._checkout_init();
+		}
+
+		// --------------------------------------------------------------------------
+
+		if ( $( '.nails-skin-shop-classic.processing' ).length > 0 )
+		{
+			this._processing_init();
 		}
 	};
 
@@ -337,7 +345,6 @@ _nails_skin_shop_classic = function()
 
 	this._checkout_init = function()
 	{
-		return false;
 		//	Show hidden elements, as JS is enabled
 		$( '#checkout-step-1 .panel-footer' ).removeClass( 'hidden' );
 		$( '#checkout-step-2 .panel-body' ).hide();
@@ -363,6 +370,12 @@ _nails_skin_shop_classic = function()
 		{
 			$( '#billing-address' ).show();
 		}
+
+		//	Skeumorphic card entry
+		this._checkout_skeuocard = new Skeuocard( $( '#skeuocard' ),
+		{
+			dontFocus: true
+		});
 
 		// --------------------------------------------------------------------------
 
@@ -437,11 +450,11 @@ _nails_skin_shop_classic = function()
 		{
 			if ( $(this).prop( 'checked' ) )
 			{
-				$( '#billing-address' ).hide();
+				$( '#billing-address' ).slideUp();
 			}
 			else
 			{
-				$( '#billing-address' ).show();
+				$( '#billing-address' ).slideDown();
 			}
 		});
 
@@ -452,14 +465,79 @@ _nails_skin_shop_classic = function()
 		{
 			if ( _this._checkout_validate_step_3() )
 			{
+				$( '#progress-bar .progress-bar' ).text( 'Please wait while we get things started...' ).addClass( 'active' );
+				$( '#progress-bar' ).addClass( 'please-wait' );
 				$( '#checkout-step-3 .panel-body' ).slideUp();
-				$( '#checkout-step-3 .panel-footer' ).slideUp();
+				$( '#checkout-step-3 .panel-footer' ).slideUp( function()
+				{
+					// Different payment gateways handle things differently
+					switch ( $( 'input[name=payment_gateway]:checked' ).val().toLowerCase() )
+					{
+						case 'stripe' :
 
-				// --------------------------------------------------------------------------
+							var _publishableKey = window.NAILS.SHOP_Checkout_Stripe_publishableKey;
+							Stripe.setPublishableKey( _publishableKey );
 
-				//	Submit the form
-				$( '#progress-bar .progress-bar' ).text( 'Please Wait...' ).addClass( 'active' );
-				$( '#checkout-form' ).submit();
+							Stripe.card.createToken({
+								number:		$('#card-form input[name=cc_number]').val(),
+								cvc:		$('#card-form input[name=cc_cvc]').val(),
+								exp_month:	$('#card-form input[name=cc_exp_month]').val(),
+								exp_year:	$('#card-form input[name=cc_exp_year]').val()
+							}, function( status, response )
+							{
+								if (response.error)
+								{
+									// Handle the error
+									var _error = response.error.message;
+
+									//	Show the form again
+									$( '#checkout-step-3 .panel-body' ).slideUp();
+									$( '#checkout-step-3 .panel-footer' ).slideDown();
+
+									alert( _error );
+								}
+								else
+								{
+									// response contains id and card, which contains additional card details
+									var token = response.id;
+
+									// Insert the token into the form so it gets submitted to the server
+									var _hidden = $( '#stripe-hidden-token' );
+
+									if ( _hidden.length === 0 )
+									{
+										var _input = $( '<input>' )
+											.attr( 'type', 'hidden' )
+											.attr( 'name', 'stripe_token' )
+											.attr( 'id', 'stripe-hidden-token' );
+
+										$( '#card-form' ).prepend( _input );
+
+										_hidden = $( '#stripe-hidden-token' );
+									}
+
+									_hidden.val( token );
+
+									//	Null out the form fields (so Card details aren't passed to the server)
+									$('#card-form input[name=cc_number]').val( '' );
+									$('#card-form input[name=cc_cvc]').val( '' );
+									$('#card-form input[name=cc_exp_month]').val( '' );
+									$('#card-form input[name=cc_exp_year]').val( '' );
+
+									// and submit
+									$( '#checkout-form' ).submit();
+								}
+							});
+
+						break;
+						default:
+
+							//	Submit to server
+							$( '#checkout-form' ).submit();
+
+						break;
+					}
+				});
 
 			} else {
 
@@ -488,9 +566,34 @@ _nails_skin_shop_classic = function()
 
 		});
 
+		$( 'table.checkout-payment-gateway-layout input' ).on( 'click', function(e)
+		{
+			//	Allows for the inputs themselves to behave as expected when clicked
+			e.stopPropagation();
+
+			if ( $(this).data( 'is-redirect' ) )
+			{
+				$( '#card-form' ).removeClass( 'active' );
+			}
+			else
+			{
+				$( '#card-form' ).addClass( 'active' );
+			}
+		});
+
 		$( 'table.checkout-payment-gateway-layout' ).on( 'click', function()
 		{
 			$(this).find( 'input' ).prop( 'checked', true );
+
+			if ( $(this).data( 'is-redirect' ) )
+			{
+				$( '#card-form' ).removeClass( 'active' );
+			}
+			else
+			{
+				$( '#card-form' ).addClass( 'active' );
+			}
+
 			return false;
 		});
 	};
@@ -808,7 +911,28 @@ _nails_skin_shop_classic = function()
 
 		// --------------------------------------------------------------------------
 
-		console.log(_value);
+		//	Payment gateway set?
+		_value = $( 'input[name=payment_gateway]:checked' ).val();
+		_value = $.trim( _value );
+
+		//	Reset
+		$( '#payment-gateway-choose-error' ).addClass( 'hidden' );
+		$( '#payment-card-error' ).addClass( 'hidden' );
+
+		if ( _value.replace( /\s/g, '' ).length === 0 )
+		{
+			_valid = false;
+			$( '#payment-gateway-choose-error' ).removeClass( 'hidden' );
+		}
+		else
+		{
+			//	Card
+			if ( ! $( 'input[name="payment_gateway"]:checked' ).data( 'is-redirect' ) && ! this._checkout_skeuocard.isValid() )
+			{
+				_valid = false;
+				$( '#payment-card-error' ).removeClass( 'hidden' );
+			}
+		}
 
 		// --------------------------------------------------------------------------
 
@@ -827,6 +951,117 @@ _nails_skin_shop_classic = function()
 		// --------------------------------------------------------------------------
 
 		return _valid;
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._processing_init = function()
+	{
+		var _this = this;
+		setTimeout( function() { _this._processing_get_status(); }, 250 );
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._processing_get_status = function()
+	{
+		var _order_ref = $( '#processing-container' ).data( 'order-ref' );
+		var _this = this;
+
+		//	Send request to shop's API
+		var _call = {
+			'controller'	: 'shop',
+			'method'		: 'order/status',
+			'data'			:
+			{
+				'ref': _order_ref
+			},
+			success : function( data )
+			{
+				if ( data.status === 200 )
+				{
+					_this._processing_get_status_ok( data );
+				}
+				else
+				{
+					_this._processing_get_status_fail( data.error );
+				}
+			},
+			error: function( data )
+			{
+				var _data;
+
+				try
+				{
+					_data = JSON.parse( data.responseText );
+				}
+				catch( err )
+				{
+					_data = {};
+				}
+
+				var _error = typeof _data.error === 'string' ? _data.error : '';
+
+				_this._processing_get_status_fail( _error );
+			}
+		};
+
+		_nails_api.call( _call );
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._processing_get_status_ok = function( data )
+	{
+		var _this = this;
+
+		$( '.order-status-feedback' )
+			.removeClass( 'unpaid paid abandoned cancelled failed pending' )
+			.addClass( 'processing' );
+
+		switch( data.order.status )
+		{
+			case 'UNPAID' :
+
+				$( '#thankyou-text' ).slideUp();
+
+				if ( data.order.is_recent )
+				{
+					//	Keep trying
+					setTimeout( function() { _this._processing_get_status(); }, 750 );
+				}
+				else
+				{
+					$( '.order-status-feedback' ).removeClass( 'processing' );
+					$( '.order-status-feedback' ).addClass( data.order.status.toLowerCase() );
+				}
+
+			break;
+			case 'PAID' :
+
+				$( '.order-status-feedback' ).removeClass( 'processing' );
+				$( '.order-status-feedback' ).addClass( data.order.status.toLowerCase() );
+				$( '#thankyou-text' ).slideDown();
+
+			break;
+			case 'ABANDONED' :
+			case 'CANCELLED' :
+			case 'FAILED' :
+			case 'PENDING' :
+
+				$( '#thankyou-text' ).slideUp();
+				$( '.order-status-feedback' ).removeClass( 'processing' );
+				$( '.order-status-feedback' ).addClass( data.order.status.toLowerCase() );
+
+			break;
+		}
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._processing_get_status_fail = function( error )
+	{
+		alert(error);
 	};
 
 	// --------------------------------------------------------------------------

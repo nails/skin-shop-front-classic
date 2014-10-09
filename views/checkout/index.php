@@ -1,3 +1,6 @@
+<noscript>
+	 <style> .jsonly { display: none } </style>
+</noscript>
 <div class="nails-skin-shop-classic checkout">
 	<?=form_open( NULL, 'id="checkout-form"')?>
 	<div class="row">
@@ -55,379 +58,380 @@
 			?>
 			</div>
 
-			<div class="progress hidden" id="progress-bar">
-				<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-			</div>
-			<hr id="progress-bar-hr" />
+			<noscript>
+				<hr />
+				<p class="alert alert-warning">
+					<strong><b class="fa fa-exclamation-triangle"></b> Please enable JavaScript</strong>
+					<br />The checkout procedure requires that you enable JavaScript.
+				</p>
+			</noscript>
 
-			<div class="panel panel-default" id="checkout-step-1">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Step 1 of 3: Contact &amp; Delivery Details
-						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
-					</h3>
+			<div class="jsonly">
+
+				<div class="progress hidden" id="progress-bar">
+					<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
 				</div>
-				<div class="panel-body">
-					<div class="col-md-6">
-						<h4>Delivery address</h4>
-						<hr>
-						<div role="form">
-						<?php
 
-							$_options	= array();
-							$_options[] = array(
-								'key'	=> 'delivery_address_line_1',
-								'label'	=> 'Address Line 1'
-							);
-							$_options[] = array(
-								'key'	=> 'delivery_address_line_2',
-								'label'	=> 'Address Line 2'
-							);
-							$_options[] = array(
-								'key'	=> 'delivery_address_town',
-								'label'	=> 'City/Town'
-							);
-							$_options[] = array(
-								'key'	=> 'delivery_address_state',
-								'label'	=> 'Region/State'
-							);
-							$_options[] = array(
-								'key'	=> 'delivery_address_postcode',
-								'label'	=> 'Postal Code'
-							);
-							$_options[] = array(
-								'key'	=> 'delivery_address_country',
-								'label'	=> 'Country',
-								'select' => $countries_flat
-							);
+				<hr id="progress-bar-hr" />
 
-							foreach ( $_options AS $opt ) :
+				<div class="panel panel-default" id="checkout-step-1">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							Step 1 of 3: Contact &amp; Delivery Details
+							<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+							<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-6">
+							<h4>Delivery address</h4>
+							<hr>
+							<div role="form">
+							<?php
 
-								$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
-								$_has_error			= $_error ? 'has-error' : '';
-								$_has_feedback		= $_error ? 'has-feedback' : '';
-								$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
-								$_active_user		= active_user( $opt['key'] );
-								$_active_user		= is_string( $_active_user ) ? $_active_user : '';
-								$_value				= set_value( $opt['key'], $_active_user );
+								$_options	= array();
+								$_options[] = array(
+									'key'	=> 'delivery_address_line_1',
+									'label'	=> 'Address Line 1'
+								);
+								$_options[] = array(
+									'key'	=> 'delivery_address_line_2',
+									'label'	=> 'Address Line 2'
+								);
+								$_options[] = array(
+									'key'	=> 'delivery_address_town',
+									'label'	=> 'City/Town'
+								);
+								$_options[] = array(
+									'key'	=> 'delivery_address_state',
+									'label'	=> 'Region/State'
+								);
+								$_options[] = array(
+									'key'	=> 'delivery_address_postcode',
+									'label'	=> 'Postal Code'
+								);
+								$_options[] = array(
+									'key'	=> 'delivery_address_country',
+									'label'	=> 'Country',
+									'select' => $countries_flat
+								);
 
-								echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-									echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+								foreach ( $_options AS $opt ) :
 
-									if ( ! empty( $opt['select'] ) ) :
+									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+									$_has_error			= $_error ? 'has-error' : '';
+									$_has_feedback		= $_error ? 'has-feedback' : '';
+									$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+									$_active_user		= active_user( $opt['key'] );
+									$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+									$_value				= set_value( $opt['key'], $_active_user );
 
-										echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
-										echo '<option value="">Please Choose...</option>';
-										foreach( $opt['select'] AS $value => $label ) :
+									echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+										echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
 
-											$_selected = $value == $_value ? 'selected="selected"' : '';
-											echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
+										if ( ! empty( $opt['select'] ) ) :
+
+											echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+											echo '<option value="">Please Choose...</option>';
+											foreach( $opt['select'] AS $value => $label ) :
+
+												$_selected = $value == $_value ? 'selected="selected"' : '';
+												echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
+
+											endforeach;
+											echo '</select>';
+
+										else :
+
+											echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+										endif;
+
+										echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+										echo $_error;
+									echo '</div>';
+
+								endforeach;
+
+							?>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<h4>Contact information</h4>
+							<hr>
+							<div role="form">
+							<?php
+
+								$_options	= array();
+								$_options[] = array(
+									'key'	=> 'first_name',
+									'label'	=> 'First Name'
+								);
+								$_options[] = array(
+									'key'	=> 'last_name',
+									'label'	=> 'Surname'
+								);
+								$_options[] = array(
+									'key'	=> 'email',
+									'label'	=> 'Email address'
+								);
+								$_options[] = array(
+									'key'	=> 'telephone',
+									'label'	=> 'Telephone'
+								);
+
+								foreach ( $_options AS $opt ) :
+
+									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+									$_has_error			= $_error ? 'has-error' : '';
+									$_has_feedback		= $_error ? 'has-feedback' : '';
+									$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+									$_active_user		= active_user( $opt['key'] );
+									$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+									$_value				= set_value( $opt['key'], $_active_user );
+
+									echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+										echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+										echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+										echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+										echo $_error;
+									echo '</div>';
+
+								endforeach;
+
+							?>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer hidden">
+						<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+				<div class="panel panel-default" id="checkout-step-2">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							Step 2 of 3: Billing Details
+							<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+							<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-12">
+							<h4>Billing address</h4>
+							<hr>
+							<label>
+								<input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
+								My billing address is the same as my delivery address
+							</label>
+
+							<div class="row billing-address" id="billing-address">
+								<div class="col-md-6">
+									<hr />
+									<div role="form">
+									<?php
+
+										$_options	= array();
+										$_options[] = array(
+											'key'	=> 'billing_address_line_1',
+											'label'	=> 'Address Line 1'
+										);
+										$_options[] = array(
+											'key'	=> 'billing_address_line_2',
+											'label'	=> 'Address Line 2'
+										);
+										$_options[] = array(
+											'key'	=> 'billing_address_town',
+											'label'	=> 'City/Town'
+										);
+										$_options[] = array(
+											'key'	=> 'billing_address_state',
+											'label'	=> 'Region/State'
+										);
+										$_options[] = array(
+											'key'	=> 'billing_address_postcode',
+											'label'	=> 'Postal Code'
+										);
+										$_options[] = array(
+											'key'	=> 'billing_address_country',
+											'label'	=> 'Country',
+											'select' => $countries_flat
+										);
+
+										foreach ( $_options AS $opt ) :
+
+											$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
+											$_has_error			= $_error ? 'has-error' : '';
+											$_has_feedback		= $_error ? 'has-feedback' : '';
+											$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
+											$_active_user		= active_user( $opt['key'] );
+											$_active_user		= is_string( $_active_user ) ? $_active_user : '';
+											$_value				= set_value( $opt['key'], $_active_user );
+
+											echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
+												echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+
+												if ( ! empty( $opt['select'] ) ) :
+
+													echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+													echo '<option value="">Please Choose...</option>';
+													foreach( $opt['select'] AS $value => $label ) :
+
+														$_selected = $value == $_value ? 'selected="selected"' : '';
+														echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
+
+													endforeach;
+													echo '</select>';
+
+												else :
+
+													echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+
+												endif;
+
+												echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
+												echo $_error;
+											echo '</div>';
 
 										endforeach;
-										echo '</select>';
 
-									else :
-
-										echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
-
-									endif;
-
-									echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
-									echo $_error;
-								echo '</div>';
-
-							endforeach;
-
-						?>
+									?>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<h4>Contact information</h4>
-						<hr>
-						<div role="form">
-						<?php
-
-							$_options	= array();
-							$_options[] = array(
-								'key'	=> 'first_name',
-								'label'	=> 'First Name'
-							);
-							$_options[] = array(
-								'key'	=> 'last_name',
-								'label'	=> 'Surname'
-							);
-							$_options[] = array(
-								'key'	=> 'email',
-								'label'	=> 'Email address'
-							);
-							$_options[] = array(
-								'key'	=> 'telephone',
-								'label'	=> 'Telephone'
-							);
-
-							foreach ( $_options AS $opt ) :
-
-								$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
-								$_has_error			= $_error ? 'has-error' : '';
-								$_has_feedback		= $_error ? 'has-feedback' : '';
-								$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
-								$_active_user		= active_user( $opt['key'] );
-								$_active_user		= is_string( $_active_user ) ? $_active_user : '';
-								$_value				= set_value( $opt['key'], $_active_user );
-
-								echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-									echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
-									echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
-									echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
-									echo $_error;
-								echo '</div>';
-
-							endforeach;
-
-						?>
-						</div>
+					<div class="panel-footer">
+						<button class="btn action-back btn-primary btn-warning">Back</button>
+						<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
+						<div class="clearfix"></div>
 					</div>
+
 				</div>
-				<div class="panel-footer hidden">
-					<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
-					<div class="clearfix"></div>
-				</div>
-			</div>
 
-			<div class="panel panel-default" id="checkout-step-2">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Step 2 of 3: Billing Details
-						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
-					</h3>
-				</div>
-				<div class="panel-body">
-					<div class="col-md-12">
-						<h4>Billing address</h4>
-						<hr>
-						<label>
-							<input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
-							My billing address is the same as my delivery address
-						</label>
+				<div class="panel panel-default" id="checkout-step-3">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							Step 3 of 3: Payment Details
+							<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
+							<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-12">
+							<p>
+								Please choose how you wish to pay.
+							</p>
+							<hr />
+							<div class="row">
+								<div class="col-sm-5">
+									<p id="payment-gateway-choose-error" class="alert alert-danger hidden">
+										Please choose how you'd like to pay.
+									</p>
+									<ul class="list-unstyled">
+									<?php
 
-						<div class="row billing-address" id="billing-address">
-							<div class="col-md-6">
-								<hr />
-								<div role="form">
-								<?php
+										foreach( $payment_gateways AS $gateway ) :
 
-									$_options	= array();
-									$_options[] = array(
-										'key'	=> 'billing_address_line_1',
-										'label'	=> 'Address Line 1'
-									);
-									$_options[] = array(
-										'key'	=> 'billing_address_line_2',
-										'label'	=> 'Address Line 2'
-									);
-									$_options[] = array(
-										'key'	=> 'billing_address_town',
-										'label'	=> 'City/Town'
-									);
-									$_options[] = array(
-										'key'	=> 'billing_address_state',
-										'label'	=> 'Region/State'
-									);
-									$_options[] = array(
-										'key'	=> 'billing_address_postcode',
-										'label'	=> 'Postal Code'
-									);
-									$_options[] = array(
-										'key'	=> 'billing_address_country',
-										'label'	=> 'Country',
-										'select' => $countries_flat
-									);
+											//	Forgive me Gods of CSS.
+											?>
+											<li>
+												<table class="checkout-payment-gateway-layout" data-is-redirect="<?=(int) $gateway->is_redirect?>">
+													<tbody>
+														<tr>
+															<td class="pg-radio" rowspan="2">
+																<?=form_radio( 'payment_gateway', $gateway->slug, set_radio( 'payment_gateway', $gateway->slug ), 'data-is-redirect="' . (int) $gateway->is_redirect . '"' )?>
+															</td>
+															<td class="pg-img"><?=$gateway->img ? img( array( 'src' => cdn_serve( $gateway->img ), 'class' => 'img-responsive' ) ) : '' ?></td>
+														</tr>
+														<tr>
+															<td class="pg-label">
+																<?=$gateway->label?>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+											<?php
 
-									foreach ( $_options AS $opt ) :
+										endforeach;
 
-										$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
-										$_has_error			= $_error ? 'has-error' : '';
-										$_has_feedback		= $_error ? 'has-feedback' : '';
-										$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
-										$_active_user		= active_user( $opt['key'] );
-										$_active_user		= is_string( $_active_user ) ? $_active_user : '';
-										$_value				= set_value( $opt['key'], $_active_user );
+									?>
+									</ul>
+								</div>
+								<div class="col-sm-7">
+									<?php
 
-										echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-											echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+										$_chosen_gateway = set_value( 'payment_gateway' );
 
-											if ( ! empty( $opt['select'] ) ) :
+										if ( $_chosen_gateway ) :
 
-												echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
-												echo '<option value="">Please Choose...</option>';
-												foreach( $opt['select'] AS $value => $label ) :
+											if ( $this->shop_payment_gateway_model->is_redirect( $_chosen_gateway ) ) :
 
-													$_selected = $value == $_value ? 'selected="selected"' : '';
-													echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
-
-												endforeach;
-												echo '</select>';
+												$_active = '';
 
 											else :
 
-												echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+												$_active = 'active';
 
 											endif;
 
-											echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
-											echo $_error;
-										echo '</div>';
 
-									endforeach;
+										else :
 
-								?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<button class="btn action-back btn-primary btn-warning">Back</button>
-					<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
-					<div class="clearfix"></div>
-				</div>
+											$_active = '';
 
-			</div>
+										endif;
 
-			<div class="panel panel-default" id="checkout-step-3">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Step 3 of 3: Payment Details
-						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
-					</h3>
-				</div>
-				<div class="panel-body">
-					<div class="col-md-12">
-						<p>
-							Please choose how you wish to pay.
-						</p>
-						<hr />
-						<div class="row">
-							<div class="col-md-5">
-								<ul class="list-unstyled">
-								<?php
-
-									foreach( $payment_gateways AS $gateway ) :
-
-										//	Forgive me Gods of CSS.
-										?>
-										<li>
-											<table class="checkout-payment-gateway-layout">
-												<tbody>
-													<tr>
-														<td class="pg-radio" rowspan="2">
-															<?=form_radio( 'payment_gateway', $gateway->slug, set_radio( 'payment_gateway', $gateway->slug ) )?>
-														</td>
-														<td class="pg-img"><?=$gateway->img ? img( array( 'src' => cdn_serve( $gateway->img ), 'class' => 'img-responsive' ) ) : '' ?></td>
-													</tr>
-													<tr>
-														<td class="pg-label">
-															<?=$gateway->label?>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</li>
+									?>
+									<div id="card-form" class="clearfix <?=$_active?>">
+										<p id="payment-card-error" class="alert alert-danger hidden">
+											Please verify all details are correct.
+										</p>
 										<?php
 
-									endforeach;
+											echo ! empty( $payment_error ) ? '<p class="alert alert-danger">' . $payment_error . '</p>' : '';
 
-								?>
-								</ul>
-							</div>
-							<div class="col-md-7">
-								<div id="card-form">
-									<div class="well well-sm">
-										<div class="row">
-											<div class="col-xs-12">
-												<?=form_input( 'card_number', set_value( 'card_number' ), 'class="form-control card-number" placeholder="Card Number"' )?>
-											</div>
+										?>
+										<div class="credit-card-input no-js" id="skeuocard">
+											<label for="cc_type">Card Type</label>
+											<select name="cc_type">
+												<option value="">...</option>
+												<option value="visa">Visa</option>
+												<option value="discover">Discover</option>
+												<option value="mastercard">MasterCard</option>
+												<option value="maestro">Maestro</option>
+												<option value="jcb">JCB</option>
+												<option value="unionpay">China UnionPay</option>
+												<option value="amex">American Express</option>
+												<option value="dinersclubintl">Diners Club</option>
+											</select>
+											<label for="cc_number">Card Number</label>
+											<input type="text" name="cc_number" id="cc_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19">
+											<label for="cc_exp_month">Expiration Month</label>
+											<input type="text" name="cc_exp_month" id="cc_exp_month" placeholder="00">
+											<label for="cc_exp_year">Expiration Year</label>
+											<input type="text" name="cc_exp_year" id="cc_exp_year" placeholder="00">
+											<label for="cc_name">Cardholder's Name</label>
+											<input type="text" name="cc_name" id="cc_name" placeholder="John Doe">
+											<label for="cc_cvc">Card Validation Code</label>
+											<input type="text" name="cc_cvc" id="cc_cvc" placeholder="123" maxlength="3" size="3">
 										</div>
-										<div class="row">
-											<div class="col-xs-9">
-												<?php
-
-													$_options = array(
-														'Expire Month',
-														'01 - Jan',
-														'02 - Feb',
-														'03 - Mar',
-														'04 - Apr',
-														'05 - May',
-														'06 - Jun',
-														'07 - Jul',
-														'08 - Aug',
-														'09 - Sep',
-														'10 - Oct',
-														'11 - Nov',
-														'12 - Dec'
-													);
-
-													echo form_dropdown( 'card_expire_month', $_options, set_value( 'card_expire_month' ), 'class="form-control card-expire-month" placeholder="Expires (MM/YY)"' );
-
-													$_options = range( date( 'Y' ), date( 'Y' ) + 10 );
-													$_options = array( 'Expire Year' ) + array_combine( $_options, $_options );
-
-													echo form_dropdown( 'card_expire_year', $_options, set_value( 'card_expire_year' ), 'class="form-control card-expire-year" placeholder="Expires (MM/YY)"' );
-
-												?>
-											</div>
-											<div class="col-xs-3">
-												<?=form_input( 'card_number', set_value( 'card_number' ), 'class="form-control card-cvc" placeholder="CVC"' )?>
-											</div>
-										</div>
+										<div class="mask"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 hidden" id="checkout-card-form">
-						<div role="form">
-							<div class="form-group">
-								<label for="address_1">Card Number</label>
-								<input type="text" class="form-control" id="card" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="address_1">Expiry Date</label>
-								<div class="row">
-									<div class="col-md-6">
-										<select class="form-control" id="expiry-month">
-											<option value="">Jan (01)</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<select class="form-control" id="expiry-month">
-											<option value="">2014</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="address_1">Security Code</label>
-								<div class="row">
-									<div class="col-md-6">
-										<input type="text" class="form-control" id="address_3" placeholder="">
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="panel-footer">
+						<button class="btn action-back btn-primary btn-warning">Back</button>
+						<button type="submit" class="btn action-continue btn-primary btn-primary pull-right">Place Order &amp; Pay</button>
+						<div class="clearfix"></div>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<button class="btn action-back btn-primary btn-warning">Back</button>
-					<button type="submit" class="btn action-continue btn-primary btn-primary pull-right">Place Order &amp; Pay</button>
-					<div class="clearfix"></div>
-				</div>
+
 			</div>
-
 
 		</div>
 
