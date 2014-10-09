@@ -337,11 +337,12 @@ _nails_skin_shop_classic = function()
 
 	this._checkout_init = function()
 	{
+		return false;
 		//	Show hidden elements, as JS is enabled
 		$( '#checkout-step-1 .panel-footer' ).removeClass( 'hidden' );
 		$( '#checkout-step-2 .panel-body' ).hide();
 		$( '#checkout-step-2 .panel-footer' ).hide();
-		$( '#checkout-step-2 .panel-footer a.action-back' ).removeClass( 'hidden' );
+		$( '#checkout-step-2 .panel-footer' ).removeClass( 'hidden' );
 		$( '#checkout-step-3 .panel-body' ).hide();
 		$( '#checkout-step-3 .panel-footer' ).hide();
 		$( '#progress-bar' ).removeClass( 'hidden' );
@@ -389,6 +390,8 @@ _nails_skin_shop_classic = function()
 			return false;
 		});
 
+		// --------------------------------------------------------------------------
+
 		//	Step 2
 		$( '#checkout-step-2 .panel-footer .action-continue' ).on( 'click', function()
 		{
@@ -397,11 +400,10 @@ _nails_skin_shop_classic = function()
 				$( '#checkout-step-2 .panel-body' ).slideUp();
 				$( '#checkout-step-2 .panel-footer' ).slideUp();
 
-				// --------------------------------------------------------------------------
+				$( '#checkout-step-3 .panel-body' ).slideDown();
+				$( '#checkout-step-3 .panel-footer' ).slideDown();
 
-				//	Submit the form
-				$( '#progress-bar .progress-bar' ).text( 'Please Wait...' ).addClass( 'active' );
-				$( '#checkout-form' ).submit();
+				_this._checkout_set_progress( 3 );
 
 			} else {
 
@@ -442,6 +444,55 @@ _nails_skin_shop_classic = function()
 				$( '#billing-address' ).show();
 			}
 		});
+
+		// --------------------------------------------------------------------------
+
+		//	Step 3
+		$( '#checkout-step-3 .panel-footer .action-continue' ).on( 'click', function()
+		{
+			if ( _this._checkout_validate_step_3() )
+			{
+				$( '#checkout-step-3 .panel-body' ).slideUp();
+				$( '#checkout-step-3 .panel-footer' ).slideUp();
+
+				// --------------------------------------------------------------------------
+
+				//	Submit the form
+				$( '#progress-bar .progress-bar' ).text( 'Please Wait...' ).addClass( 'active' );
+				$( '#checkout-form' ).submit();
+
+			} else {
+
+			}
+
+			return false;
+		});
+
+		$( '#checkout-step-3 .panel-footer .action-back' ).on( 'click', function()
+		{
+			$( '#checkout-step-2 .panel-body' ).slideDown();
+			$( '#checkout-step-2 .panel-footer' ).slideDown();
+
+			$( '#checkout-step-3 .panel-body' ).slideUp();
+			$( '#checkout-step-3 .panel-footer' ).slideUp();
+
+			$( '#checkout-step-2 .panel-heading .validate-ok' ).addClass( 'hidden' );
+			$( '#checkout-step-2 .panel-heading .validate-fail' ).addClass( 'hidden' );
+
+			$( '#checkout-step-3 .panel-heading .validate-ok' ).addClass( 'hidden' );
+			$( '#checkout-step-3 .panel-heading .validate-fail' ).addClass( 'hidden' );
+
+			_this._checkout_set_progress( 2 );
+
+			return false;
+
+		});
+
+		$( 'table.checkout-payment-gateway-layout' ).on( 'click', function()
+		{
+			$(this).find( 'input' ).prop( 'checked', true );
+			return false;
+		});
 	};
 
 	// --------------------------------------------------------------------------
@@ -453,7 +504,7 @@ _nails_skin_shop_classic = function()
 	 */
 	this._checkout_set_progress = function( step )
 	{
-		var _steps	= 2;
+		var _steps	= 3;
 		var _text	= 'Step ' + step + ' of ' + _steps;
 		var _width	= 100/_steps*step;
 
@@ -744,6 +795,39 @@ _nails_skin_shop_classic = function()
 		return _valid;
 	};
 
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Validates the data entered in step 3
+	 * @return {boolean}
+	 */
+	this._checkout_validate_step_3 = function()
+	{
+		var _valid	= true;
+		var _value	= '';
+
+		// --------------------------------------------------------------------------
+
+		console.log(_value);
+
+		// --------------------------------------------------------------------------
+
+		//	Visual feedback
+		if ( _valid === true )
+		{
+			$( '#checkout-step-3 .panel-heading .validate-ok' ).removeClass( 'hidden' );
+			$( '#checkout-step-3 .panel-heading .validate-fail' ).addClass( 'hidden' );
+		}
+		else
+		{
+			$( '#checkout-step-3 .panel-heading .validate-ok' ).addClass( 'hidden' );
+			$( '#checkout-step-3 .panel-heading .validate-fail' ).removeClass( 'hidden' );
+		}
+
+		// --------------------------------------------------------------------------
+
+		return _valid;
+	};
 
 	// --------------------------------------------------------------------------
 

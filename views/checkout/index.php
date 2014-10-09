@@ -63,7 +63,7 @@
 			<div class="panel panel-default" id="checkout-step-1">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						Step 1 of 2: Contact &amp; Delivery Details
+						Step 1 of 3: Contact &amp; Delivery Details
 						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
 						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
 					</h3>
@@ -198,7 +198,7 @@
 			<div class="panel panel-default" id="checkout-step-2">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						Step 2 of 2: Billing Details
+						Step 2 of 3: Billing Details
 						<b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
 						<b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
 					</h3>
@@ -289,17 +289,13 @@
 					</div>
 				</div>
 				<div class="panel-footer">
-					<button class="btn action-back btn-primary btn-warning hidden">Back</button>
-					<button type="submit" class="btn action-continue btn-primary btn-primary pull-right">Place Order &amp; Proceed to Payment</button>
+					<button class="btn action-back btn-primary btn-warning">Back</button>
+					<button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
 					<div class="clearfix"></div>
 				</div>
+
 			</div>
 
-			<?php
-
-			//	Not being used now, but saving for later
-
-			/*
 			<div class="panel panel-default" id="checkout-step-3">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -310,14 +306,90 @@
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12">
-						<h4>Payment method<img src="<?=$skin->url . 'assets/img/checkout-cards.png'?>" class="pull-right"></h4>
 						<p>
-							We accept all major credit and debit cards. Payments are collected safely and securely via WorldPay. We do not directly store any card
-							details on our website.
+							Please choose how you wish to pay.
 						</p>
-						<hr>
+						<hr />
+						<div class="row">
+							<div class="col-md-5">
+								<ul class="list-unstyled">
+								<?php
+
+									foreach( $payment_gateways AS $gateway ) :
+
+										//	Forgive me Gods of CSS.
+										?>
+										<li>
+											<table class="checkout-payment-gateway-layout">
+												<tbody>
+													<tr>
+														<td class="pg-radio" rowspan="2">
+															<?=form_radio( 'payment_gateway', $gateway->slug, set_radio( 'payment_gateway', $gateway->slug ) )?>
+														</td>
+														<td class="pg-img"><?=$gateway->img ? img( array( 'src' => cdn_serve( $gateway->img ), 'class' => 'img-responsive' ) ) : '' ?></td>
+													</tr>
+													<tr>
+														<td class="pg-label">
+															<?=$gateway->label?>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</li>
+										<?php
+
+									endforeach;
+
+								?>
+								</ul>
+							</div>
+							<div class="col-md-7">
+								<div id="card-form">
+									<div class="well well-sm">
+										<div class="row">
+											<div class="col-xs-12">
+												<?=form_input( 'card_number', set_value( 'card_number' ), 'class="form-control card-number" placeholder="Card Number"' )?>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-9">
+												<?php
+
+													$_options = array(
+														'Expire Month',
+														'01 - Jan',
+														'02 - Feb',
+														'03 - Mar',
+														'04 - Apr',
+														'05 - May',
+														'06 - Jun',
+														'07 - Jul',
+														'08 - Aug',
+														'09 - Sep',
+														'10 - Oct',
+														'11 - Nov',
+														'12 - Dec'
+													);
+
+													echo form_dropdown( 'card_expire_month', $_options, set_value( 'card_expire_month' ), 'class="form-control card-expire-month" placeholder="Expires (MM/YY)"' );
+
+													$_options = range( date( 'Y' ), date( 'Y' ) + 10 );
+													$_options = array( 'Expire Year' ) + array_combine( $_options, $_options );
+
+													echo form_dropdown( 'card_expire_year', $_options, set_value( 'card_expire_year' ), 'class="form-control card-expire-year" placeholder="Expires (MM/YY)"' );
+
+												?>
+											</div>
+											<div class="col-xs-3">
+												<?=form_input( 'card_number', set_value( 'card_number' ), 'class="form-control card-cvc" placeholder="CVC"' )?>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 hidden" id="checkout-card-form">
 						<div role="form">
 							<div class="form-group">
 								<label for="address_1">Card Number</label>
@@ -350,16 +422,11 @@
 					</div>
 				</div>
 				<div class="panel-footer">
-					<div class="terms pull-left">
-						<input type="checkbox"> I have read and I agree to the <a href="#">terms and conditions</a>.
-					</div>
-					<a href="#" class="btn btn-primary btn-warning btn-lg pull-right">Confirm &amp; Pay</a>
+					<button class="btn action-back btn-primary btn-warning">Back</button>
+					<button type="submit" class="btn action-continue btn-primary btn-primary pull-right">Place Order &amp; Pay</button>
 					<div class="clearfix"></div>
 				</div>
 			</div>
-			*/
-
-			?>
 
 
 		</div>

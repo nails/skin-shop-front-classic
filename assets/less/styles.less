@@ -477,6 +477,68 @@
 		{
 			margin: 11px 0 0 0;
 		}
+
+		table.checkout-payment-gateway-layout
+		{
+			border: 1px solid #EFEFEF;
+			background: lighten( #EFEFEF, 5%);
+			margin-bottom: 0.5em;
+			border-radius: 3px;
+			display: inline-block;
+			cursor: pointer;
+
+			td
+			{
+				padding: 0.5em;
+
+				&.pg-radio
+				{
+					padding-left: 1em;
+				}
+
+				&.pg-img
+				{
+					padding-bottom: 0;
+					padding-right: 1em;
+				}
+
+				&.pg-label
+				{
+					font-weight: bold;
+					padding-right: 1em;
+				}
+
+				&:empty
+				{
+					padding: 0;
+				}
+			}
+		}
+
+		#card-form
+		{
+			.card-number
+			{
+				margin-bottom: 1em;
+			}
+
+			.card-expire-month,
+			.card-expire-year
+			{
+				display: inline-block;
+				width: 48%;
+			}
+
+			.card-expire-year
+			{
+				float: right;
+			}
+
+			.card-cvc
+			{
+
+			}
+		}
 	}
 
 	// --------------------------------------------------------------------------
