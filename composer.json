@@ -1,13 +1,13 @@
 {
-	"name": "nailsapp/skin-shop-classic",
+	"name": "nailsapp/shop-skin-front-classic",
 	"keywords":
 	[
 		"Nails",
 		"Twitter Bootstrap",
 		"Bootstrap"
 	],
-	"homepage": "http://nailsapp.co.uk/skins/shop/classic",
-	"description": "The Classic skin for the Nails Shop module",
+	"homepage": "http://nailsapp.co.uk/shop/skin/front/classic",
+	"description": "The Classic \"Front of House\" skin for the Nails Shop module",
 	"license": "MIT",
 	"authors":
 	[

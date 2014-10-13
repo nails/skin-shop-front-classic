@@ -22,7 +22,7 @@
 
 			// --------------------------------------------------------------------------
 
-			$this->load->view( $skin->path . 'views/front/_components/browse_sorter' );
+			$this->load->view( $skin_front->path . 'views/front/_components/browse_sorter' );
 
 			// --------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@
 
 				echo '<div class="product ' . implode( ' ', $_class ) . '">';
 
-					$this->load->view( $skin->path . 'views/front/_components/browse_products_single', array( 'product' => $product ) );
+					$this->load->view( $skin_front->path . 'views/front/_components/browse_products_single', array( 'product' => $product ) );
 
 				echo '</div>';
 
@@ -63,8 +63,8 @@
 			// --------------------------------------------------------------------------
 
 			echo '<hr />';
-			$this->load->view( $skin->path . 'views/front/_components/browse_sorter' );
-			$this->load->view( $skin->path . 'views/front/_components/browse_pagination' );
+			$this->load->view( $skin_front->path . 'views/front/_components/browse_sorter' );
+			$this->load->view( $skin_front->path . 'views/front/_components/browse_pagination' );
 
 		else :
 

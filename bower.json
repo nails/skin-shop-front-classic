@@ -1,11 +1,11 @@
 {
-  "name": "nailsapp/skin-shop-classic",
+  "name": "nailsapp/shop-shop-front-classic",
   "version": "0.1.0",
-  "homepage": "http://nailsapp.co.uk/skins/shop/classic",
+  "homepage": "http://nailsapp.co.uk/shop/skin/front/classic",
   "authors": [
     "Pablo de la Pena <p@shedcollective.org>"
   ],
-  "description": "This is a bare bones shop skin levereging Twitter Bootstrap.",
+  "description": "This is a bare bones \"Front of House\" shop skin levereging Twitter Bootstrap.",
   "keywords": [
     "Nails",
     "Twitter",

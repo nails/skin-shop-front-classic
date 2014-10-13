@@ -1,4 +1,4 @@
-<div class="nails-skin-shop-classic browse tag">
+<div class="nails-shop-skin-classic browse tag">
 	<div class="row">
 		<div class="col-md-12">
 			<h1><?=$shop_name . ': Tags'?></h1>
@@ -13,7 +13,7 @@
 					'url'	=> $shop_url . 'tag'
 				);
 
-				$this->load->view( $skin->path . 'views/front/_components/browse_breadcrumb', array( 'crumbs' => $_crumbs, 'active_id' => NULL ) );
+				$this->load->view( $skin_front->path . 'views/front/_components/browse_breadcrumb', array( 'crumbs' => $_crumbs, 'active_id' => NULL ) );
 
 			?>
 		</div>

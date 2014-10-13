@@ -6,7 +6,7 @@
 
 	else :
 
-		$_url = $skin->url . 'assets/img/product-no-image.png';
+		$_url = $skin_front->url . 'assets/img/product-no-image.png';
 
 	endif;
 
@@ -15,7 +15,7 @@
 
 		if ( count( $product->variations ) > 1 ) :
 
-			if ( app_setting( 'browse_product_ribbon_mode', 'shop-' . $skin->slug ) == 'corner' ) :
+			if ( app_setting( 'browse_product_ribbon_mode', 'shop-' . $skin_front->slug ) == 'corner' ) :
 
 				echo '<div class="ribbon corner">';
 					echo '<div class="ribbon-wrapper">';

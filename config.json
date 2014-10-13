@@ -1,8 +1,8 @@
 {
 	"name": "Classic",
-	"description": "This is a bare bones shop skin levereging Twitter Bootstrap.",
+	"description": "This is a bare bones \"Front of House\" shop skin levereging Twitter Bootstrap.",
 	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
-	"homepage": "http://nailsapp.co.uk/skins/shop/classic",
+	"homepage": "http://nailsapp.co.uk/shop/skin/front/classic",
 	"license":"MIT",
 	"version": "0.1.0",
 	"authors": [
@@ -26,7 +26,7 @@
 	],
 	"js_inline": [
 		"var _nails_api = new NAILS_API();",
-		"var _nails_skin_shop_classic = new _nails_skin_shop_classic();"
+		"var _nails_skin_shop_front_classic = new _nails_skin_shop_front_classic();"
 	],
 	"settings": [
 		{
@@ -70,18 +70,6 @@
 			"label": "Hide Empty Tags",
 			"tip": "Hides any tags which do not contain products.",
 			"type": "boolean"
-		},
-		{
-			"key": "thankyou_title",
-			"label": "\"Thanks for your Order\" title",
-			"tip": "This title is shown on the order processing page when an order is confirmed as paid.",
-			"type": "text"
-		},
-		{
-			"key": "thankyou_text",
-			"label": "\"Thanks for your Order\" text",
-			"tip": "This text is shown on the order processing page when an order is confirmed as paid.",
-			"type": "wysiwyg"
 		},
 		{
 			"key": "browse_product_ribbon_mode",

@@ -11,7 +11,7 @@
 
 					foreach( $categories AS $category ) :
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $category->product_count ) ) :
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $category->product_count ) ) :
 
 							continue;
 
@@ -36,7 +36,7 @@
 
 					foreach( $brands AS $brand ) :
 
-						if ( app_setting( 'hide_empty_brands', 'shop-' . $skin->slug ) && empty( $brand->product_count ) ) :
+						if ( app_setting( 'hide_empty_brands', 'shop-' . $skin_front->slug ) && empty( $brand->product_count ) ) :
 
 							continue;
 
@@ -61,7 +61,7 @@
 
 					foreach( $ranges AS $range ) :
 
-						if ( app_setting( 'hide_empty_ranges', 'shop-' . $skin->slug ) && empty( $range->product_count ) ) :
+						if ( app_setting( 'hide_empty_ranges', 'shop-' . $skin_front->slug ) && empty( $range->product_count ) ) :
 
 							continue;
 
@@ -86,7 +86,7 @@
 
 					foreach( $collections AS $collection ) :
 
-						if ( app_setting( 'hide_empty_collections', 'shop-' . $skin->slug ) && empty( $collection->product_count ) ) :
+						if ( app_setting( 'hide_empty_collections', 'shop-' . $skin_front->slug ) && empty( $collection->product_count ) ) :
 
 							continue;
 

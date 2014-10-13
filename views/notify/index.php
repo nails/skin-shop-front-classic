@@ -24,7 +24,7 @@
 
 			else :
 
-				$_url = $skin->url . 'assets/img/product-no-image.png';
+				$_url = $skin_front->url . 'assets/img/product-no-image.png';
 
 			endif;
 

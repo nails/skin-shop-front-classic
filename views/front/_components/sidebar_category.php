@@ -41,7 +41,7 @@
 
 					foreach ( $category->children AS $crumb ) :
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $crumb->product_count ) ) :
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $crumb->product_count ) ) :
 
 							continue;
 
@@ -58,7 +58,7 @@
 
 					foreach ( $category_siblings AS $crumb ) :
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin->slug ) && empty( $crumb->product_count ) ) :
+						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $crumb->product_count ) ) :
 
 							continue;
 
@@ -77,7 +77,7 @@
 	</ul>
 	<?php
 
-		$this->load->view( $skin->path . 'views/front/_components/sidebar_filters' );
+		$this->load->view( $skin_front->path . 'views/front/_components/sidebar_filters' );
 
 	?>
 </div>

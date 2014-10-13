@@ -36,7 +36,7 @@
 				'url'	=> $sale->url
 			);
 
-			$this->load->view( $skin->path . 'views/front/_components/browse_breadcrumb', array( 'crumbs' => $_crumbs, 'active_id' => $sale->id ) );
+			$this->load->view( $skin_front->path . 'views/front/_components/browse_breadcrumb', array( 'crumbs' => $_crumbs, 'active_id' => $sale->id ) );
 
 			// --------------------------------------------------------------------------
 
