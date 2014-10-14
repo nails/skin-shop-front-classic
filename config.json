@@ -18,9 +18,11 @@
 	},
 	"assets": [
 		"bower_components/skeuocard/styles/skeuocard.css",
+		"bower_components/social-likes/social-likes_classic.css",
 		"css/styles.css",
 		"bower_components/jquery-zoom/jquery.zoom.min.js",
 		"bower_components/skeuocard/javascripts/skeuocard.js",
+		"bower_components/social-likes/social-likes.min.js",
 		["nails.api.min.js","NAILS"],
 		"js/shop.min.js"
 	],
@@ -86,6 +88,80 @@
 					"label": "Corner"
 				}
 			]
+		},
+		{
+			"key": "social_facebook_enabled",
+			"label": "Social: Enable Facebook",
+			"type": "boolean"
+		},
+		{
+			"key": "social_twitter_enabled",
+			"label": "Social: Enable Twitter",
+			"type": "boolean"
+		},
+		{
+			"key": "social_twitter_via",
+			"label": "Social: Twitter via",
+			"tip": "Specify which Twitter handle, if any, to set as the \"via\" when sharing with Twitter.",
+			"placeholder": "The Twitter handle to set as the \"via\" when sharing with Twitter"
+		},
+		{
+			"key": "social_googleplus_enabled",
+			"label": "Social: Enable Google+",
+			"type": "boolean"
+		},
+		{
+			"key": "social_pinterest_enabled",
+			"label": "Social: Enable Pinterest",
+			"type": "boolean"
+		},
+		{
+			"key": "social_skin",
+			"label": "Social: Skin",
+			"type": "dropdown",
+			"options": [
+				{
+					"value": "CLASSIC",
+					"label": "Classic"
+				},
+				{
+					"value": "FLAT",
+					"label": "Flat"
+				},
+				{
+					"value": "BIRMAN",
+					"label": "Birnam"
+				}
+			]
+		},
+		{
+			"key": "social_layout",
+			"label": "Social: Layout",
+			"type": "dropdown",
+			"options": [
+				{
+					"value": "HORIZONTAL",
+					"label": "Horizontal"
+				},
+				{
+					"value": "VERTICAL",
+					"label": "Veritcal"
+				},
+				{
+					"value": "SINGLE",
+					"label": "Single Button"
+				}
+			]
+		},
+		{
+			"key": "social_layout_single_text",
+			"label": "Social: Single button text",
+			"placeholder": "The button text when the \"single Button\" layout is used"
+		},
+		{
+			"key": "social_counters",
+			"label": "Social: Show Counters",
+			"type": "boolean"
 		}
 	]
 }

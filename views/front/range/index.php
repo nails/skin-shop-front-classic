@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-classic browse range">
+<div class="nails-shop-skin-front-classic browse range">
 	<div class="row">
 		<div class="col-md-12">
 			<h1><?=$shop_name . ': Ranges'?></h1>

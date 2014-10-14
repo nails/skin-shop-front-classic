@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-classic browse sale">
+<div class="nails-shop-skin-front-classic browse sale">
 	<div class="row">
 		<div class="col-md-12">
 			<h1><?=$shop_name . ': Sales'?></h1>

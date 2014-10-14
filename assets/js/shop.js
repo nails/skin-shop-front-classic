@@ -23,7 +23,7 @@ _nails_skin_shop_front_classic = function()
 		// --------------------------------------------------------------------------
 
 		//	Product sorter
-		if ( $( '.nails-shop-skin-classic .product-sort' ).length > 0 )
+		if ( $( '.nails-shop-skin-front-classic .product-sort' ).length > 0 )
 		{
 			this._browse_sorter_init();
 		}
@@ -31,7 +31,7 @@ _nails_skin_shop_front_classic = function()
 		// --------------------------------------------------------------------------
 
 		//	Sidebar filter
-		if ( $( '.nails-shop-skin-classic .sidebar-filter' ).length > 0 )
+		if ( $( '.nails-shop-skin-front-classic .sidebar-filter' ).length > 0 )
 		{
 			this._browse_sidebar_filter_init();
 		}
@@ -39,7 +39,7 @@ _nails_skin_shop_front_classic = function()
 		// --------------------------------------------------------------------------
 
 		//	Single product page malarky
-		if ( $( '.nails-shop-skin-classic.browse.product.single' ).length > 0 )
+		if ( $( '.nails-shop-skin-front-classic.browse.product.single' ).length > 0 )
 		{
 			this._product_single_image_gallery_init();
 			this._product_single_image_zoomer_init();
@@ -53,7 +53,7 @@ _nails_skin_shop_front_classic = function()
 
 		// --------------------------------------------------------------------------
 
-		if ( $( '.nails-shop-skin-classic.processing' ).length > 0 )
+		if ( $( '.nails-shop-skin-front-classic.processing' ).length > 0 )
 		{
 			this._processing_init();
 		}
@@ -67,7 +67,7 @@ _nails_skin_shop_front_classic = function()
 	 */
 	this._browse_sidebar_filter_init = function()
 	{
-		$( '.nails-shop-skin-classic .sidebar-filter .filter-list' ).hover(
+		$( '.nails-shop-skin-front-classic .sidebar-filter .filter-list' ).hover(
 			function()
 			{
 				var _orig_max_height = parseInt( $(this).css( 'max-height' ), 10 );
@@ -94,9 +94,9 @@ _nails_skin_shop_front_classic = function()
 	 */
 	this._browse_sorter_init = function()
 	{
-		$( '.nails-shop-skin-classic .product-sort select' ).on( 'change', function()
+		$( '.nails-shop-skin-front-classic .product-sort select' ).on( 'change', function()
 		{
-			$( '.nails-shop-skin-classic .product-sort' ).addClass( 'submitting' );
+			$( '.nails-shop-skin-front-classic .product-sort' ).addClass( 'submitting' );
 			$(this).closest( 'form' ).submit();
 		});
 	};

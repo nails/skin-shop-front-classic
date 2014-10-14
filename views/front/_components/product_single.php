@@ -274,6 +274,45 @@
 
 			// --------------------------------------------------------------------------
 
+			//	Social Likes
+
+			//	Defaults
+			$_layout		= '';
+			$_single_title	= app_setting( 'social_layout_single_text', 'shop-' . $skin_front->slug ) ? app_setting( 'social_layout_single_text', 'shop-' . $skin_front->slug ) : 'Share';
+			$_counters		= app_setting( 'social_counters', 'shop-' . $skin_front->slug ) ? 'data-zeroes="yes"' : 'data-counters="no"';
+			$_twitter_via	= app_setting( 'social_twitter_via', 'shop-' . $skin_front->slug ) ? app_setting( 'social_twitter_via', 'shop-' . $skin_front->slug ) : '';
+
+			//	Layout
+			switch( app_setting( 'social_layout', 'shop-' . $skin_front->slug ) ) :
+
+				case 'HORIZONTAL' :	$_layout = '';						break;
+				case 'VERTICAL' :	$_layout = 'social-likes_vertical';	break;
+				case 'SINGLE' :		$_layout = 'social-likes_single';	break;
+
+			endswitch;
+
+			$_enabled = array();
+			$_enabled[]	= app_setting( 'social_facebook_enabled', 'shop-' . $skin_front->slug ) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
+			$_enabled[] = app_setting( 'social_twitter_enabled', 'shop-' . $skin_front->slug ) ? '<div class="twitter" data-via="' . $_twitter_via . '" title="Share link on Twitter">Twitter</div>' : '';
+			$_enabled[] = app_setting( 'social_googleplus_enabled', 'shop-' . $skin_front->slug ) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
+			$_enabled[] = app_setting( 'social_pinterest_enabled', 'shop-' . $skin_front->slug ) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve( $product->featured_img ) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+
+			$_enabled = array_filter( $_enabled );
+
+			if ( $_enabled ) :
+
+				echo '<div class="product-social social-likes ' . $_layout . '" ' . $_counters . ' data-url="' . $product->url . '" data-single-title="' . $_single_title . '" data-title="' . $product->label . '">';
+				foreach ( $_enabled AS $enabled ) :
+
+					echo $enabled;
+
+				endforeach;
+				echo '</div>';
+
+			endif;
+
+			// --------------------------------------------------------------------------
+
 			//	Collection only items?
 			if ( ! $product->is_external ) :
 
