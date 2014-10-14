@@ -21,13 +21,10 @@
 		"bower_components/social-likes/social-likes_classic.css",
 		"css/styles.css",
 		"bower_components/jquery-zoom/jquery.zoom.min.js",
-		"bower_components/skeuocard/javascripts/skeuocard.js",
 		"bower_components/social-likes/social-likes.min.js",
-		["nails.api.min.js","NAILS"],
 		"js/shop.min.js"
 	],
 	"js_inline": [
-		"var _nails_api = new NAILS_API();",
 		"var _nails_skin_shop_front_classic = new _nails_skin_shop_front_classic();"
 	],
 	"settings": [
@@ -156,7 +153,7 @@
 		{
 			"key": "social_layout_single_text",
 			"label": "Social: Single button text",
-			"placeholder": "The button text when the \"single Button\" layout is used"
+			"placeholder": "The button text when the \"Single Button\" layout is used"
 		},
 		{
 			"key": "social_counters",

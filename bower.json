@@ -23,7 +23,6 @@
   ],
   "dependencies": {
      "jquery-zoom": "~1.7.0",
-     "skeuocard": "~1.1.0",
      "social-likes": "~3.0.4"
   }
 }
