@@ -480,7 +480,7 @@
 										echo '</td>';
 										echo '<td>';
 
-											if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
+											if ( ! $this->shop_basket_model->isInBasket( $variant->id ) ) :
 
 												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
 													echo form_hidden( 'return', $product->url );
@@ -494,7 +494,7 @@
 												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
 													echo form_hidden( 'return', $product->url );
 													echo form_hidden( 'variant_id', $variant->id );
-													echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+													echo $this->shop_basket_model->getVariantQuantity( $variant->id );
 													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 												echo form_close();
@@ -555,7 +555,7 @@
 										echo '</td>';
 										echo '<td>';
 
-											if ( ! $this->shop_basket_model->is_in_basket( $variant->id ) ) :
+											if ( ! $this->shop_basket_model->isInBasket( $variant->id ) ) :
 
 												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
 													echo form_hidden( 'return', $product->url );
@@ -569,7 +569,7 @@
 												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
 													echo form_hidden( 'return', $product->url );
 													echo form_hidden( 'variant_id', $variant->id );
-													echo $this->shop_basket_model->get_variant_quantity( $variant->id );
+													echo $this->shop_basket_model->getVariantQuantity( $variant->id );
 													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
 													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
 												echo form_close();
@@ -642,7 +642,7 @@
 			// --------------------------------------------------------------------------
 
 			/**
-			 * TODOMarkup here because I think it looks OK and can be used when product
+			 * TODO Markup here because I think it looks OK and can be used when product
 			 * reviews get implemented (if they get implemented)
 			 */
 			if ( ! empty( $product_reviews ) ) :
