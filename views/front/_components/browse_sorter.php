@@ -1,71 +1,73 @@
 <div class="product-sort panel panel-default">
-	<div class="mask">
-		<span class="fa fa-refresh fa-spin"></span>
-	</div>
-	<div class="panel-body small">
-	<?php
+    <div class="mask">
+        <span class="fa fa-refresh fa-spin"></span>
+    </div>
+    <div class="panel-body small">
+    <?php
 
-		//	Build the URL, remove any pagination malarky
-		$_url = site_url( preg_replace( '#/\\d+$#', '', uri_string() ) );
+        //  Build the URL, remove any pagination malarky
+        $url = site_url(preg_replace('#/\\d+$#', '', uri_string()));
 
-		echo form_open( $_url, 'method="GET"' );
+        echo form_open($url, 'method="GET"');
 
-			//	Maintain any other get params
-			$_get = array_filter( (array) $this->input->get() );
+            //  Maintain any other get params
+            $get = array_filter((array) $this->input->get());
 
-			unset( $_get['per_page'] );
-			unset( $_get['sort'] );
+            unset($get['per_page']);
+            unset($get['sort']);
 
-			$_get = http_build_query( $_get );
-			$_get = explode( '&', $_get );
+            $get = http_build_query($get);
+            $get = explode('&', $get);
 
-			foreach ( $_get AS $param ) :
+            foreach ($get as $param) {
 
-				$_param = explode( '=', $param );
+                $param = explode('=', $param);
 
-				if ( count( $_param ) == 2 ) :
+                if (count($param) == 2) {
 
-					echo form_hidden( urldecode( $_param[0] ), urldecode( $_param[1] ) );
+                    echo form_hidden(urldecode($param[0]), urldecode($param[1]));
+                }
+            }
 
-				endif;
+            // --------------------------------------------------------------------------
 
-			endforeach;
+            echo '<div class="pull-left">';
 
-			// --------------------------------------------------------------------------
+                $options        = array();
+                $options['20']  = '20';
+                $options['40']  = '40';
+                $options['80']  = '80';
+                $options['100'] = '100';
+                $options['all'] = 'All';
 
-			echo '<div class="pull-left">';
+                $selected = $product_pagination->per_page == '10000' ? 'all' : $product_pagination->per_page;
 
-				$_options			= array();
-				$_options['20']		= '20';
-				$_options['40']		= '40';
-				$_options['80']		= '80';
-				$_options['100']	= '100';
-				$_options['all']	= 'All';
+                echo form_dropdown('per_page', $options, $selected);
 
-				echo form_dropdown( 'per_page', $_options, $product_pagination->per_page );
+            echo '&nbsp;&nbsp;per page';
+            echo '</div>';
 
-			echo '&nbsp;&nbsp;per page';
-			echo '</div>';
+            echo '<div class="pull-right">';
 
-			echo '<div class="pull-right">';
-				echo 'Sort by&nbsp;&nbsp;';
+                echo 'Sort by&nbsp;&nbsp;';
 
-				$_options					= array();
-				$_options['recent']			= 'Recently Added';
-				$_options['price-low-high']	= 'Price: Low to High';
-				$_options['price-high-low']	= 'Price: High to Low';
-				$_options['a-z']			= 'A to Z';
+                $options                    = array();
+                $options['recent']          = 'Recently Added';
+                $options['price-low-high']  = 'Price: Low to High';
+                $options['price-high-low']  = 'Price: High to Low';
+                $options['a-z']         = 'A to Z';
 
-				echo form_dropdown( 'sort', $_options, $product_sort->sort );
+                echo form_dropdown('sort', $options, $product_sort->sort);
 
-				echo '<noscript>';
-					echo '<button type="submit" class="btn btn-primary btn-xs" style="margin-left:0.5em">';
-						echo 'Apply';
-					echo '</button>';
-				echo '</noscript>';
-			echo '</div>';
+                echo '<noscript>';
+                    echo '<button type="submit" class="btn btn-primary btn-xs" style="margin-left:0.5em">';
+                        echo 'Apply';
+                    echo '</button>';
+                echo '</noscript>';
 
-		echo form_close();
-	?>
-	</div>
+            echo '</div>';
+
+        echo form_close();
+    ?>
+    </div>
 </div>

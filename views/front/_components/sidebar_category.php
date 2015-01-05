@@ -1,83 +1,86 @@
 <div class="sidebar-filter col-md-3 col-md-pull-9 hidden-xs hidden-sm">
-	<ul class="list-group">
-		<li class="list-group-item">
-			<?php
+    <?php
 
-				echo '<p>';
-					echo '<strong>Categories</strong>';
-				echo '</p>';
+        $this->load->view($skin_front->path . 'views/front/_components/sidebar_searchform');
 
-				$_indent = 0;
+    ?>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <?php
 
-				echo '<ul class="list-unstyled rsaquo-list category-nav">';
+                echo '<p>';
+                    echo '<strong>Categories</strong>';
+                echo '</p>';
 
-					//	Home first
-					echo '<li class="level-' . $_indent . '">';
-						echo anchor( $shop_url, app_setting( 'name', 'shop' ) );
-					echo '</li>';
+                $indent = 0;
 
-					$_indent++;
+                echo '<ul class="list-unstyled rsaquo-list category-nav">';
 
-					foreach ( $category->breadcrumbs AS $crumb ) :
+                    //  Home first
+                    echo '<li class="level-' . $indent . '">';
+                        echo anchor($shop_url, app_setting('name', 'shop'));
+                    echo '</li>';
+
+                    $indent++;
+
+                    foreach ($category->breadcrumbs as $crumb) {
 
 
-						if ( $crumb->id == $category->id ) :
+                        if ($crumb->id == $category->id) {
 
-							echo '<li class="level-' . $_indent . ' current">';
-								echo '<strong>' . $crumb->label . '</strong>';
-							echo '</li>';
+                            echo '<li class="level-' . $indent . ' current">';
+                                echo '<strong>' . $crumb->label . '</strong>';
+                            echo '</li>';
 
-						else :
+                        } else {
 
-							echo '<li class="level-' . $_indent . '">';
-								echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
-							echo '</li>';
+                            echo '<li class="level-' . $indent . '">';
+                                echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
+                            echo '</li>';
+                        }
 
-						endif;
+                        $indent++;
+                    }
 
-						$_indent++;
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
 
-					endforeach;
+                    foreach ($category->children as $crumb) {
 
-					foreach ( $category->children AS $crumb ) :
+                        if ($hideEmpty && empty($crumb->product_count)) {
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $crumb->product_count ) ) :
+                            continue;
+                        }
 
-							continue;
+                        echo '<li class="level-' . $indent . '">';
+                            echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
+                        echo '</li>';
+                    }
 
-						endif;
+                    //  Bring the indent back down a level
+                    $indent--;
 
-						echo '<li class="level-' . $_indent . '">';
-							echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
-						echo '</li>';
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
 
-					endforeach;
+                    foreach ($category_siblings as $crumb) {
 
-					//	Bring the indent back down a level
-					$_indent--;
+                        if ($hideEmpty && empty($crumb->product_count)) {
 
-					foreach ( $category_siblings AS $crumb ) :
+                            continue;
+                        }
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $crumb->product_count ) ) :
+                        echo '<li class="level-' . $indent . '">';
+                            echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
+                        echo '</li>';
+                    }
 
-							continue;
+                echo '</ul>';
 
-						endif;
+            ?>
+        </li>
+    </ul>
+    <?php
 
-						echo '<li class="level-' . $_indent . '">';
-							echo anchor( $this->shop_category_model->format_url( $crumb->slug ), $crumb->label );
-						echo '</li>';
+        $this->load->view($skin_front->path . 'views/front/_components/sidebar_filters');
 
-					endforeach;
-
-				echo '</ul>';
-
-			?>
-		</li>
-	</ul>
-	<?php
-
-		$this->load->view( $skin_front->path . 'views/front/_components/sidebar_filters' );
-
-	?>
+    ?>
 </div>

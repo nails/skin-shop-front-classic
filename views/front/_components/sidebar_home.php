@@ -1,108 +1,108 @@
 <hr class="hidden-md hidden-lg" />
 <div class="sidebar-home col-md-3 col-md-pull-9">
-	<ul class="list-group">
-	<?php
+<?php
 
-		if ( ! empty( $categories ) ) :
+    $this->load->view($skin_front->path . 'views/front/_components/sidebar_searchform');
 
-			echo '<li class="list-group-item">';
-				echo '<h3 class="list-group-item-heading">Categories</h3>';
-				echo '<ul class="list-unstyled rsaquo-list">';
+    echo '<ul class="list-group">';
 
-					foreach( $categories AS $category ) :
+        if (!empty($categories)) {
 
-						if ( app_setting( 'hide_empty_categories', 'shop-' . $skin_front->slug ) && empty( $category->product_count ) ) :
+            echo '<li class="list-group-item">';
+                echo '<h3 class="list-group-item-heading">Categories</h3>';
+                echo '<ul class="list-unstyled rsaquo-list">';
 
-							continue;
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
 
-						endif;
+                    foreach($categories as $category) {
 
-						echo '<li>';
-							echo anchor( $category->url, $category->label );
-						echo '</li>';
+                        if ($hideEmpty && empty($category->product_count)) {
 
-					endforeach;
+                            continue;
+                        }
 
-				echo '</ul>';
-			echo '</li>';
+                        echo '<li>';
+                            echo anchor($category->url, $category->label);
+                        echo '</li>';
+                    }
 
-		endif;
+                echo '</ul>';
+            echo '</li>';
+        }
 
-		if ( ! empty( $brands ) ) :
+        if (!empty($brands)) {
 
-			echo '<li class="list-group-item">';
-				echo '<h3 class="list-group-item-heading">Brands</h3>';
-				echo '<ul class="list-unstyled rsaquo-list">';
+            echo '<li class="list-group-item">';
+                echo '<h3 class="list-group-item-heading">Brands</h3>';
+                echo '<ul class="list-unstyled rsaquo-list">';
 
-					foreach( $brands AS $brand ) :
+                    $hideEmpty = app_setting('hide_empty_brands', 'shop-' . $skin_front->slug);
 
-						if ( app_setting( 'hide_empty_brands', 'shop-' . $skin_front->slug ) && empty( $brand->product_count ) ) :
+                    foreach ($brands as $brand) {
 
-							continue;
+                        if ($hideEmpty && empty($brand->product_count)) {
 
-						endif;
+                            continue;
+                        }
 
-						echo '<li>';
-							echo anchor( $brand->url, $brand->label );
-						echo '</li>';
+                        echo '<li>';
+                            echo anchor($brand->url, $brand->label);
+                        echo '</li>';
+                    }
 
-					endforeach;
+                echo '</ul>';
+            echo '</li>';
+        }
 
-				echo '</ul>';
-			echo '</li>';
+        if (!empty($ranges)) {
 
-		endif;
+            echo '<li class="list-group-item">';
+                echo '<h3 class="list-group-item-heading">Ranges</h3>';
+                echo '<ul class="list-unstyled rsaquo-list">';
 
-		if ( ! empty( $ranges ) ) :
+                    $hideEmpty = app_setting('hide_empty_ranges', 'shop-' . $skin_front->slug);
 
-			echo '<li class="list-group-item">';
-				echo '<h3 class="list-group-item-heading">Ranges</h3>';
-				echo '<ul class="list-unstyled rsaquo-list">';
+                    foreach ($ranges as $range) {
 
-					foreach( $ranges AS $range ) :
+                        if ($hideEmpty && empty($range->product_count)) {
 
-						if ( app_setting( 'hide_empty_ranges', 'shop-' . $skin_front->slug ) && empty( $range->product_count ) ) :
+                            continue;
+                        }
 
-							continue;
+                        echo '<li>';
+                            echo anchor($range->url, $range->label);
+                        echo '</li>';
+                    }
 
-						endif;
+                echo '</ul>';
+            echo '</li>';
+        }
 
-						echo '<li>';
-							echo anchor( $range->url, $range->label );
-						echo '</li>';
+        if (!empty($collections)) {
 
-					endforeach;
+            echo '<li class="list-group-item">';
+                echo '<h3 class="list-group-item-heading">Collections</h3>';
+                echo '<ul class="list-unstyled rsaquo-list">';
 
-				echo '</ul>';
-			echo '</li>';
+                    $hideEmpty = app_setting('hide_empty_collections', 'shop-' . $skin_front->slug);
 
-		endif;
+                    foreach ($collections as $collection) {
 
-		if ( ! empty( $collections ) ) :
+                        if ($hideEmpty && empty($collection->product_count)) {
 
-			echo '<li class="list-group-item">';
-				echo '<h3 class="list-group-item-heading">Collections</h3>';
-				echo '<ul class="list-unstyled rsaquo-list">';
+                            continue;
+                        }
 
-					foreach( $collections AS $collection ) :
+                        echo '<li>';
+                            echo anchor($collection->url, $collection->label);
+                        echo '</li>';
+                    }
 
-						if ( app_setting( 'hide_empty_collections', 'shop-' . $skin_front->slug ) && empty( $collection->product_count ) ) :
+                echo '</ul>';
+            echo '</li>';
+        }
 
-							continue;
+    echo '</ul>';
 
-						endif;
-
-						echo '<li>';
-							echo anchor( $collection->url, $collection->label );
-						echo '</li>';
-
-					endforeach;
-
-				echo '</ul>';
-			echo '</li>';
-
-		endif;
-
-	?>
-	</ul>
+?>
 </div>

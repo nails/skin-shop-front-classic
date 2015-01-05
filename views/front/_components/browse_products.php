@@ -1,79 +1,82 @@
 <div class="product-browser row">
-	<div class="col-xs-12">
-	<?php
+    <div class="col-xs-12">
+    <?php
 
-		if ( ! empty( $products ) ) :
+        if (!empty($products)) {
 
-			$_products_per_row	= array();
-			$_class				= array();
-			$_counter			= 0;
-			$_row_open			= FALSE;
+            $productsPerRow = array();
+            $class          = array();
+            $counter        = 0;
+            $rowOpen       = FALSE;
 
-			$_products_per_row['lg']	= 4;
-			$_products_per_row['md']	= 4;
-			$_products_per_row['sm']	= 2;
-			$_products_per_row['xs']	= 1;
+            $productsPerRow['lg'] = 4;
+            $productsPerRow['md'] = 4;
+            $productsPerRow['sm'] = 2;
+            $productsPerRow['xs'] = 1;
 
-			foreach ( $_products_per_row AS $breakpoint => $value ) :
+            foreach ($productsPerRow as $breakpoint => $value) {
 
-				$_class[] = 'col-' . $breakpoint . '-' . floor( APP_BOOTSTRAP_GRID / $value );
+                $class[] = 'col-' . $breakpoint . '-' . floor(APP_BOOTSTRAP_GRID / $value);
+            }
 
-			endforeach;
+            // --------------------------------------------------------------------------
 
-			// --------------------------------------------------------------------------
+            $this->load->view($skin_front->path . 'views/front/_components/browse_sorter');
 
-			$this->load->view( $skin_front->path . 'views/front/_components/browse_sorter' );
+            // --------------------------------------------------------------------------
 
-			// --------------------------------------------------------------------------
+            foreach ($products as $product) {
 
-			foreach ( $products AS $product ) :
+                if (empty($rowOpen)) {
 
-				if ( empty( $_row_open ) ) :
+                    $rowOpen = TRUE;
+                    echo '<div class="row">';
+                }
 
-					$_row_open = TRUE;
-					echo '<div class="row">';
+                echo '<div class="product ' . implode(' ', $class) . '">';
 
-				endif;
+                    $this->load->view($skin_front->path . 'views/front/_components/browse_products_single', array('product' => $product));
 
-				echo '<div class="product ' . implode( ' ', $_class ) . '">';
-
-					$this->load->view( $skin_front->path . 'views/front/_components/browse_products_single', array( 'product' => $product ) );
-
-				echo '</div>';
+                echo '</div>';
 
 
-				if ( $_counter % $_products_per_row['lg'] == $_products_per_row['lg'] - 1 ) :
+                if ($counter % $productsPerRow['lg'] == $productsPerRow['lg'] - 1) {
 
-					$_row_open = FALSE;
-					echo '</div>';
+                    $rowOpen = FALSE;
+                    echo '</div>';
+                }
 
-				endif;
+                $counter++;
+            }
 
-				$_counter++;
+            if (!empty($rowOpen)) {
 
-			endforeach;
+                $rowOpen = FALSE;
+                echo '</div>';
+            }
 
-			if ( ! empty( $_row_open ) ) :
+            // --------------------------------------------------------------------------
 
-				$_row_open = FALSE;
-				echo '</div>';
+            echo '<hr />';
+            $this->load->view($skin_front->path . 'views/front/_components/browse_sorter');
+            $this->load->view($skin_front->path . 'views/front/_components/browse_pagination');
 
-			endif;
+        } else {
 
-			// --------------------------------------------------------------------------
+            echo '<p class="alert alert-warning">';
 
-			echo '<hr />';
-			$this->load->view( $skin_front->path . 'views/front/_components/browse_sorter' );
-			$this->load->view( $skin_front->path . 'views/front/_components/browse_pagination' );
+                if ($this->input->get('s')) {
 
-		else :
+                    echo '<strong>Sorry,</strong> no products were found for "' . $this->input->get('s') . '".';
 
-			echo '<p class="alert alert-warning">';
-				echo '<strong>Sorry,</strong> no products were found.';
-			echo '</p>';
+                } else {
 
-		endif;
+                    echo '<strong>Sorry,</strong> no products were found.';
+                }
 
-	?>
-	</div>
+            echo '</p>';
+        }
+
+    ?>
+    </div>
 </div>
