@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-front-classic search">
+<div class="nails-shop-skin-front-classic browse search">
     <?php
 
         echo '<div class="row">';

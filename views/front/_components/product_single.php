@@ -1,716 +1,674 @@
-	<div class="product col-xs-12">
+<div class="product col-xs-12">
 <?php
 
-	echo '<div class="product-label">';
-		echo '<h3 class="text-center hidden-md hidden-lg">';
-			echo $product->label;
-		echo '</h3>';
+    echo '<div class="product-label">';
+        echo '<h3 class="text-center hidden-md hidden-lg">';
+            echo $product->label;
+        echo '</h3>';
 
-		echo '<h3 class="hidden-xs hidden-sm">';
-			echo $product->label;
-		echo '</h3>';
-	echo '</div>';
+        echo '<h3 class="hidden-xs hidden-sm">';
+            echo $product->label;
+        echo '</h3>';
+    echo '</div>';
 
-	echo '<hr />';
+    echo '<hr />';
 
-	echo '<div class="row">';
+    echo '<div class="row">';
 
-		//	Featured Image & Gallery
-		echo '<div class="col-md-4">';
+        //  Featured Image & Gallery
+        echo '<div class="col-md-4">';
 
-			//	Featured Image
-			$_featured_img = array( 'url' => '', 'thumb' => '' );
+            //  Featured Image
+            $featured_img = array('url' => '', 'thumb' => '');
 
-			if ( $product->featured_img ) :
+            if ($product->featured_img) {
 
-				$_featured_img['url']	= cdn_serve( $product->featured_img );
-				$_featured_img['thumb']	= cdn_thumb( $product->featured_img, 800, 800 );
+                $featured_img['url']   = cdn_serve($product->featured_img);
+                $featured_img['thumb'] = cdn_thumb($product->featured_img, 800, 800);
 
-			else :
+            } else {
 
-				$_featured_img['thumb']	= $skin_front->url . 'assets/img/product-no-image.png';
+                $featured_img['thumb'] = $skin_front->url . 'assets/img/product-no-image.png';
+            }
 
-			endif;
+            // --------------------------------------------------------------------------
 
-			// --------------------------------------------------------------------------
+            //  Gallery
+            $gallery = array();
+            foreach ($product->gallery as $object_id) {
 
-			//	Gallery
-			$_gallery = array();
-			foreach ( $product->gallery AS $object_id ) :
+                $gallery[] = array(
+                    'url'   => cdn_serve($object_id),
+                    'thumb' => cdn_thumb($object_id, 800, 800)
+                );
+            }
 
-				$_gallery[] = array(
-					'url'	=> cdn_serve( $object_id ),
-					'thumb'	=> cdn_thumb( $object_id, 800, 800 )
-				);
+            // --------------------------------------------------------------------------
 
-			endforeach;
+            //  Extra small and Small breakpoints
+            echo '<div class="hidden-md hidden-lg clearfix">';
 
-			// --------------------------------------------------------------------------
+                echo '<div class="row featured-image-xs-sm">';
 
-			//	Extra small and Small breakpoints
-			echo '<div class="hidden-md hidden-lg clearfix">';
+                    if ($gallery) {
 
-				echo '<div class="row featured-image-xs-sm">';
+                        echo '<div class="col-xs-9">';
 
-					if ( $_gallery ) :
+                    } else {
 
-						echo '<div class="col-xs-9">';
+                        echo '<div class="col-xs-12">';
+                    }
 
-					else :
+                        if (!empty($featured_img['url'])) {
 
-						echo '<div class="col-xs-12">';
+                            echo '<a href="' . $featured_img['url'] . '" class="featured-img-link">';
+                        }
 
-					endif;
+                        echo img(array('src' => $featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
 
-						if ( ! empty( $_featured_img['url'] ) ) :
+                        if (!empty($featured_img['url'])) {
 
-							echo '<a href="' . $_featured_img['url'] . '" class="featured-img-link">';
+                            echo '</a>';
+                        }
 
-						endif;
+                    echo '</div>';
 
-						echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img' ) );
+                    if ($gallery) {
+                    echo '<div class="gallery-scroll gallery-xs-sm">';
 
-						if ( ! empty( $_featured_img['url'] ) ) :
+                        foreach ($gallery as $item) {
 
-							echo '</a>';
+                            echo '<div class="text-center gallery-item">';
 
-						endif;
+                            if (!empty($item['url'])) {
 
-					echo '</div>';
+                                echo '<a href="' . $item['url'] . '" class="gallery-link">';
+                            }
 
-					if ( $_gallery ) :
-					echo '<div class="gallery-scroll gallery-xs-sm">';
+                            echo img(array('src' => $item['thumb'], 'class' => 'center-block img-responsive img-thumbnail gallery-img'));
 
-						foreach ( $_gallery AS $item ) :
+                            if (!empty($item['url'])) {
 
-							echo '<div class="text-center gallery-item">';
+                                echo '</a>';
+                            }
 
-							if ( ! empty( $item['url'] ) ) :
+                            echo '</div>';
+                        }
 
-								echo '<a href="' . $item['url'] . '" class="gallery-link">';
+                    echo '</div>';
+                    }
 
-							endif;
+                echo '</div>';
 
-							echo img( array( 'src' => $item['thumb'], 'class' => 'center-block img-responsive img-thumbnail gallery-img' ) );
+            echo '</div>';
 
-							if ( ! empty( $item['url'] ) ) :
+            //  Medium and Large breakpoints
+            echo '<div class="hidden-sm hidden-xs clearfix">';
 
-								echo '</a>';
+                echo '<div class="text-center featured-image-md-lg">';
 
-							endif;
+                    if (!empty($featured_img['url'])) {
 
-							echo '</div>';
+                        echo '<a href="' . $featured_img['url'] . '" class="featured-img-link" target="_blank">';
+                    }
 
-						endforeach;
+                    echo img(array('src' => $featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
 
-					echo '</div>';
-					endif;
+                    if (!empty($featured_img['url'])) {
 
-				echo '</div>';
+                        echo '</a>';
+                    }
 
-			echo '</div>';
+                echo '</div>';
 
-			//	Medium and Large breakpoints
-			echo '<div class="hidden-sm hidden-xs clearfix">';
+                echo '<div class="row text-center gallery-md-lg">';
+                foreach ($gallery as $item) {
 
-				echo '<div class="text-center featured-image-md-lg">';
+                    echo '<div class="col-md-4 col-lg-4 gallery-item">';
+                    if (!empty($item['url'])) {
 
-					if ( ! empty( $_featured_img['url'] ) ) :
+                        echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
+                    }
 
-						echo '<a href="' . $_featured_img['url'] . '" class="featured-img-link" target="_blank">';
+                    echo img(array('src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img'));
 
-					endif;
+                    if (!empty($item['url'])) {
 
-					echo img( array( 'src' => $_featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img' ) );
+                        echo '</a>';
+                    }
+                    echo '</div>';
+                }
+                echo '</div>';
 
-					if ( ! empty( $_featured_img['url'] ) ) :
+            echo '</div>';
 
-						echo '</a>';
+            // --------------------------------------------------------------------------
 
-					endif;
+            //  Tags
+            if (!empty($product->tags)) {
 
-				echo '</div>';
+                echo '<hr />';
+                echo '<h4>Tags</h4>';
+                echo '<ul class="list-inline">';
 
-				echo '<div class="row text-center gallery-md-lg">';
-				foreach ( $_gallery AS $item ) :
+                foreach ($product->tags as $tag) {
 
-					echo '<div class="col-md-4 col-lg-4 gallery-item">';
-					if ( ! empty( $item['url'] ) ) :
+                    echo '<li>';
+                        $url   = $this->shop_tag_model->format_url($tag->slug);
+                        $label = '<span class="badge">' . $tag->label . '</span>';
+                        echo anchor($url, $label);
+                    echo '</li>';
+                }
 
-						echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
+                echo '</ul>';
+            }
 
-					endif;
+            // --------------------------------------------------------------------------
 
-					echo img( array( 'src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img' ) );
+            //  Categories
+            if (!empty($product->categories)) {
 
-					if ( ! empty( $item['url'] ) ) :
+                echo '<hr />';
+                echo '<h4>Categories</h4>';
+                echo '<ul class="list-unstyled">';
 
-						echo '</a>';
+                foreach ($product->categories as $category) {
 
-					endif;
-					echo '</div>';
+                    echo '<li>';
+                        echo anchor($this->shop_category_model->format_url($category->slug), $category->label);
+                    echo '</li>';
+                }
 
-				endforeach;
-				echo '</div>';
+                echo '</ul>';
+            }
 
-			echo '</div>';
+            // --------------------------------------------------------------------------
 
-			// --------------------------------------------------------------------------
+            //  Brands
+            if (!empty($product->brands)) {
 
-			//	Tags
-			if ( ! empty( $product->tags ) ) :
+                echo '<hr />';
+                echo '<h4>Brands</h4>';
+                echo '<ul class="list-unstyled">';
 
-				echo '<hr />';
-				echo '<h4>Tags</h4>';
-				echo '<ul class="list-inline">';
+                foreach ($product->brands as $brand) {
 
-				foreach( $product->tags AS $tag ) :
+                    echo '<li>';
+                        echo anchor($this->shop_brand_model->format_url($brand->slug), $brand->label);
+                    echo '</li>';
+                }
 
-					echo '<li>';
-						echo anchor( $this->shop_tag_model->format_url( $tag->slug ), '<span class="badge">' . $tag->label . '</span>' );
-					echo '</li>';
+                echo '</ul>';
+            }
 
-				endforeach;
+            // --------------------------------------------------------------------------
 
-				echo '</ul>';
+            //  Ranges
+            if (!empty($product->collections)) {
 
-			endif;
+                echo '<hr />';
+                echo '<h4>Collections</h4>';
+                echo '<ul class="list-unstyled">';
 
-			// --------------------------------------------------------------------------
+                foreach ($product->collections as $collection) {
 
-			//	Categories
-			if ( ! empty( $product->categories ) ) :
+                    echo '<li>';
+                        echo anchor($this->shop_collection_model->format_url($collection->slug), $collection->label);
+                    echo '</li>';
+                }
 
-				echo '<hr />';
-				echo '<h4>Categories</h4>';
-				echo '<ul class="list-unstyled">';
+                echo '</ul>';
+            }
 
-				foreach( $product->categories AS $category ) :
+            // --------------------------------------------------------------------------
 
-					echo '<li>';
-						echo anchor( $this->shop_category_model->format_url( $category->slug ), $category->label );
-					echo '</li>';
+            //  Ranges
+            if (!empty($product->ranges)) {
 
-				endforeach;
+                echo '<hr />';
+                echo '<h4>Ranges</h4>';
+                echo '<ul class="list-unstyled">';
 
-				echo '</ul>';
+                foreach ($product->ranges as $range) {
 
-			endif;
+                    echo '<li>';
+                        echo anchor($this->shop_range_model->format_url($range->slug), $range->label);
+                    echo '</li>';
+                }
 
-			// --------------------------------------------------------------------------
+                echo '</ul>';
+            }
 
-			//	Brands
-			if ( ! empty( $product->brands ) ) :
+        echo '</div>';
 
-				echo '<hr />';
-				echo '<h4>Brands</h4>';
-				echo '<ul class="list-unstyled">';
+        // --------------------------------------------------------------------------
 
-				foreach( $product->brands AS $brand ) :
+        //  Right hand column
+        echo '<div class="col-md-8">';
 
-					echo '<li>';
-						echo anchor( $this->shop_brand_model->format_url( $brand->slug ), $brand->label );
-					echo '</li>';
+            //  Description
+            echo '<div class="product-description">';
+                echo $product->description;
+            echo '</div>';
 
-				endforeach;
+            // --------------------------------------------------------------------------
 
-				echo '</ul>';
+            //  Social Likes
 
-			endif;
+            //  Defaults
+            $layout       = '';
+            $single_title = app_setting('social_layout_single_text', 'shop-' . $skin_front->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin_front->slug) : 'Share';
+            $counters     = app_setting('social_counters', 'shop-' . $skin_front->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
+            $twitter_via  = app_setting('social_twitter_via', 'shop-' . $skin_front->slug) ? app_setting('social_twitter_via', 'shop-' . $skin_front->slug) : '';
 
-			// --------------------------------------------------------------------------
+            //  Layout
+            switch (app_setting('social_layout', 'shop-' . $skin_front->slug)) {
 
-			//	Ranges
-			if ( ! empty( $product->collections ) ) :
+                case 'HORIZONTAL':
 
-				echo '<hr />';
-				echo '<h4>Collections</h4>';
-				echo '<ul class="list-unstyled">';
+                    $layout = '';
+                    break;
 
-				foreach( $product->collections AS $collection ) :
+                case 'VERTICAL':
 
-					echo '<li>';
-						echo anchor( $this->shop_collection_model->format_url( $collection->slug ), $collection->label );
-					echo '</li>';
+                    $layout = 'social-likes_vertical';
+                    break;
 
-				endforeach;
+                case 'SINGLE':
 
-				echo '</ul>';
+                    $layout = 'social-likes_single';
+                    break;
+            }
 
-			endif;
+            $enabled   = array();
+            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin_front->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
+            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin_front->slug) ? '<div class="twitter" data-via="' . $twitter_via . '" title="Share link on Twitter">Twitter</div>' : '';
+            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin_front->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
+            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin_front->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
 
-			// --------------------------------------------------------------------------
+            $enabled = array_filter($enabled);
 
-			//	Ranges
-			if ( ! empty( $product->ranges ) ) :
+            if ($enabled) {
 
-				echo '<hr />';
-				echo '<h4>Ranges</h4>';
-				echo '<ul class="list-unstyled">';
+                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $single_title . '" data-title="' . $product->label . '">';
+                foreach ($enabled as $enabled) {
 
-				foreach( $product->ranges AS $range ) :
+                    echo $enabled;
+                }
+                echo '</div>';
+            }
 
-					echo '<li>';
-						echo anchor( $this->shop_range_model->format_url( $range->slug ), $range->label );
-					echo '</li>';
+            // --------------------------------------------------------------------------
 
-				endforeach;
+            //  Collection only items?
+            if (!$product->is_external) {
 
-				echo '</ul>';
+                foreach ($product->variations as $variant) {
 
-			endif;
+                    if ($variant->shipping->collection_only) {
 
-		echo '</div>';
+                        echo '<p class="alert alert-warning">';
+                            echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
+                            if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
 
-		// --------------------------------------------------------------------------
+                                echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
+                            }
+                        echo '</p>';
+                        break;
+                    }
+                }
+            }
 
-		//	Right hand column
-		echo '<div class="col-md-8">';
+            // --------------------------------------------------------------------------
 
-			//	Description
-			echo '<div class="product-description">';
-				echo $product->description;
-			echo '</div>';
+            //  Variants
+            echo '<div class="well well-sm">';
 
-			// --------------------------------------------------------------------------
+                echo '<table class="table table-variants">';
+                    echo '<thead>';
+                        echo '<tr>';
+                            echo '<th class="col-xs-5">Item</th>';
+                            echo '<th class="col-xs-3">Price</th>';
+                            echo '<th class="col-xs-4">Quantity</th>';
+                        echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
 
-			//	Social Likes
+                    foreach ($product->variations as $variant) {
 
-			//	Defaults
-			$_layout		= '';
-			$_single_title	= app_setting( 'social_layout_single_text', 'shop-' . $skin_front->slug ) ? app_setting( 'social_layout_single_text', 'shop-' . $skin_front->slug ) : 'Share';
-			$_counters		= app_setting( 'social_counters', 'shop-' . $skin_front->slug ) ? 'data-zeroes="yes"' : 'data-counters="no"';
-			$_twitter_via	= app_setting( 'social_twitter_via', 'shop-' . $skin_front->slug ) ? app_setting( 'social_twitter_via', 'shop-' . $skin_front->slug ) : '';
+                        if (!empty($variant->gallery)) {
 
-			//	Layout
-			switch( app_setting( 'social_layout', 'shop-' . $skin_front->slug ) ) :
+                            echo '<tr class="variant has-img" data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
 
-				case 'HORIZONTAL' :	$_layout = '';						break;
-				case 'VERTICAL' :	$_layout = 'social-likes_vertical';	break;
-				case 'SINGLE' :		$_layout = 'social-likes_single';	break;
+                        } else {
 
-			endswitch;
+                            echo '<tr class="variant">';
+                        }
 
-			$_enabled = array();
-			$_enabled[]	= app_setting( 'social_facebook_enabled', 'shop-' . $skin_front->slug ) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
-			$_enabled[] = app_setting( 'social_twitter_enabled', 'shop-' . $skin_front->slug ) ? '<div class="twitter" data-via="' . $_twitter_via . '" title="Share link on Twitter">Twitter</div>' : '';
-			$_enabled[] = app_setting( 'social_googleplus_enabled', 'shop-' . $skin_front->slug ) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-			$_enabled[] = app_setting( 'social_pinterest_enabled', 'shop-' . $skin_front->slug ) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve( $product->featured_img ) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+                            if ($product->is_external) {
 
-			$_enabled = array_filter( $_enabled );
+                                echo '<td>';
+                                    echo '<p>' . $variant->label . '</p>';
+                                echo '</td>';
+                                echo '<td>';
+                                    echo '<p>' . $variant->price->price->user_formatted->value . '</p>';
+                                echo '</td>';
+                                echo '<td>';
+                                    echo '<p>';
+                                        echo anchor($product->external_vendor_url, 'Go to Seller <b class="fa fa-external-link"></b>', 'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."');
+                                    echo '</p>';
+                                echo '</td>';
 
-			if ( $_enabled ) :
+                            } else {
 
-				echo '<div class="product-social social-likes ' . $_layout . '" ' . $_counters . ' data-url="' . $product->url . '" data-single-title="' . $_single_title . '" data-title="' . $product->label . '">';
-				foreach ( $_enabled AS $enabled ) :
+                                //  Calculate quantity ranges
+                                $max_per_order = $product->type->max_per_order;
+                                $available     = $variant->quantity_available;
 
-					echo $enabled;
+                                //  Number of items to show if the quantity is "unlimited"
+                                $unlimited = 10;
 
-				endforeach;
-				echo '</div>';
+                                if (is_null($available) && empty($max_per_order)) {
 
-			endif;
+                                    //  Unlimited quantity available, with no maximum per order
+                                    $range = array_combine(range(1, $unlimited), range(1, $unlimited));
 
-			// --------------------------------------------------------------------------
+                                } elseif (is_null($available) && !empty($max_per_order)) {
 
-			//	Collection only items?
-			if ( ! $product->is_external ) :
+                                    //  Unlimited quantity available, with maximum per order
+                                    $range = array_combine(range(1, $max_per_order), range(1, $max_per_order));
 
-				foreach ( $product->variations AS $variant ) :
+                                } elseif (is_numeric($available) && !empty($max_per_order)) {
 
-					if ( $variant->shipping->collection_only ) :
+                                    //  Limited quantity available, with maximum per order
+                                    if ($available >= $max_per_order) {
 
-						echo '<p class="alert alert-warning">';
-							echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
-							if ( app_setting( 'warehouse_collection_delivery_enquiry', 'shop' ) ) :
+                                        //  There are more available than the maximum per order
+                                        $range = array_combine(range(1, $max_per_order), range(1, $max_per_order));
 
-								echo anchor( $shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"' );
+                                    } else {
 
-							endif;
-						echo '</p>';
-						break;
+                                        //  There are fewer available than the maximum per order
+                                        $range = array_combine(range(1, $available), range(1, $available));
+                                    }
 
-					endif;
+                                } elseif (is_numeric($available) && empty($max_per_order)) {
 
-				endforeach;
+                                    //  Limited quantity available, with no maximum per order
+                                    $range = array_combine(range(1, $available), range(1, $available));
 
-			endif;
+                                } else {
 
-			// --------------------------------------------------------------------------
+                                    //  Shouldn't happen.
+                                    $range = array(0);
+                                }
 
-			//	Variants
-			echo '<div class="well well-sm">';
+                                switch ($variant->stock_status) {
 
-				echo '<table class="table table-variants">';
-					echo '<thead>';
-						echo '<tr>';
-							echo '<th class="col-xs-5">Item</th>';
-							echo '<th class="col-xs-3">Price</th>';
-							echo '<th class="col-xs-4">Quantity</th>';
-						echo '</tr>';
-					echo '</thead>';
-					echo '<tbody>';
+                                    case 'IN_STOCK':
 
-					foreach ( $product->variations AS $variant ) :
+                                        echo '<td>';
+                                            echo '<p>';
 
-						if ( ! empty( $variant->gallery ) ) :
+                                                echo $variant->label;
 
- 							echo '<tr class="variant has-img" data-image="' . cdn_thumb( $variant->gallery[0], 800, 800 ) . '">';
+                                                if ($variant->shipping->collection_only) {
 
-						else :
+                                                    echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
+                                                }
 
-							echo '<tr class="variant">';
+                                            echo '</p>';
+                                        echo '</td>';
+                                        echo '<td>';
 
-						endif;
+                                            if (app_setting('price_exclude_tax', 'shop')) {
 
-							if ( $product->is_external ) :
+                                                //  Product prices include taxes
+                                                echo '<p>';
+                                                    echo $variant->price->price->user_formatted->value;
+                                                echo '</p>';
 
-								echo '<td>';
-									echo '<p>' . $variant->label . '</p>';
-								echo '</td>';
-								echo '<td>';
-									echo '<p>' . $variant->price->price->user_formatted->value . '</p>';
-								echo '</td>';
-								echo '<td>';
-									echo '<p>';
-										echo anchor( $product->external_vendor_url, 'Go to Seller <b class="fa fa-external-link"></b>', 'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."' );
-									echo '</p>';
-								echo '</td>';
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
-							else :
+                                                    echo '<p class="text-muted">';
+                                                        echo '<small>';
+                                                            echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+                                                        echo '</small>';
+                                                    echo '</p>';
+                                                }
 
-								//	Calculate quantity ranges
-								$_max_per_order	= $product->type->max_per_order;
-								$_available		= $variant->quantity_available;
+                                            } else {
 
-								//	Number of items to show if the quantity is "unlimited"
-								$_unlimited		= 10;
+                                                echo '<p>';
+                                                    echo $variant->price->price->user_formatted->value;
+                                                echo '</p>';
 
-								if ( is_null( $_available ) && empty( $_max_per_order ) ) :
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
-									//	Unlimited quantity available, with no maximum per order
-									$_range = array_combine( range( 1, $_unlimited ), range( 1, $_unlimited ) );
+                                                    echo '<p class="text-muted">';
+                                                        echo '<small>';
+                                                            echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+                                                        echo '</small>';
+                                                    echo '</p>';
+                                                }
+                                            }
 
-								elseif ( is_null( $_available ) && ! empty( $_max_per_order ) ) :
+                                        echo '</td>';
+                                        echo '<td>';
 
-									//	Unlimited quantity available, with maximum per order
-									$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
+                                            if (!$this->shop_basket_model->isInBasket($variant->id)) {
 
-								elseif ( is_numeric( $_available ) && ! empty( $_max_per_order ) ) :
+                                                echo form_open($shop_url . 'basket/add', 'method="GET"');
+                                                    echo form_hidden('return', $product->url);
+                                                    echo form_hidden('variant_id', $variant->id);
+                                                    echo form_dropdown('quantity', $range);
+                                                    echo form_submit('submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"');
+                                                echo form_close();
 
-									//	Limited quantity available, with maximum per order
-									if ( $_available >= $_max_per_order ) :
+                                            } else {
 
-										//	There are more available than the maximum per order
-										$_range = array_combine( range( 1, $_max_per_order ), range( 1, $_max_per_order ) );
+                                                echo form_open($shop_url . 'basket/remove', 'method="GET"');
+                                                    echo form_hidden('return', $product->url);
+                                                    echo form_hidden('variant_id', $variant->id);
+                                                    echo $this->shop_basket_model->getVariantQuantity($variant->id);
+                                                    echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"');
+                                                    echo form_submit('submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"');
+                                                echo form_close();
+                                            }
 
-									else :
+                                        echo '</td>';
+                                        break;
 
-										//	There are fewer available than the maximum per order
-										$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
+                                    case 'TO_ORDER':
 
-									endif;
+                                        echo '<td>';
+                                            echo '<p>' . $variant->label . '</p>';
+                                            echo '<p class="text-muted">';
+                                                echo '<small>';
+                                                    echo '<em>Lead time: ' . $variant->lead_time . '</em>';
+                                                echo '</small>';
+                                            echo '</p>';
+                                        echo '</td>';
+                                        echo '<td>';
 
-								elseif ( is_numeric( $_available ) && empty( $_max_per_order ) ) :
+                                            if (app_setting('price_exclude_tax', 'shop')) {
 
-									//	Limited quantity available, with no maximum per order
-									$_range = array_combine( range( 1, $_available ), range( 1, $_available ) );
+                                                //  Product prices include taxes
+                                                echo '<p>';
+                                                    echo $variant->price->price->user_formatted->value;
+                                                echo '</p>';
 
-								else :
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
-									//	Shouldn't happen.
-									$_range = array( 0 );
+                                                    echo '<p class="text-muted">';
+                                                        echo '<small>';
+                                                            echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
+                                                        echo '</small>';
+                                                    echo '</p>';
 
-								endif;
+                                                }
 
-								switch( $variant->stock_status ) :
+                                            } else {
 
-									case 'IN_STOCK' :
+                                                echo '<p>';
+                                                    echo $variant->price->price->user_formatted->value;
+                                                echo '</p>';
 
-										echo '<td>';
-											echo '<p>';
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
-												echo $variant->label;
+                                                    echo '<p class="text-muted">';
+                                                        echo '<small>';
+                                                            echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
+                                                        echo '</small>';
+                                                    echo '</p>';
+                                                }
+                                            }
 
-												if ( $variant->shipping->collection_only ) :
+                                        echo '</td>';
+                                        echo '<td>';
 
-													echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
+                                            if (!$this->shop_basket_model->isInBasket($variant->id)) {
 
-												endif;
+                                                echo form_open($shop_url . 'basket/add', 'method="GET"');
+                                                    echo form_hidden('return', $product->url);
+                                                    echo form_hidden('variant_id', $variant->id);
+                                                    echo form_dropdown('quantity', $range);
+                                                    echo form_submit('submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"');
+                                                echo form_close();
 
-											echo '</p>';
-										echo '</td>';
-										echo '<td>';
+                                            } else {
 
-											if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+                                                echo form_open($shop_url . 'basket/remove', 'method="GET"');
+                                                    echo form_hidden('return', $product->url);
+                                                    echo form_hidden('variant_id', $variant->id);
+                                                    echo $this->shop_basket_model->getVariantQuantity($variant->id);
+                                                    echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"');
+                                                    echo form_submit('submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"');
+                                                echo form_close();
+                                            }
 
-												//	Product prices include taxes
-												echo '<p>';
-													echo $variant->price->price->user_formatted->value;
-												echo '</p>';
+                                        echo '</td>';
+                                        break;
 
-												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_front->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+                                    case 'OUT_OF_STOCK':
 
-													echo '<p class="text-muted">';
-														echo '<small>';
-															echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-														echo '</small>';
-													echo '</p>';
+                                        echo '<td>';
+                                            echo '<p><strike>' . $variant->label . '</strike></p>';
+                                        echo '</td>';
+                                        echo '<td>';
+                                            echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
+                                        echo '</td>';
+                                        echo '<td>';
+                                            echo '<p>';
+                                                echo '<em>Out of Stock!</em>';
+                                                echo anchor($shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"');
+                                            echo '</p>';
+                                        echo '</td>';
+                                        break;
+                                }
 
-												endif;
+                            }
 
-											else :
+                        echo '</tr>';
+                    }
 
-												echo '<p>';
-													echo $variant->price->price->user_formatted->value;
-												echo '</p>';
+                    echo '</tbody>';
+                echo '</table>';
 
-												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_front->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+            echo '</div>';
 
-													echo '<p class="text-muted">';
-														echo '<small>';
-															echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-														echo '</small>';
-													echo '</p>';
+            // --------------------------------------------------------------------------
 
-												endif;
+            //  Attributes
+            if (!empty($product->attributes)) {
 
-											endif;
+                echo '<table class="table table-bordered table-striped product-attributes">';
+                    echo '<thead>';
+                        echo '<tr>';
+                            echo '<th>Attribute</th>';
+                            echo '<th>Value</th>';
+                        echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
 
-										echo '</td>';
-										echo '<td>';
+                        foreach ($product->attributes as $attribute) {
 
-											if ( ! $this->shop_basket_model->isInBasket( $variant->id ) ) :
+                            echo '<tr>';
+                                echo '<td>' . $attribute->label . '</td>';
+                                echo '<td>' . $attribute->value . '</td>';
+                            echo '</tr>';
+                        }
 
-												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
-													echo form_hidden( 'return', $product->url );
-													echo form_hidden( 'variant_id', $variant->id );
-													echo form_dropdown( 'quantity', $_range );
-													echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
-												echo form_close();
+                    echo '</tbody>';
 
-											else :
+                echo '</table>';
+            }
 
-												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
-													echo form_hidden( 'return', $product->url );
-													echo form_hidden( 'variant_id', $variant->id );
-													echo $this->shop_basket_model->getVariantQuantity( $variant->id );
-													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
-													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
-												echo form_close();
+            // --------------------------------------------------------------------------
 
-											endif;
+            /**
+             * TODO Markup here because I think it looks OK and can be used when product
+             * reviews get implemented (if they get implemented)
+             */
+            if (!empty($product_reviews)) {
 
-										echo '</td>';
+                //  Reviews
+                echo '<div class="product-reviews">';
 
-									break;
+                    echo '<hr />';
+                    echo '<h4>Customer Reviews</h4>';
 
-									case 'TO_ORDER' :
+                    foreach ($product_reviews as $review) {
 
-										echo '<td>';
-											echo '<p>' . $variant->label . '</p>';
-											echo '<p class="text-muted">';
-												echo '<small>';
-													echo '<em>Lead time: ' . $variant->lead_time . '</em>';
-												echo '</small>';
-											echo '</p>';
-										echo '</td>';
-										echo '<td>';
+                        echo '<div class="well">';
+                            echo '<div class="row">';
+                                echo '<div class="col-xs-2">';
 
-											if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+                                    if ($review->user->profile_img) {
 
-												//	Product prices include taxes
-												echo '<p>';
-													echo $variant->price->price->user_formatted->value;
-												echo '</p>';
+                                        $url = cdn_thumb($review->user->profile_img, 250, 250);
 
-												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_front->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax ) :
+                                    } else {
 
-													echo '<p class="text-muted">';
-														echo '<small>';
-															echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-														echo '</small>';
-													echo '</p>';
+                                        $url = cdn_blank_avatar(250, 250, $review->user->gender);
+                                    }
 
-												endif;
+                                    echo img(array('src' => $url, 'class="img-responsive img-thumbnail img-circle"'));
 
-											else :
+                                echo '</div>';
+                                echo '<div class="col-xs-10">';
+                                    echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
+                                    echo '<p>';
 
-												echo '<p>';
-													echo $variant->price->price->user_formatted->value;
-												echo '</p>';
+                                        foreach ($reviw->stars as $star) {
 
-												if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_front->slug ) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax ) :
+                                            if ($star->is_half) {
 
-													echo '<p class="text-muted">';
-														echo '<small>';
-															echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-														echo '</small>';
-													echo '</p>';
+                                                echo '<span class="fa fa-star-half"></span>';
 
-												endif;
+                                            } else {
 
-											endif;
+                                                echo '<span class="fa fa-star></span>';
+                                            }
+                                        }
 
-										echo '</td>';
-										echo '<td>';
+                                    echo '</p>';
+                                    echo '<hr />';
+                                    echo auto_typography($review->body);
+                                    echo '<p>';
+                                        echo '<small>';
+                                            echo '<em>' . user_datetime($review->created) . '</em>';
+                                        echo '</small>';
+                                    echo '</p>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    }
+                echo '</div>';
+            }
+        echo '</div>';
 
-											if ( ! $this->shop_basket_model->isInBasket( $variant->id ) ) :
-
-												echo form_open( $shop_url . 'basket/add', 'method="GET"' );
-													echo form_hidden( 'return', $product->url );
-													echo form_hidden( 'variant_id', $variant->id );
-													echo form_dropdown( 'quantity', $_range );
-													echo form_submit( 'submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"' );
-												echo form_close();
-
-											else :
-
-												echo form_open( $shop_url . 'basket/remove', 'method="GET"' );
-													echo form_hidden( 'return', $product->url );
-													echo form_hidden( 'variant_id', $variant->id );
-													echo $this->shop_basket_model->getVariantQuantity( $variant->id );
-													echo anchor( $shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"' );
-													echo form_submit( 'submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"' );
-												echo form_close();
-
-											endif;
-
-										echo '</td>';
-
-									break;
-
-									case 'OUT_OF_STOCK' :
-
-										echo '<td>';
-											echo '<p><strike>' . $variant->label . '</strike></p>';
-										echo '</td>';
-										echo '<td>';
-											echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
-										echo '</td>';
-										echo '<td>';
-											echo '<p>';
-												echo '<em>Out of Stock!</em>';
-												echo anchor( $shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"' );
-											echo '</p>';
-										echo '</td>';
-
-									break;
-
-								endswitch;
-
-							endif;
-
-						echo '</tr>';
-
-					endforeach;
-
-					echo '</tbody>';
-				echo '</table>';
-
-			echo '</div>';
-
-			// --------------------------------------------------------------------------
-
-			//	Attributes
-			if ( ! empty( $product->attributes ) ) :
-
-				echo '<table class="table table-bordered table-striped product-attributes">';
-					echo '<thead>';
-						echo '<tr>';
-							echo '<th>Attribute</th>';
-							echo '<th>Value</th>';
-						echo '</tr>';
-					echo '</thead>';
-					echo '<tbody>';
-
-						foreach ( $product->attributes AS $attribute ) :
-
-							echo '<tr>';
-								echo '<td>' . $attribute->label . '</td>';
-								echo '<td>' . $attribute->value . '</td>';
-							echo '</tr>';
-
-						endforeach;
-
-					echo '</tbody>';
-
-				echo '</table>';
-
-			endif;
-
-			// --------------------------------------------------------------------------
-
-			/**
-			 * TODO Markup here because I think it looks OK and can be used when product
-			 * reviews get implemented (if they get implemented)
-			 */
-			if ( ! empty( $product_reviews ) ) :
-
-				//	Reviews
-				echo '<div class="product-reviews">';
-
-					echo '<hr />';
-					echo '<h4>Customer Reviews</h4>';
-
-					foreach( $product_reviews AS $review ) :
-
-						echo '<div class="well">';
-							echo '<div class="row">';
-								echo '<div class="col-xs-2">';
-
-									if ( $review->user->profile_img ) :
-
-										$_url = cdn_thumb( $review->user->profile_img, 250, 250 );
-
-									else :
-
-										$_url = cdn_blank_avatar( 250, 250, $review->user->gender );
-
-									endif;
-
-									echo img( array( 'src' => $_url, 'class="img-responsive img-thumbnail img-circle"' ) );
-
-								echo '</div>';
-								echo '<div class="col-xs-10">';
-									echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
-									echo '<p>';
-
-										foreach ( $reviw->stars AS $star ) :
-
-											if ( $star->is_half ) :
-
-												echo '<span class="fa fa-star-half"></span>';
-
-											else :
-
-												echo '<span class="fa fa-star></span>';
-
-											endif;
-
-										endforeach;
-
-									echo '</p>';
-									echo '<hr />';
-									echo auto_typography( $review->body );
-									echo '<p>';
-										echo '<small>';
-											echo '<em>' . user_datetime( $review->created ) . '</em>';
-										echo '</small>';
-									echo '</p>';
-								echo '</div>';
-							echo '</div>';
-						echo '</div>';
-
-					endforeach;
-
-				echo '</div>';
-
-			endif;
-
-		echo '</div>';
-
-	echo '</div>';
+    echo '</div>';
 
 ?>
 </div>

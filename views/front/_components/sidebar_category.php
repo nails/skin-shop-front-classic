@@ -18,7 +18,7 @@
 
                     //  Home first
                     echo '<li class="level-' . $indent . '">';
-                        echo anchor($shop_url, app_setting('name', 'shop'));
+                        echo anchor($shop_url, $shop_name);
                     echo '</li>';
 
                     $indent++;

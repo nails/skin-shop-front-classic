@@ -7,7 +7,7 @@
             $productsPerRow = array();
             $class          = array();
             $counter        = 0;
-            $rowOpen       = FALSE;
+            $rowOpen        = FALSE;
 
             $productsPerRow['lg'] = 4;
             $productsPerRow['md'] = 4;
