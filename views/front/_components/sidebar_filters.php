@@ -42,6 +42,11 @@
 				echo form_hidden('sort', $this->input->get_post('sort'));
 			}
 
+			if ($this->input->get_post('s')) {
+
+				echo form_hidden('s', $this->input->get_post('s'));
+			}
+
 			?>
 			<ul class="list-group filters">
 				<li class="list-group-item">
@@ -59,9 +64,9 @@
 							echo '<li>';
 								echo '<label class="clearfix">';
 
-									if (isset($GET['f'][$filter->id]) && is_array($GET['f'][$filter->id])) {
+									if (isset($_GET['f'][$filter->id]) && is_array($_GET['f'][$filter->id])) {
 
-										if (array_search($value->value, $GET['f'][$filter->id]) !== false) {
+										if (array_search($value->value, $_GET['f'][$filter->id]) !== false) {
 
 											$checked = true;
 
