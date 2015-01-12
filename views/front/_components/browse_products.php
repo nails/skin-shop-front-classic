@@ -16,7 +16,7 @@
 
             foreach ($productsPerRow as $breakpoint => $value) {
 
-                $class[] = 'col-' . $breakpoint . '-' . floor(APP_BOOTSTRAP_GRID / $value);
+                $class[] = 'col-' . $breakpoint . '-' . floor(12 / $value);
             }
 
             // --------------------------------------------------------------------------
