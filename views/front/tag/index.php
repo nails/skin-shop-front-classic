@@ -26,7 +26,7 @@
 			$_counter	= 0;
 			$_row_open	= FALSE;
 
-			foreach( $tags AS $tag ) :
+			foreach ( $tags AS $tag ) :
 
 				if ( empty( $_row_open ) ) :
 

@@ -26,7 +26,7 @@
 			$_counter	= 0;
 			$_row_open	= FALSE;
 
-			foreach( $sales AS $sale ) :
+			foreach ( $sales AS $sale ) :
 
 				if ( empty( $_row_open ) ) :
 

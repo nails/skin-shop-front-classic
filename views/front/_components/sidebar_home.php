@@ -14,7 +14,7 @@
 
                     $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
 
-                    foreach($categories as $category) {
+                    foreach ($categories as $category) {
 
                         if ($hideEmpty && empty($category->product_count)) {
 

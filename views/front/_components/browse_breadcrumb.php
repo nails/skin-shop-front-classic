@@ -9,7 +9,7 @@
 
         if (!empty($crumbs)) {
 
-            foreach($crumbs as $crumb) {
+            foreach ($crumbs as $crumb) {
 
                 echo '<li class="crumb">';
 

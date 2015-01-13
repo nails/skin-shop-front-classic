@@ -26,7 +26,7 @@
 			$_counter	= 0;
 			$_row_open	= FALSE;
 
-			foreach( $ranges AS $range ) :
+			foreach ( $ranges AS $range ) :
 
 				if ( empty( $_row_open ) ) :
 

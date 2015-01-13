@@ -23,7 +23,7 @@
             //  Prepare the breadcrumbs
             $crumbs = array();
 
-            foreach($category->breadcrumbs as $crumb) {
+            foreach ($category->breadcrumbs as $crumb) {
 
                 $crumbs[] = array(
                     'id'    => $crumb->id,

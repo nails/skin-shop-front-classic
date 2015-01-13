@@ -87,7 +87,7 @@
 											echo form_hidden( 'product_id', $product->id );
 
 											$_options = array();
-											foreach( $product->variations AS $v ) :
+											foreach ( $product->variations AS $v ) :
 
 												if ( $v->shipping->collection_only ) :
 

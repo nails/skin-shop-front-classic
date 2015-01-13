@@ -26,7 +26,7 @@
 			$_counter	= 0;
 			$_row_open	= FALSE;
 
-			foreach( $brands AS $brand ) :
+			foreach ( $brands AS $brand ) :
 
 				if ( empty( $_row_open ) ) :
 

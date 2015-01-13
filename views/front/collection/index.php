@@ -26,7 +26,7 @@
 			$_counter	= 0;
 			$_row_open	= FALSE;
 
-			foreach( $collections AS $collection ) :
+			foreach ( $collections AS $collection ) :
 
 				if ( empty( $_row_open ) ) :
 
