@@ -87,7 +87,7 @@
 											echo form_hidden( 'product_id', $product->id );
 
 											$_options = array();
-											foreach ( $product->variations AS $v ) :
+											foreach ( $product->variations as $v ) :
 
 												if ( $v->shipping->collection_only ) :
 
@@ -102,7 +102,7 @@
 												echo' <div class="col-xs-9">';
 													echo' <select name="variant_id" class="form-control">';
 
-														foreach ( $_options AS $v_id => $v_label ) :
+														foreach ( $_options as $v_id => $v_label ) :
 
 															echo '<option value="' . $v_id . '">';
 																echo $v_label;

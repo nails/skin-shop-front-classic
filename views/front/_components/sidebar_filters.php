@@ -59,7 +59,7 @@
 						echo '</p>';
 						echo '<ul class="filter-list list-unstyled">';
 
-						foreach ($filter->values AS $value) {
+						foreach ($filter->values as $value) {
 
 							echo '<li>';
 								echo '<label class="clearfix">';
