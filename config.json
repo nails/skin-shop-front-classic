@@ -17,7 +17,6 @@
 		"email": "hello@shedcollective.org"
 	},
 	"assets": [
-		"bower_components/skeuocard/styles/skeuocard.css",
 		"bower_components/social-likes/social-likes_classic.css",
 		"css/styles.css",
 		"bower_components/jquery-zoom/jquery.zoom.min.js",
