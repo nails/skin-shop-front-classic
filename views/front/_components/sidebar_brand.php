@@ -8,8 +8,8 @@
         echo '</div>';
     }
 
-    $this->load->view($skin_front->path . 'views/front/_components/sidebar_searchform');
-    $this->load->view($skin_front->path . 'views/front/_components/sidebar_filters');
+    $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
+    $this->load->view($skin->path . 'views/front/_components/sidebar_filters');
 
 ?>
 </div>

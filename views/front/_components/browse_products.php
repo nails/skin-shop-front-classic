@@ -7,7 +7,7 @@
             $productsPerRow = array();
             $class          = array();
             $counter        = 0;
-            $rowOpen        = FALSE;
+            $rowOpen        = false;
 
             $productsPerRow['lg'] = 4;
             $productsPerRow['md'] = 4;
@@ -21,7 +21,7 @@
 
             // --------------------------------------------------------------------------
 
-            $this->load->view($skin_front->path . 'views/front/_components/browse_sorter');
+            $this->load->view($skin->path . 'views/front/_components/browse_sorter');
 
             // --------------------------------------------------------------------------
 
@@ -29,20 +29,20 @@
 
                 if (empty($rowOpen)) {
 
-                    $rowOpen = TRUE;
+                    $rowOpen = true;
                     echo '<div class="row">';
                 }
 
                 echo '<div class="product ' . implode(' ', $class) . '">';
 
-                    $this->load->view($skin_front->path . 'views/front/_components/browse_products_single', array('product' => $product));
+                    $this->load->view($skin->path . 'views/front/_components/browse_products_single', array('product' => $product));
 
                 echo '</div>';
 
 
                 if ($counter % $productsPerRow['lg'] == $productsPerRow['lg'] - 1) {
 
-                    $rowOpen = FALSE;
+                    $rowOpen = false;
                     echo '</div>';
                 }
 
@@ -51,15 +51,15 @@
 
             if (!empty($rowOpen)) {
 
-                $rowOpen = FALSE;
+                $rowOpen = false;
                 echo '</div>';
             }
 
             // --------------------------------------------------------------------------
 
             echo '<hr />';
-            $this->load->view($skin_front->path . 'views/front/_components/browse_sorter');
-            $this->load->view($skin_front->path . 'views/front/_components/browse_pagination');
+            $this->load->view($skin->path . 'views/front/_components/browse_sorter');
+            $this->load->view($skin->path . 'views/front/_components/browse_pagination');
 
         } else {
 

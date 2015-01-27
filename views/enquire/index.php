@@ -1,179 +1,170 @@
 <?php
 
-	if ( $this->input->get( 'is_fancybox' ) ) :
+    if ($this->input->get('is_fancybox')) {
 
-		echo '<style type="text/css">';
-			echo 'body,html { background:transparent; }';
-		echo '</style>';
-		echo '<div class="container">';
+        echo '<style type="text/css">';
+            echo 'body,html { background:transparent; }';
+        echo '</style>';
+        echo '<div class="container">';
+    }
 
-	endif;
+    ?>
+    <div class="row">
+        <?php
 
-	?>
-	<div class="row">
-		<?php
+            if ($variant) {
 
-			if ( $variant)	:
+                echo '<div class="col-xs-3">';
 
-				echo '<div class="col-xs-3">';
+                    if ($variant->featured_img) {
 
-					if ( $variant->featured_img ) :
+                        $url = cdn_thumb($variant->featured_img, 800, 800);
 
-						$_url = cdn_thumb( $variant->featured_img, 800, 800 );
+                    } elseif ($product->featured_img) {
 
-					elseif ( $product->featured_img ) :
+                        $url = cdn_thumb($product->featured_img, 800, 800);
 
-						$_url = cdn_thumb( $product->featured_img, 800, 800 );
+                    } else {
 
-					else :
+                        $url = $skin->url . 'assets/img/product-no-image.png';
+                    }
 
-						$_url = $skin_front->url . 'assets/img/product-no-image.png';
+                    echo '<img src="' . $url . '" class="img-responsive img-thumbnail" />';
 
-					endif;
+                echo '</div>';
+                echo '<div class="col-xs-9">';
 
-					echo '<img src="' . $_url . '" class="img-responsive img-thumbnail" />';
+            } else {
 
-				echo '</div>';
-				echo '<div class="col-xs-9">';
+                echo '<div class="col-md-12">';
+            }
 
-			else :
+            echo '<p>';
+                echo '<strong>' . $product->label . '</strong>';
+            echo '</p>';
+            echo '<p>';
+                echo 'Complete the form below as fully as you can and one of the team will get back in touch to discuss your delivery options. Your details will only be used for the purposes of contacting you with regards this item.';
+            echo '</p>';
 
-				echo '<div class="col-md-12">';
+            echo '<hr />';
 
-			endif;
+            if ($this->input->get('is_fancybox') && !empty($error)) {
 
-			echo '<p>';
-				echo '<strong>' . $product->label . '</strong>';
-			echo '</p>';
-			echo '<p>';
-				echo 'Complete the form below as fully as you can and one of the team will get back in touch to discuss your delivery options. Your details will only be used for the purposes of contacting you with regards this item.';
-			echo '</p>';
+                echo '<p class="alert alert-danger">';
+                    echo $error;
+                echo '</p>';
+            }
 
-			echo '<hr />';
+            ?>
+            <div class="row">
+                <div class="col-xs-12">
+                    <?php
 
-			if ( $this->input->get( 'is_fancybox' ) && ! empty( $error ) ) :
+                        if (!empty($success)) {
 
-				echo '<p class="alert alert-danger">';
-					echo $error;
-				echo '</p>';
+                            echo '<p class="alert alert-success">';
+                                echo '<strong>Success!</strong> Your enquiry was received successfully.';
+                            echo '</p>';
+                            echo '<p>';
+                                echo 'Thank you for your enquiry, we will get back to you as soon as we can.';
+                            echo '</p>';
 
-			endif;
+                        } else {
 
-			?>
-			<div class="row">
-				<div class="col-xs-12">
-					<?php
+                            $get = $this->input->get('is_fancybox') ? '?is_fancybox=1' : '';
 
-						if ( ! empty( $success ) ) :
+                            echo form_open(uri_string() . $get);
 
-							echo '<p class="alert alert-success">';
-								echo '<strong>Success!</strong> Your enquiry was received successfully.';
-							echo '</p>';
-							echo '<p>';
-								echo 'Thank you for your enquiry, we will get back to you as soon as we can.';
-							echo '</p>';
+                                ?>
+                                <div class="well well-sm">
+                                    <div class="form-horizontal">
+                                        <?php
 
-						else :
+                                            echo form_hidden('product_id', $product->id);
 
-							$_get = $this->input->get( 'is_fancybox' ) ? '?is_fancybox=1' : '';
+                                            $options = array();
+                                            foreach ($product->variations as $v) {
 
-							echo form_open( uri_string() . $_get );
+                                                if ($v->shipping->collection_only) {
 
-								?>
-								<div class="well well-sm">
-									<div class="form-horizontal">
-										<?php
+                                                    $options[$v->id] = $v->label;
+                                                }
+                                            }
 
-											echo form_hidden( 'product_id', $product->id );
+                                            echo' <div class="form-group">';
+                                                echo' <label class="col-xs-3 control-label">Item*</label>';
+                                                echo' <div class="col-xs-9">';
+                                                    echo' <select name="variant_id" class="form-control">';
 
-											$_options = array();
-											foreach ( $product->variations as $v ) :
+                                                        foreach ($options as $v_id => $v_label) {
 
-												if ( $v->shipping->collection_only ) :
+                                                            echo '<option value="' . $v_id . '">';
+                                                                echo $v_label;
+                                                            echo '</option>';
+                                                        }
 
-													$_options[$v->id] = $v->label;
+                                                    echo '</select>';
+                                                echo '</div>';
+                                            echo '</div>';
 
-												endif;
+                                        ?>
+                                        <div class="form-group <?=form_error('name') ? 'has-error' : ''?>">
+                                            <label class="col-xs-3 control-label">Name*</label>
+                                            <div class="col-xs-9">
+                                                <input name="name" type="text" class="form-control" placeholder="Your name" value="<?=set_value('name', active_user('first_name,last_name'))?>">
+                                                <?=form_error('name', '<p class="help-block">', '</p>')?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group <?=form_error('email') ? 'has-error' : ''?>">
+                                            <label class="col-xs-3 control-label">Email*</label>
+                                            <div class="col-xs-9">
+                                                <input name="email" type="email" class="form-control" placeholder="Email" value="<?=set_value('email', active_user('email'))?>">
+                                                <?=form_error('email', '<p class="help-block">', '</p>')?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group <?=form_error('telephone') ? 'has-error' : ''?>">
+                                            <label class="col-xs-3 control-label">Telephone</label>
+                                            <div class="col-xs-9">
+                                                <input name="telephone" type="text" class="form-control" placeholder="Your telephone number" value="<?=set_value('telephone')?>">
+                                                <?=form_error('telephone', '<p class="help-block">', '</p>')?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group <?=form_error('address') ? 'has-error' : ''?>">
+                                            <label class="col-xs-3 control-label">Address*</label>
+                                            <div class="col-xs-9">
+                                                <textarea name="address" type="text" class="form-control" placeholder="Your address (including postcode)"><?=set_value('address')?></textarea>
+                                                <?=form_error('address', '<p class="help-block">', '</p>')?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group <?=form_error('notes') ? 'has-error' : ''?>">
+                                            <label class="col-xs-3 control-label">Notes</label>
+                                            <div class="col-xs-9">
+                                                <textarea name="notes" type="text" class="form-control" placeholder="Any details about delivery we should know about (e.g stairs)"><?=set_value('notes')?></textarea>
+                                                <?=form_error('notes', '<p class="help-block">', '</p>')?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-center">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        Send Enquiry
+                                    </button>
+                                </p>
+                                <?php
 
-											endforeach;
+                            echo form_close();
+                        }
 
-											echo' <div class="form-group">';
-												echo' <label class="col-xs-3 control-label">Item*</label>';
-												echo' <div class="col-xs-9">';
-													echo' <select name="variant_id" class="form-control">';
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 
-														foreach ( $_options as $v_id => $v_label ) :
+    if ($this->input->get('is_fancybox')) {
 
-															echo '<option value="' . $v_id . '">';
-																echo $v_label;
-															echo '</option>';
-
-														endforeach;
-
-													echo '</select>';
-												echo '</div>';
-											echo '</div>';
-
-										?>
-										<div class="form-group <?=form_error( 'name' ) ? 'has-error' : ''?>">
-											<label class="col-xs-3 control-label">Name*</label>
-											<div class="col-xs-9">
-												<input name="name" type="text" class="form-control" placeholder="Your name" value="<?=set_value( 'name', active_user( 'first_name,last_name' ) )?>">
-												<?=form_error( 'name', '<p class="help-block">', '</p>' )?>
-											</div>
-										</div>
-										<div class="form-group <?=form_error( 'email' ) ? 'has-error' : ''?>">
-											<label class="col-xs-3 control-label">Email*</label>
-											<div class="col-xs-9">
-												<input name="email" type="email" class="form-control" placeholder="Email" value="<?=set_value( 'email', active_user( 'email' ) )?>">
-												<?=form_error( 'email', '<p class="help-block">', '</p>' )?>
-											</div>
-										</div>
-										<div class="form-group <?=form_error( 'telephone' ) ? 'has-error' : ''?>">
-											<label class="col-xs-3 control-label">Telephone</label>
-											<div class="col-xs-9">
-												<input name="telephone" type="text" class="form-control" placeholder="Your telephone number" value="<?=set_value( 'telephone' )?>">
-												<?=form_error( 'telephone', '<p class="help-block">', '</p>' )?>
-											</div>
-										</div>
-										<div class="form-group <?=form_error( 'address' ) ? 'has-error' : ''?>">
-											<label class="col-xs-3 control-label">Address*</label>
-											<div class="col-xs-9">
-												<textarea name="address" type="text" class="form-control" placeholder="Your address (including postcode)"><?=set_value( 'address' )?></textarea>
-												<?=form_error( 'address', '<p class="help-block">', '</p>' )?>
-											</div>
-										</div>
-										<div class="form-group <?=form_error( 'notes' ) ? 'has-error' : ''?>">
-											<label class="col-xs-3 control-label">Notes</label>
-											<div class="col-xs-9">
-												<textarea name="notes" type="text" class="form-control" placeholder="Any details about delivery we should know about (e.g stairs)"><?=set_value( 'notes' )?></textarea>
-												<?=form_error( 'notes', '<p class="help-block">', '</p>' )?>
-											</div>
-										</div>
-									</div>
-								</div>
-								<p class="text-center">
-									<button type="submit" class="btn btn-success btn-lg">
-										Send Enquiry
-									</button>
-								</p>
-								<?php
-
-							echo form_close();
-
-							endif;
-
-					?>
-				</div>
-			</div>
-		</div>
-	</div>
-	<?php
-
-	if ( $this->input->get( 'is_fancybox' ) ) :
-
-		echo '</div>';
-
-	endif;
+        echo '</div>';
+    }
 
 ?>

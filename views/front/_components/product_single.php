@@ -19,16 +19,16 @@
         echo '<div class="col-md-4">';
 
             //  Featured Image
-            $featured_img = array('url' => '', 'thumb' => '');
+            $featuredImg = array('url' => '', 'thumb' => '');
 
             if ($product->featured_img) {
 
-                $featured_img['url']   = cdn_serve($product->featured_img);
-                $featured_img['thumb'] = cdn_thumb($product->featured_img, 800, 800);
+                $featuredImg['url']   = cdn_serve($product->featured_img);
+                $featuredImg['thumb'] = cdn_thumb($product->featured_img, 800, 800);
 
             } else {
 
-                $featured_img['thumb'] = $skin_front->url . 'assets/img/product-no-image.png';
+                $featuredImg['thumb'] = $skin->url . 'assets/img/product-no-image.png';
             }
 
             // --------------------------------------------------------------------------
@@ -40,7 +40,7 @@
                 $gallery[] = array(
                     'url'   => cdn_serve($object_id),
                     'thumb' => cdn_thumb($object_id, 800, 800)
-                );
+               );
             }
 
             // --------------------------------------------------------------------------
@@ -59,14 +59,19 @@
                         echo '<div class="col-xs-12">';
                     }
 
-                        if (!empty($featured_img['url'])) {
+                        if (!empty($featuredImg['url'])) {
 
-                            echo '<a href="' . $featured_img['url'] . '" class="featured-img-link">';
+                            echo '<a href="' . $featuredImg['url'] . '" class="featured-img-link">';
                         }
 
-                        echo img(array('src' => $featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
+                        echo img(
+                            array(
+                                'src' => $featuredImg['thumb'],
+                                'class' => 'img-responsive img-thumbnail featured-img-img'
+                            )
+                        );
 
-                        if (!empty($featured_img['url'])) {
+                        if (!empty($featuredImg['url'])) {
 
                             echo '</a>';
                         }
@@ -74,28 +79,35 @@
                     echo '</div>';
 
                     if ($gallery) {
-                    echo '<div class="gallery-scroll gallery-xs-sm">';
 
-                        foreach ($gallery as $item) {
+                        echo '<div class="gallery-scroll gallery-xs-sm">';
 
-                            echo '<div class="text-center gallery-item">';
+                            foreach ($gallery as $item) {
 
-                            if (!empty($item['url'])) {
+                                echo '<div class="text-center gallery-item">';
 
-                                echo '<a href="' . $item['url'] . '" class="gallery-link">';
+                                if (!empty($item['url'])) {
+
+                                    echo '<a href="' . $item['url'] . '" class="gallery-link">';
+                                }
+
+                                echo img(
+                                    array(
+                                        'src' => $item['thumb'],
+                                        'class' => 'center-block img-responsive img-thumbnail gallery-img'
+                                    )
+                                );
+
+                                if (!empty($item['url'])) {
+
+                                    echo '</a>';
+                                }
+
+                                echo '</div>';
                             }
 
-                            echo img(array('src' => $item['thumb'], 'class' => 'center-block img-responsive img-thumbnail gallery-img'));
+                        echo '</div>';
 
-                            if (!empty($item['url'])) {
-
-                                echo '</a>';
-                            }
-
-                            echo '</div>';
-                        }
-
-                    echo '</div>';
                     }
 
                 echo '</div>';
@@ -107,14 +119,14 @@
 
                 echo '<div class="text-center featured-image-md-lg">';
 
-                    if (!empty($featured_img['url'])) {
+                    if (!empty($featuredImg['url'])) {
 
-                        echo '<a href="' . $featured_img['url'] . '" class="featured-img-link" target="_blank">';
+                        echo '<a href="' . $featuredImg['url'] . '" class="featured-img-link" target="_blank">';
                     }
 
-                    echo img(array('src' => $featured_img['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
+                    echo img(array('src' => $featuredImg['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
 
-                    if (!empty($featured_img['url'])) {
+                    if (!empty($featuredImg['url'])) {
 
                         echo '</a>';
                     }
@@ -256,13 +268,13 @@
             //  Social Likes
 
             //  Defaults
-            $layout       = '';
-            $single_title = app_setting('social_layout_single_text', 'shop-' . $skin_front->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin_front->slug) : 'Share';
-            $counters     = app_setting('social_counters', 'shop-' . $skin_front->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
-            $twitter_via  = app_setting('social_twitter_via', 'shop-' . $skin_front->slug) ? app_setting('social_twitter_via', 'shop-' . $skin_front->slug) : '';
+            $layout      = '';
+            $singleTitle = app_setting('social_layout_single_text', 'shop-' . $skin->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin->slug) : 'Share';
+            $counters    = app_setting('social_counters', 'shop-' . $skin->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
+            $twitterVia  = app_setting('social_twitter_via', 'shop-' . $skin->slug) ? app_setting('social_twitter_via', 'shop-' . $skin->slug) : '';
 
             //  Layout
-            switch (app_setting('social_layout', 'shop-' . $skin_front->slug)) {
+            switch (app_setting('social_layout', 'shop-' . $skin->slug)) {
 
                 case 'HORIZONTAL':
 
@@ -281,16 +293,16 @@
             }
 
             $enabled   = array();
-            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin_front->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
-            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin_front->slug) ? '<div class="twitter" data-via="' . $twitter_via . '" title="Share link on Twitter">Twitter</div>' : '';
-            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin_front->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin_front->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
+            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
+            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
+            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
 
             $enabled = array_filter($enabled);
 
             if ($enabled) {
 
-                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $single_title . '" data-title="' . $product->label . '">';
+                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $singleTitle . '" data-title="' . $product->label . '">';
                 foreach ($enabled as $enabled) {
 
                     echo $enabled;
@@ -362,29 +374,29 @@
                             } else {
 
                                 //  Calculate quantity ranges
-                                $max_per_order = $product->type->max_per_order;
-                                $available     = $variant->quantity_available;
+                                $maxPerOrder = $product->type->max_per_order;
+                                $available   = $variant->quantity_available;
 
                                 //  Number of items to show if the quantity is "unlimited"
                                 $unlimited = 10;
 
-                                if (is_null($available) && empty($max_per_order)) {
+                                if (is_null($available) && empty($maxPerOrder)) {
 
                                     //  Unlimited quantity available, with no maximum per order
                                     $range = array_combine(range(1, $unlimited), range(1, $unlimited));
 
-                                } elseif (is_null($available) && !empty($max_per_order)) {
+                                } elseif (is_null($available) && !empty($maxPerOrder)) {
 
                                     //  Unlimited quantity available, with maximum per order
-                                    $range = array_combine(range(1, $max_per_order), range(1, $max_per_order));
+                                    $range = array_combine(range(1, $maxPerOrder), range(1, $maxPerOrder));
 
-                                } elseif (is_numeric($available) && !empty($max_per_order)) {
+                                } elseif (is_numeric($available) && !empty($maxPerOrder)) {
 
                                     //  Limited quantity available, with maximum per order
-                                    if ($available >= $max_per_order) {
+                                    if ($available >= $maxPerOrder) {
 
                                         //  There are more available than the maximum per order
-                                        $range = array_combine(range(1, $max_per_order), range(1, $max_per_order));
+                                        $range = array_combine(range(1, $maxPerOrder), range(1, $maxPerOrder));
 
                                     } else {
 
@@ -392,7 +404,7 @@
                                         $range = array_combine(range(1, $available), range(1, $available));
                                     }
 
-                                } elseif (is_numeric($available) && empty($max_per_order)) {
+                                } elseif (is_numeric($available) && empty($maxPerOrder)) {
 
                                     //  Limited quantity available, with no maximum per order
                                     $range = array_combine(range(1, $available), range(1, $available));
@@ -428,7 +440,7 @@
                                                     echo $variant->price->price->user_formatted->value;
                                                 echo '</p>';
 
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
                                                     echo '<p class="text-muted">';
                                                         echo '<small>';
@@ -443,7 +455,7 @@
                                                     echo $variant->price->price->user_formatted->value;
                                                 echo '</p>';
 
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
                                                     echo '<p class="text-muted">';
                                                         echo '<small>';
@@ -498,14 +510,13 @@
                                                     echo $variant->price->price->user_formatted->value;
                                                 echo '</p>';
 
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
                                                     echo '<p class="text-muted">';
                                                         echo '<small>';
                                                             echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
                                                         echo '</small>';
                                                     echo '</p>';
-
                                                 }
 
                                             } else {
@@ -514,7 +525,7 @@
                                                     echo $variant->price->price->user_formatted->value;
                                                 echo '</p>';
 
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin_front->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
                                                     echo '<p class="text-muted">';
                                                         echo '<small>';
@@ -633,7 +644,12 @@
                                         $url = cdn_blank_avatar(250, 250, $review->user->gender);
                                     }
 
-                                    echo img(array('src' => $url, 'class="img-responsive img-thumbnail img-circle"'));
+                                    echo img(
+                                        array(
+                                            'src' => $url,
+                                            'class="img-responsive img-thumbnail img-circle"'
+                                        )
+                                    );
 
                                 echo '</div>';
                                 echo '<div class="col-xs-10">';

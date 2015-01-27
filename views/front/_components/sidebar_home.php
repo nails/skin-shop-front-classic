@@ -2,7 +2,7 @@
 <div class="sidebar-home col-md-3 col-md-pull-9">
 <?php
 
-    $this->load->view($skin_front->path . 'views/front/_components/sidebar_searchform');
+    $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
 
     echo '<ul class="list-group">';
 
@@ -12,7 +12,7 @@
                 echo '<h3 class="list-group-item-heading">Categories</h3>';
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin->slug);
 
                     foreach ($categories as $category) {
 
@@ -36,7 +36,7 @@
                 echo '<h3 class="list-group-item-heading">Brands</h3>';
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = app_setting('hide_empty_brands', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_brands', 'shop-' . $skin->slug);
 
                     foreach ($brands as $brand) {
 
@@ -60,7 +60,7 @@
                 echo '<h3 class="list-group-item-heading">Ranges</h3>';
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = app_setting('hide_empty_ranges', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_ranges', 'shop-' . $skin->slug);
 
                     foreach ($ranges as $range) {
 
@@ -84,7 +84,7 @@
                 echo '<h3 class="list-group-item-heading">Collections</h3>';
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = app_setting('hide_empty_collections', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_collections', 'shop-' . $skin->slug);
 
                     foreach ($collections as $collection) {
 

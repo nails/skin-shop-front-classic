@@ -1,7 +1,7 @@
 <div class="sidebar-filter col-md-3 col-md-pull-9 hidden-xs hidden-sm">
     <?php
 
-        $this->load->view($skin_front->path . 'views/front/_components/sidebar_searchform');
+        $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
 
     ?>
     <ul class="list-group">
@@ -25,7 +25,6 @@
 
                     foreach ($category->breadcrumbs as $crumb) {
 
-
                         if ($crumb->id == $category->id) {
 
                             echo '<li class="level-' . $indent . ' current">';
@@ -42,7 +41,7 @@
                         $indent++;
                     }
 
-                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin->slug);
 
                     foreach ($category->children as $crumb) {
 
@@ -59,7 +58,7 @@
                     //  Bring the indent back down a level
                     $indent--;
 
-                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin_front->slug);
+                    $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin->slug);
 
                     foreach ($category_siblings as $crumb) {
 
@@ -80,7 +79,7 @@
     </ul>
     <?php
 
-        $this->load->view($skin_front->path . 'views/front/_components/sidebar_filters');
+        $this->load->view($skin->path . 'views/front/_components/sidebar_filters');
 
     ?>
 </div>

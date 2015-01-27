@@ -21,22 +21,21 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $_crumbs    = array();
-
-            $_crumbs[]  = array(
-                'id'    => NULL,
+            $crumbs    = array();
+            $crumbs[]  = array(
+                'id'    => null,
                 'label' => 'Brands',
-                'url'   => app_setting('page_brand_listing', 'shop') ? $shop_url . 'brand' : NULL
+                'url'   => app_setting('page_brand_listing', 'shop') ? $shop_url . 'brand' : null
             );
 
-            $_crumbs[]  = array(
+            $crumbs[]  = array(
                 'id'    => $brand->id,
                 'label' => $brand->label,
                 'url'   => $brand->url
             );
 
-            $view = $skin_front->path . 'views/front/_components/browse_breadcrumb';
-            $data = array('crumbs' => $_crumbs, 'active_id' => $brand->id);
+            $view = $skin->path . 'views/front/_components/browse_breadcrumb';
+            $data = array('crumbs' => $crumbs, 'active_id' => $brand->id);
 
             $this->load->view($view, $data);
 

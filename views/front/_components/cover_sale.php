@@ -21,8 +21,7 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $crumbs = array();
-
+            $crumbs     = array();
             $crumbs[]   = array(
                 'id'    => NULL,
                 'label' => 'Sales',
@@ -35,7 +34,7 @@
                 'url'   => $sale->url
             );
 
-            $view = $skin_front->path . 'views/front/_components/browse_breadcrumb';
+            $view = $skin->path . 'views/front/_components/browse_breadcrumb';
             $data = array('crumbs' => $crumbs, 'active_id' => $sale->id);
             $this->load->view($view, $data);
 
