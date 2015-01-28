@@ -14,7 +14,7 @@
 
             echo '<div class="background collection" ' . $style . '>';
                 echo '<div class="overlay">';
-                    echo '<h2>' . $collection->label . '</h2>';
+                    echo '<h1>' . $collection->label . '</h1>';
                 echo '</div>';
             echo '</div>';
 

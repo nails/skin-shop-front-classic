@@ -1,14 +1,22 @@
-<div class="product col-xs-12">
+<div class="product col-xs-12" itemscope itemtype="http://schema.org/Product">
+    <meta itemprop="url" content="<?=$product->url?>">
+    <div itemprop="seller" itemscope itemtype="http://schema.org/Organisation">
+        <meta itemprop="name" content="<?=lang( 'site_title' )?>">
+        <meta itemprop="address" content="<?=app_setting('invoice_address', 'shop')?>">
+        <meta itemprop="vatID" content="<?=app_setting('invoice_vat_no', 'shop')?>">
+    </div>
 <?php
 
     echo '<div class="product-label">';
-        echo '<h3 class="text-center hidden-md hidden-lg">';
-            echo $product->label;
-        echo '</h3>';
+        echo '<h1 class="text-center hidden-md hidden-lg">';
+            echo '<span itemprop="name">';
+                echo $product->label;
+            echo '</span>';
+        echo '</h1>';
 
-        echo '<h3 class="hidden-xs hidden-sm">';
+        echo '<h1 class="hidden-xs hidden-sm">';
             echo $product->label;
-        echo '</h3>';
+        echo '</h1>';
     echo '</div>';
 
     echo '<hr />';
@@ -25,6 +33,7 @@
 
                 $featuredImg['url']   = cdn_serve($product->featured_img);
                 $featuredImg['thumb'] = cdn_thumb($product->featured_img, 800, 800);
+                echo '<meta itemprop="image" content="' . cdn_thumb($product->featured_img, 800, 800) . '" />';
 
             } else {
 
@@ -260,7 +269,9 @@
 
             //  Description
             echo '<div class="product-description">';
-                echo $product->description;
+                echo '<span itemprop="description">';
+                    echo $product->description;
+                echo '</span>';
             echo '</div>';
 
             // --------------------------------------------------------------------------
@@ -350,20 +361,24 @@
 
                         if (!empty($variant->gallery)) {
 
-                            echo '<tr class="variant has-img" data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
+                            echo '<tr class="variant has-img" data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
 
                         } else {
 
-                            echo '<tr class="variant">';
+                            echo '<tr class="variant" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
                         }
 
                             if ($product->is_external) {
 
                                 echo '<td>';
-                                    echo '<p>' . $variant->label . '</p>';
+                                    echo '<p itemprop="itemOffered">' . $variant->label . '</p>';
+                                    echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
+                                    if (!empty($variant->gallery)) {
+                                        echo '<meta itemprop="image" content="' . cdn_thumb($variant->gallery[0], 800, 800) . '" />';
+                                    }
                                 echo '</td>';
                                 echo '<td>';
-                                    echo '<p>' . $variant->price->price->user_formatted->value . '</p>';
+                                    echo '<p itemprop="price">' . $variant->price->price->user_formatted->value . '</p>';
                                 echo '</td>';
                                 echo '<td>';
                                     echo '<p>';
@@ -422,7 +437,11 @@
                                         echo '<td>';
                                             echo '<p>';
 
-                                                echo $variant->label;
+                                                echo '<span itemprop="itemOffered">' . $variant->label . '</span>';
+                                                echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
+                                                if (!empty($product->gallery)) {
+                                                    echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                                }
 
                                                 if ($variant->shipping->collection_only) {
 
@@ -437,7 +456,7 @@
 
                                                 //  Product prices include taxes
                                                 echo '<p>';
-                                                    echo $variant->price->price->user_formatted->value;
+                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                                 echo '</p>';
 
                                                 if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
@@ -452,7 +471,7 @@
                                             } else {
 
                                                 echo '<p>';
-                                                    echo $variant->price->price->user_formatted->value;
+                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                                 echo '</p>';
 
                                                 if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
@@ -495,6 +514,10 @@
 
                                         echo '<td>';
                                             echo '<p>' . $variant->label . '</p>';
+                                            echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
+                                            if (!empty($product->gallery)) {
+                                                echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                            }
                                             echo '<p class="text-muted">';
                                                 echo '<small>';
                                                     echo '<em>Lead time: ' . $variant->lead_time . '</em>';
@@ -507,7 +530,7 @@
 
                                                 //  Product prices include taxes
                                                 echo '<p>';
-                                                    echo $variant->price->price->user_formatted->value;
+                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                                 echo '</p>';
 
                                                 if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
@@ -522,7 +545,7 @@
                                             } else {
 
                                                 echo '<p>';
-                                                    echo $variant->price->price->user_formatted->value;
+                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                                 echo '</p>';
 
                                                 if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
@@ -565,13 +588,17 @@
 
                                         echo '<td>';
                                             echo '<p><strike>' . $variant->label . '</strike></p>';
+                                            echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
+                                            if (!empty($product->gallery)) {
+                                                echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                            }
                                         echo '</td>';
                                         echo '<td>';
-                                            echo '<p><strike>' . $variant->price->price->user_formatted->value . '</strike></p>';
+                                            echo '<p><strike><span itemprop="price">' . $variant->price->price->user_formatted->value . '</span></strike></p>';
                                         echo '</td>';
                                         echo '<td>';
                                             echo '<p>';
-                                                echo '<em>Out of Stock!</em>';
+                                                echo '<em><span itemprop="availability">Out of Stock</span></em>';
                                                 echo anchor($shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"');
                                             echo '</p>';
                                         echo '</td>';
@@ -581,6 +608,7 @@
                             }
 
                         echo '</tr>';
+
                     }
 
                     echo '</tbody>';

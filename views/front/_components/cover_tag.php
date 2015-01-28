@@ -14,7 +14,7 @@
 
             echo '<div class="background tag" ' . $style . '>';
                 echo '<div class="overlay">';
-                    echo '<h2>' . $tag->label . '</h2>';
+                    echo '<h1>' . $tag->label . '</h1>';
                 echo '</div>';
             echo '</div>';
 

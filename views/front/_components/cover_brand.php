@@ -14,7 +14,7 @@
 
             echo '<div class="background brand" ' . $style . '>';
                 echo '<div class="overlay">';
-                    echo '<h2>' . $brand->label . '</h2>';
+                    echo '<h1>' . $brand->label . '</h1>';
                 echo '</div>';
             echo '</div>';
 

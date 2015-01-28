@@ -14,7 +14,7 @@
 
             echo '<div class="background sale" ' . $style . '>';
                 echo '<div class="overlay">';
-                    echo '<h2>' . $sale->label . '</h2>';
+                    echo '<h1>' . $sale->label . '</h1>';
                 echo '</div>';
             echo '</div>';
 
