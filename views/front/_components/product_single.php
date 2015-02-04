@@ -701,7 +701,7 @@
                                     echo auto_typography($review->body);
                                     echo '<p>';
                                         echo '<small>';
-                                            echo '<em>' . user_datetime($review->created) . '</em>';
+                                            echo '<em>' . userDatetime($review->created) . '</em>';
                                         echo '</small>';
                                     echo '</p>';
                                 echo '</div>';

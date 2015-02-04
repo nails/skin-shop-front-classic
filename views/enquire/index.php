@@ -1,6 +1,6 @@
 <?php
 
-    if ($this->input->get('is_fancybox')) {
+    if ($this->input->get('isFancybox')) {
 
         echo '<style type="text/css">';
             echo 'body,html { background:transparent; }';
@@ -48,7 +48,7 @@
 
             echo '<hr />';
 
-            if ($this->input->get('is_fancybox') && !empty($error)) {
+            if ($this->input->get('isFancybox') && !empty($error)) {
 
                 echo '<p class="alert alert-danger">';
                     echo $error;
@@ -71,7 +71,7 @@
 
                         } else {
 
-                            $get = $this->input->get('is_fancybox') ? '?is_fancybox=1' : '';
+                            $get = $this->input->get('isFancybox') ? '?isFancybox=1' : '';
 
                             echo form_open(uri_string() . $get);
 
@@ -162,7 +162,7 @@
     </div>
     <?php
 
-    if ($this->input->get('is_fancybox')) {
+    if ($this->input->get('isFancybox')) {
 
         echo '</div>';
     }

@@ -1,6 +1,6 @@
 <?php
 
-    if ($this->input->get('is_fancybox')) {
+    if ($this->input->get('isFancybox')) {
 
         echo '<style type="text/css">';
             echo 'body,html { background:transparent; }';
@@ -74,7 +74,7 @@
             <hr />
             <?php
 
-                $_get = $this->input->get('is_fancybox') ? '?is_fancybox=1' : '';
+                $_get = $this->input->get('isFancybox') ? '?isFancybox=1' : '';
 
                 echo form_open(uri_string() . $_get);
 
@@ -96,7 +96,7 @@
     </div>
     <?php
 
-    if ($this->input->get('is_fancybox')) {
+    if ($this->input->get('isFancybox')) {
 
         echo '</div>';
     }
