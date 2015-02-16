@@ -6,7 +6,7 @@
 
                 //  Prepare the breadcrumbs
                 $crumbs    = array();
-                $crumbs[]  = array(
+                $crumbs[] = array(
                     'id'    => null,
                     'label' => 'Collections',
                     'url'   => $shop_url . 'collection'

@@ -21,14 +21,14 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $crumbs     = array();
-            $crumbs[]   = array(
+            $crumbs   = array();
+            $crumbs[] = array(
                 'id'    => null,
                 'label' => 'Tags',
                 'url'   => app_setting('page_tag_listing', 'shop') ? $shop_url . 'tag' : null
             );
 
-            $crumbs[]   = array(
+            $crumbs[] = array(
                 'id'    => $tag->id,
                 'label' => $tag->label,
                 'url'   => $tag->url

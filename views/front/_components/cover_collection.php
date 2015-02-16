@@ -21,14 +21,14 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $crumbs     = array();
-            $crumbs[]   = array(
+            $crumbs   = array();
+            $crumbs[] = array(
                 'id'    => NULL,
                 'label' => 'Collections',
                 'url'   => app_setting('page_collection_listing', 'shop') ? $shop_url . 'collection' : NULL
             );
 
-            $crumbs[]   = array(
+            $crumbs[] = array(
                 'id'    => $collection->id,
                 'label' => $collection->label,
                 'url'   => $collection->url

@@ -21,14 +21,14 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $crumbs    = array();
-            $crumbs[]  = array(
+            $crumbs   = array();
+            $crumbs[] = array(
                 'id'    => null,
                 'label' => 'Brands',
                 'url'   => app_setting('page_brand_listing', 'shop') ? $shop_url . 'brand' : null
             );
 
-            $crumbs[]  = array(
+            $crumbs[] = array(
                 'id'    => $brand->id,
                 'label' => $brand->label,
                 'url'   => $brand->url

@@ -21,14 +21,14 @@
             // --------------------------------------------------------------------------
 
             //  Prepare the breadcrumbs
-            $crumbs     = array();
-            $crumbs[]   = array(
+            $crumbs   = array();
+            $crumbs[] = array(
                 'id'    => NULL,
                 'label' => 'Ranges',
                 'url'   => app_setting('page_range_listing', 'shop') ? $shop_url . 'range' : NULL
             );
 
-            $crumbs[]   = array(
+            $crumbs[] = array(
                 'id'    => $range->id,
                 'label' => $range->label,
                 'url'   => $range->url

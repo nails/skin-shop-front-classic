@@ -13,7 +13,7 @@
 
                 echo '<li class="crumb">';
 
-                    if ($crumb['id'] == $active_id) {
+                    if ($crumb['id'] == $active_id || empty($crumb['url'])) {
 
                         echo $crumb['label'];
 

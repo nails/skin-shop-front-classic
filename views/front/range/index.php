@@ -5,8 +5,8 @@
             <?php
 
                 //  Prepare the breadcrumbs
-                $crumbs     = array();
-                $crumbs[]   = array(
+                $crumbs   = array();
+                $crumbs[] = array(
                     'id'    => null,
                     'label' => 'Ranges',
                     'url'   => $shop_url . 'range'
