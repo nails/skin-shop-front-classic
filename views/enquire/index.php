@@ -111,14 +111,14 @@
                                         <div class="form-group <?=form_error('name') ? 'has-error' : ''?>">
                                             <label class="col-xs-3 control-label">Name*</label>
                                             <div class="col-xs-9">
-                                                <input name="name" type="text" class="form-control" placeholder="Your name" value="<?=set_value('name', active_user('first_name,last_name'))?>">
+                                                <input name="name" type="text" class="form-control" placeholder="Your name" value="<?=set_value('name', activeUser('first_name,last_name'))?>">
                                                 <?=form_error('name', '<p class="help-block">', '</p>')?>
                                             </div>
                                         </div>
                                         <div class="form-group <?=form_error('email') ? 'has-error' : ''?>">
                                             <label class="col-xs-3 control-label">Email*</label>
                                             <div class="col-xs-9">
-                                                <input name="email" type="email" class="form-control" placeholder="Email" value="<?=set_value('email', active_user('email'))?>">
+                                                <input name="email" type="email" class="form-control" placeholder="Email" value="<?=set_value('email', activeUser('email'))?>">
                                                 <?=form_error('email', '<p class="help-block">', '</p>')?>
                                             </div>
                                         </div>

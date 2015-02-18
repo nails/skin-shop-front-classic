@@ -80,7 +80,7 @@
 
                     ?>
                     <div class="well well-sm">
-                        <?=form_email('email', active_user('email'), 'class="form-control" placeholder="Your email address"')?>
+                        <?=form_email('email', activeUser('email'), 'class="form-control" placeholder="Your email address"')?>
                     </div>
                     <p class="text-center">
                         <button type="submit" class="btn btn-success btn-lg">
