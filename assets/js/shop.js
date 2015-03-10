@@ -30,6 +30,14 @@ _nails_skin_shop_front_classic = function()
 
 		// --------------------------------------------------------------------------
 
+		//	Sidebar lists
+		if ( $( '.nails-shop-skin-front-classic .sidebar-home' ).length > 0 )
+		{
+			this._browse_sidebar_lists_init();
+		}
+
+		// --------------------------------------------------------------------------
+
 		//	Sidebar filter
 		if ( $( '.nails-shop-skin-front-classic .sidebar-filter' ).length > 0 )
 		{
@@ -57,6 +65,31 @@ _nails_skin_shop_front_classic = function()
 		{
 			this._processing_init();
 		}
+	};
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Binds events to the sidebar lists
+	 * @return void
+	 */
+	this._browse_sidebar_lists_init = function()
+	{
+
+        $('.panel-heading span.clickable').on("click", function() {
+            if ($(this).hasClass('panel-collapsed')) {
+                // expand the panel
+                $(this).parents('.panel').find('.panel-body').slideDown();
+                $(this).removeClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+            else {
+                // collapse the panel
+                $(this).parents('.panel').find('.panel-body').slideUp();
+                $(this).addClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            }
+        });
 	};
 
 	// --------------------------------------------------------------------------

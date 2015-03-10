@@ -1,15 +1,20 @@
-<hr class="hidden-md hidden-lg" />
-<div class="sidebar-home col-md-3 col-md-pull-9">
+<div class="sidebar-home col-md-3">
+
 <?php
 
     $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
 
-    echo '<ul class="list-group">';
+    if (!empty($categories)) {
 
-        if (!empty($categories)) {
+        ?>
 
-            echo '<li class="list-group-item">';
-                echo '<h3 class="list-group-item-heading">Categories</h3>';
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Categories <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></h3>
+            </div>
+            <div class="panel-body">
+            <?php
+
                 echo '<ul class="list-unstyled rsaquo-list">';
 
                     $hideEmpty = app_setting('hide_empty_categories', 'shop-' . $skin->slug);
@@ -27,13 +32,27 @@
                     }
 
                 echo '</ul>';
-            echo '</li>';
-        }
 
-        if (!empty($brands)) {
+            ?>
+            </div>
+        </div>
+    
 
-            echo '<li class="list-group-item">';
-                echo '<h3 class="list-group-item-heading">Brands</h3>';
+    <?php
+
+    }
+
+    if (!empty($brands)) {
+
+        ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Brands <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            </div>
+            <div class="panel-body" style="display:none;">
+            <?php
+
                 echo '<ul class="list-unstyled rsaquo-list">';
 
                     $hideEmpty = app_setting('hide_empty_brands', 'shop-' . $skin->slug);
@@ -51,13 +70,27 @@
                     }
 
                 echo '</ul>';
-            echo '</li>';
-        }
 
-        if (!empty($ranges)) {
+            ?>
+            </div>
+        </div>
+    
 
-            echo '<li class="list-group-item">';
-                echo '<h3 class="list-group-item-heading">Ranges</h3>';
+    <?php
+
+    }
+
+    if (!empty($ranges)) {
+
+        ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ranges <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            </div>
+            <div class="panel-body" style="display:none;">
+            <?php
+
                 echo '<ul class="list-unstyled rsaquo-list">';
 
                     $hideEmpty = app_setting('hide_empty_ranges', 'shop-' . $skin->slug);
@@ -75,13 +108,27 @@
                     }
 
                 echo '</ul>';
-            echo '</li>';
-        }
 
-        if (!empty($collections)) {
+            ?>
+            </div>
+        </div>
+    
 
-            echo '<li class="list-group-item">';
-                echo '<h3 class="list-group-item-heading">Collections</h3>';
+    <?php
+
+    }
+
+    if (!empty($collections)) {
+
+        ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Collections <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            </div>
+            <div class="panel-body" style="display:none;">
+            <?php
+
                 echo '<ul class="list-unstyled rsaquo-list">';
 
                     $hideEmpty = app_setting('hide_empty_collections', 'shop-' . $skin->slug);
@@ -99,10 +146,15 @@
                     }
 
                 echo '</ul>';
-            echo '</li>';
-        }
 
-    echo '</ul>';
+            ?>
+            </div>
+        </div>
+    
+
+    <?php
+
+    }
 
 ?>
 </div>
