@@ -3,14 +3,19 @@
 <?php
 
     $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
+    $this->load->view($skin->path . 'views/front/_components/sidebar_basket');
 
     if (!empty($categories)) {
 
         ?>
-
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Categories <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></h3>
+                <h3 class="panel-title">
+                    Categories
+                    <span class="pull-right clickable">
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                    </span>
+                </h3>
             </div>
             <div class="panel-body">
             <?php
@@ -36,7 +41,7 @@
             ?>
             </div>
         </div>
-    
+
 
     <?php
 
@@ -45,10 +50,14 @@
     if (!empty($brands)) {
 
         ?>
-
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Brands <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            <div class="panel-heading panel-collapsed">
+                <h3 class="panel-title">
+                    Brands
+                    <span class="pull-right clickable">
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                    </span>
+                </h3>
             </div>
             <div class="panel-body" style="display:none;">
             <?php
@@ -74,19 +83,21 @@
             ?>
             </div>
         </div>
-    
-
-    <?php
+        <?php
 
     }
 
     if (!empty($ranges)) {
 
         ?>
-
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Ranges <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            <div class="panel-heading panel-collapsed">
+                <h3 class="panel-title">
+                    Ranges
+                    <span class="pull-right clickable">
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                    </span>
+                </h3>
             </div>
             <div class="panel-body" style="display:none;">
             <?php
@@ -112,19 +123,21 @@
             ?>
             </div>
         </div>
-    
-
-    <?php
+        <?php
 
     }
 
     if (!empty($collections)) {
 
         ?>
-
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Collections <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+            <div class="panel-heading panel-collapsed">
+                <h3 class="panel-title">
+                    Collections
+                    <span class="pull-right clickable">
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                    </span>
+                </h3>
             </div>
             <div class="panel-body" style="display:none;">
             <?php
@@ -150,9 +163,7 @@
             ?>
             </div>
         </div>
-    
-
-    <?php
+        <?php
 
     }
 

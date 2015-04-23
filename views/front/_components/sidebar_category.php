@@ -2,6 +2,7 @@
     <?php
 
         $this->load->view($skin->path . 'views/front/_components/sidebar_searchform');
+        $this->load->view($skin->path . 'views/front/_components/sidebar_basket');
 
     ?>
     <ul class="list-group">

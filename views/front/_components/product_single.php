@@ -331,7 +331,7 @@
                     if ($variant->shipping->collection_only) {
 
                         echo '<p class="alert alert-warning">';
-                            echo 'Items marked with <b class="fa fa-cube"></b> are only available for collection.';
+                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker"></b> are only available for collection.';
                             if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
 
                                 echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
@@ -445,7 +445,7 @@
 
                                                 if ($variant->shipping->collection_only) {
 
-                                                    echo '&nbsp;&nbsp;<b class="fa fa-cube"></b>';
+                                                    echo '&nbsp;&nbsp;<b class="glyphicon glyphicon-map-marker"></b>';
                                                 }
 
                                             echo '</p>';
