@@ -2,12 +2,12 @@
 
 if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
 
-    $basketCount = get_basket_count();
+    $basketCount = getBasketCount();
 
     if ($basketCount) {
 
         $this->load->helper('inflector');
-        $basket    = get_basket();
+        $basket    = getBasket();
         $returnUrl = uri_string();
 
         if ($this->input->server('QUERY_STRING')) {
@@ -156,34 +156,5 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
         </div>
         <?php
 
-
-
-
-
-
-
-
-
-/*
-        ?>
-        <p>
-            <a href="<?=$shop_url?>basket" class="btn-block btn btn-primary">
-                <i class="glyphicon glyphicon-shopping-cart"></i>
-                <?php
-
-                    if ($basketCount > 1) {
-
-                        echo $basketCount . ' items in basket; ' . get_basket_total(true, true);
-
-                    } else {
-
-                        echo '1 item in basket; ' . get_basket_total(true, true);
-                    }
-
-                ?>
-            </a>
-        </p>
-        <?php
-        */
     }
 }
