@@ -43,39 +43,54 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
 
                         foreach ($basket->items AS $item) {
 
+                            if ($item->variant->featured_img) {
+
+                                $imgUrl = cdn_thumb($item->variant->featured_img, 50, 50);
+
+                            } elseif ($item->product->featured_img) {
+
+                                $imgUrl = cdn_thumb($item->product->featured_img, 50, 50);
+
+                            } else {
+
+                                $imgUrl = '';
+                            }
+
                             ?>
-                            <li class="row product">
-                                <div class="col-xs-12">
-                                    <p class="clearfix">
-                                        <?php
+                            <li class="row product <?=$imgUrl ? 'has-img' : ''?>">
+                            <?php
 
-                                            if ($item->variant->featured_img) {
+                                if ($item->variant->featured_img) {
 
-                                                echo '<img src="' . cdn_thumb($item->variant->featured_img, 50, 50) . '" class="product-img img-thumbnail" />';
+                                    echo '<img src="' . $imgUrl . '" class="product-img img-thumbnail" />';
 
-                                            } elseif ($item->product->featured_img) {
+                                } elseif ($item->product->featured_img) {
 
-                                                echo '<img src="' . cdn_thumb($item->product->featured_img, 50, 50) . '" class="product-img img-thumbnail" />';
-                                            }
+                                    echo '<img src="' . $imgUrl . '" class="product-img img-thumbnail" />';
 
-                                            echo anchor($item->product->url, $item->product_label);
+                                } else {
 
-                                            if ($item->product_label != $item->variant_label) {
-                                                echo '<br /><small><em>' . $item->variant_label . '</em></small>';
-                                            }
+                                }
 
-                                            echo '<span class="product-details small">';
-                                                echo 'Quantity: <span class="pull-right">';
-                                                    echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id . '&return=' . $returnUrl, '<b class="decrement glyphicon glyphicon-minus-sign"></b>');
-                                                    echo $item->quantity;
-                                                    echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id . '&return=' . $returnUrl, '<b class="increment glyphicon glyphicon-plus-sign"></b>');
-                                                echo '</span>';
-                                                echo '<br />Price: <span class="pull-right">' . $item->variant->price->price->user_formatted->value . '</span>';
-                                            echo '</span>';
+                                echo anchor($item->product->url, $item->product_label);
 
-                                        ?>
-                                    </p>
-                                </div>
+                                if ($item->product_label != $item->variant_label) {
+                                    echo '<br /><small><em>' . $item->variant_label . '</em></small>';
+                                }
+
+                                echo '<span class="product-details small">';
+                                    echo 'Quantity: <span class="pull-right">';
+                                        echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id . '&return=' . $returnUrl, '<b class="decrement glyphicon glyphicon-minus-sign"></b>');
+                                        echo $item->quantity;
+                                        echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id . '&return=' . $returnUrl, '<b class="increment glyphicon glyphicon-plus-sign"></b>');
+                                    echo '</span>';
+                                    echo '<br />Price: <span class="pull-right">' . $item->variant->price->price->user_formatted->value . '</span>';
+                                    if ($item->variant->ship_collection_only) {
+                                        echo '<br />This item is collect only';
+                                    }
+                                echo '</span>';
+
+                            ?>
                             </li>
                             <?php
 
@@ -92,7 +107,25 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
                         <p>
                             Shipping
                             <span class="pull-right">
-                                <?=$basket->totals->user_formatted->shipping?>
+                            <?php
+
+                                if ($basket->shipping->type === 'COLLECT') {
+
+                                    echo 'Collection';
+
+                                } else {
+
+                                    if (empty($basket->totals->user->shipping)) {
+
+                                        echo 'Free';
+
+                                    } else {
+
+                                        echo $basket->totals->user_formatted->shipping;
+                                    }
+                                }
+
+                            ?>
                             </span>
                         </p>
                         <p>

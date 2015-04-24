@@ -3,7 +3,7 @@
     echo '<ol class="breadcrumb">';
 
         echo '<li class="crumb home">';
-            echo '<span class="fa fa-home text-muted"></span>';
+            echo '<span class="glyphicon glyphicon-home text-muted"></span>';
             echo anchor($shop_url, $shop_name);
         echo '</li>';
 

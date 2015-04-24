@@ -331,7 +331,7 @@
                     if ($variant->shipping->collection_only) {
 
                         echo '<p class="alert alert-warning">';
-                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker"></b> are only available for collection.';
+                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b> are only available for collection.';
                             if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
 
                                 echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
@@ -382,7 +382,10 @@
                                 echo '</td>';
                                 echo '<td>';
                                     echo '<p>';
-                                        echo anchor($product->external_vendor_url, 'Go to Seller <b class="fa fa-external-link"></b>', 'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."');
+                                        echo anchor(
+                                            $product->external_vendor_url,
+                                            'Go to Seller <b class="glyphicon glyphicon-new-window"></b>',
+                                            'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."');
                                     echo '</p>';
                                 echo '</td>';
 
@@ -445,7 +448,7 @@
 
                                                 if ($variant->shipping->collection_only) {
 
-                                                    echo '&nbsp;&nbsp;<b class="glyphicon glyphicon-map-marker"></b>';
+                                                    echo '&nbsp;&nbsp;<b class="glyphicon glyphicon-map-marker" title="Collection Only"></b>';
                                                 }
 
                                             echo '</p>';
@@ -645,11 +648,83 @@
 
             // --------------------------------------------------------------------------
 
+            //  Related Products
+            if (!empty($relatedProducts)) {
+
+                //  Reviews
+                echo '<div class="related-products">';
+
+                    echo '<hr />';
+                    echo '<h4>Related Products</h4>';
+
+                    echo '<div class="row product-browser">';
+
+                    foreach ($relatedProducts as $related) {
+
+                        echo '<div class="product col-sm-3">';
+
+                            if ($related->featured_img) {
+
+                                $url = cdn_thumb($related->featured_img, 360, 360);
+
+                            } else {
+
+                                $url = $skin->url . 'assets/img/product-no-image.png';
+                            }
+
+                            echo '<div class="product-image">';
+
+                                echo anchor(
+                                    $related->url,
+                                    img(
+                                        array(
+                                            'src' => $url,
+                                            'class' => 'img-responsive img-thumbnail center-block'
+                                        )
+                                    )
+                                );
+
+                                if (count($related->variations) > 1) {
+
+                                    if (app_setting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
+
+                                        echo '<div class="ribbon corner">';
+                                            echo '<div class="ribbon-wrapper">';
+                                                echo '<div class="ribbon-text">' . count($related->variations) . ' options' . '</div>';
+                                            echo '</div>';
+                                        echo '</div>';
+
+                                    } else {
+
+                                        echo '<div class="ribbon horizontal">';
+                                            echo count($related->variations) . ' options available';
+                                        echo '</div>';
+                                    }
+                                }
+
+                            echo '</div>';
+
+                            echo '<p>' . anchor($related->url, $related->label) . '</p>';
+                            echo '<p>';
+                                echo '<span class="badge">' . $related->price->user_formatted->price_string . '</span>';
+                            echo '</p>';
+                            echo '<hr class="hidden-sm hidden-md hidden-lg" />';
+
+                        echo '</div>';
+                    }
+
+                    echo '</div>';
+
+                echo '</div>';
+            }
+
+            // --------------------------------------------------------------------------
+
             /**
-             * TODO Markup here because I think it looks OK and can be used when product
+             * @todo Markup here because I think it looks OK and can be used when product
              * reviews get implemented (if they get implemented)
              */
-            if (!empty($product_reviews)) {
+            if (!empty($productReviews)) {
 
                 //  Reviews
                 echo '<div class="product-reviews">';
@@ -688,11 +763,11 @@
 
                                             if ($star->is_half) {
 
-                                                echo '<span class="fa fa-star-half"></span>';
+                                                echo '<span class="glyphicon glyphicon-star-empty"></span>';
 
                                             } else {
 
-                                                echo '<span class="fa fa-star></span>';
+                                                echo '<span class="glyphicon glyphicon-star></span>';
                                             }
                                         }
 

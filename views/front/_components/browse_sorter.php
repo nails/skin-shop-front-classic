@@ -1,6 +1,6 @@
 <div class="product-sort panel panel-default">
     <div class="mask">
-        <span class="fa fa-refresh fa-spin"></span>
+        <span class="glyphicon glyphicon-refresh spin"></span>
     </div>
     <div class="panel-body small">
     <?php
