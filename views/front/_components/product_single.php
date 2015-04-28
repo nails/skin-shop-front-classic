@@ -59,7 +59,7 @@
 
                 echo '<div class="row featured-image-xs-sm">';
 
-                    if ($gallery) {
+                    if (count($gallery) > 1) {
 
                         echo '<div class="col-xs-9">';
 
@@ -87,7 +87,7 @@
 
                     echo '</div>';
 
-                    if ($gallery) {
+                    if (count($gallery) > 1) {
 
                         echo '<div class="gallery-scroll gallery-xs-sm">';
 
@@ -142,24 +142,27 @@
 
                 echo '</div>';
 
-                echo '<div class="row text-center gallery-md-lg">';
-                foreach ($gallery as $item) {
+                if (count($gallery) > 1) {
 
-                    echo '<div class="col-md-4 col-lg-4 gallery-item">';
-                    if (!empty($item['url'])) {
+                    echo '<div class="row text-center gallery-md-lg">';
+                    foreach ($gallery as $item) {
 
-                        echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
-                    }
+                        echo '<div class="col-md-4 col-lg-4 gallery-item">';
+                        if (!empty($item['url'])) {
 
-                    echo img(array('src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img'));
+                            echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
+                        }
 
-                    if (!empty($item['url'])) {
+                        echo img(array('src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img'));
 
-                        echo '</a>';
+                        if (!empty($item['url'])) {
+
+                            echo '</a>';
+                        }
+                        echo '</div>';
                     }
                     echo '</div>';
                 }
-                echo '</div>';
 
             echo '</div>';
 
