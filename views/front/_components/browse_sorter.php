@@ -34,22 +34,21 @@
             echo '<div class="pull-left">';
 
                 $options        = array();
-                $options['20']  = '20';
-                $options['40']  = '40';
-                $options['80']  = '80';
-                $options['100'] = '100';
-                $options['all'] = 'All';
+                $options['20']  = '20 items';
+                $options['40']  = '40 items';
+                $options['80']  = '80 items';
+                $options['100'] = '100 items';
+                $options['all'] = 'All items';
 
                 $selected = $product_pagination->per_page == '10000' ? 'all' : $product_pagination->per_page;
 
                 echo form_dropdown('per_page', $options, $selected);
 
-            echo '&nbsp;&nbsp;per page';
             echo '</div>';
 
             echo '<div class="pull-right">';
 
-                echo 'Sort by&nbsp;&nbsp;';
+                echo 'Sort &nbsp;&nbsp;';
 
                 $options                    = array();
                 $options['recent']          = 'Recently Added';

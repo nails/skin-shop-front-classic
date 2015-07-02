@@ -62,6 +62,30 @@ _nails_skin_shop_front_classic = function()
 		{
 			this._processing_init();
 		}
+
+        // --------------------------------------------------------------------------
+
+        $(window).load(function() {
+
+            if ($('.product-browser').length > 0)
+            {
+
+                $('.product-browser .row').each(function() {
+
+                    var maxHeight = 0;
+                    $(this).find('.product-inner').each(function() {
+                        var eHeight = $(this).innerHeight();
+                        if (eHeight > maxHeight)
+                        {
+                            maxHeight = eHeight;
+                        }
+                    });
+                    $(this).find('.product-inner').outerHeight(maxHeight);
+
+                });
+            }
+        });
+
 	};
 
 	// --------------------------------------------------------------------------

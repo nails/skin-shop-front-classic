@@ -537,87 +537,93 @@
             }
         }
 
-
-        .product-image
+        .product-inner
         {
-            margin-bottom: 0.75em;
-            position: relative;
 
-            .ribbon
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+
+            .product-image
             {
-                &.horizontal
-                {
-                    position: absolute;
-                    bottom:4px;
-                    left:0px;
-                    right:0px;
-                    background:rgba(0,0,0,0.75);
-                    color:#FFF;
-                    padding:3px;
-                    text-align:center;
-                }
+                margin-bottom: 0.75em;
+                position: relative;
 
-                &.corner
+                .ribbon
                 {
-                    .ribbon-wrapper
+                    &.horizontal
                     {
-                        width: 85px;
-                        height: 88px;
-                        overflow: hidden;
                         position: absolute;
-                        top: -3px;
-                        right: -3px;
+                        bottom:4px;
+                        left:0px;
+                        right:0px;
+                        background:rgba(0,0,0,0.75);
+                        color:#FFF;
+                        padding:3px;
+                        text-align:center;
+                    }
 
-                        .ribbon-text
+                    &.corner
+                    {
+                        .ribbon-wrapper
                         {
-                            font: bold 1em Sans-Serif;
-                            color: #333;
-                            text-align: center;
-                            // text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
-                            -webkit-transform: rotate(45deg);
-                            -moz-transform:    rotate(45deg);
-                            -ms-transform:     rotate(45deg);
-                            -o-transform:      rotate(45deg);
-                            position: relative;
-                            padding: 7px 0;
-                            left: -5px;
-                            top: 15px;
-                            width: 120px;
-                            opacity:0.75;
+                            width: 85px;
+                            height: 88px;
+                            overflow: hidden;
+                            position: absolute;
+                            top: -3px;
+                            right: -3px;
 
-                            @gradient_from: #000000;
-                            @gradient_to: #292929;
-
-                            background-color: @gradient_from;
-                            background-image: -webkit-gradient(linear, left top, left bottom, from(@gradient_from), to(@gradient_to));
-                            background-image: -webkit-linear-gradient(top, @gradient_from, @gradient_to);
-                            background-image:    -moz-linear-gradient(top, @gradient_from, @gradient_to);
-                            background-image:     -ms-linear-gradient(top, @gradient_from, @gradient_to);
-                            background-image:      -o-linear-gradient(top, @gradient_from, @gradient_to);
-                            color: #FFF;
-                            -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
-                            -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
-                            box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
-
-                            &:before,
-                            &:after
+                            .ribbon-text
                             {
-                                content: "";
-                                border-top:   3px solid @gradient_from;
-                                border-left:  3px solid transparent;
-                                border-right: 3px solid transparent;
-                                position:absolute;
-                                bottom: -3px;
-                            }
+                                font: bold 1em Sans-Serif;
+                                color: #333;
+                                text-align: center;
+                                // text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+                                -webkit-transform: rotate(45deg);
+                                -moz-transform:    rotate(45deg);
+                                -ms-transform:     rotate(45deg);
+                                -o-transform:      rotate(45deg);
+                                position: relative;
+                                padding: 7px 0;
+                                left: -5px;
+                                top: 15px;
+                                width: 120px;
+                                opacity:0.75;
 
-                            &:before
-                            {
-                                left: 0;
-                            }
+                                @gradient_from: #000000;
+                                @gradient_to: #292929;
 
-                            &:after
-                            {
-                                right: 0;
+                                background-color: @gradient_from;
+                                background-image: -webkit-gradient(linear, left top, left bottom, from(@gradient_from), to(@gradient_to));
+                                background-image: -webkit-linear-gradient(top, @gradient_from, @gradient_to);
+                                background-image:    -moz-linear-gradient(top, @gradient_from, @gradient_to);
+                                background-image:     -ms-linear-gradient(top, @gradient_from, @gradient_to);
+                                background-image:      -o-linear-gradient(top, @gradient_from, @gradient_to);
+                                color: #FFF;
+                                -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+                                -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+                                box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+
+                                &:before,
+                                &:after
+                                {
+                                    content: "";
+                                    border-top:   3px solid @gradient_from;
+                                    border-left:  3px solid transparent;
+                                    border-right: 3px solid transparent;
+                                    position:absolute;
+                                    bottom: -3px;
+                                }
+
+                                &:before
+                                {
+                                    left: 0;
+                                }
+
+                                &:after
+                                {
+                                    right: 0;
+                                }
                             }
                         }
                     }

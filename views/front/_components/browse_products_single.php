@@ -1,3 +1,4 @@
+<div class="product-inner">
 <?php
 
     if ($product->featured_img) {
@@ -10,7 +11,7 @@
     }
 
     echo '<div class="product-image">';
-        echo anchor($product->url, img(array('src' => $url, 'class' => 'img-responsive img-thumbnail center-block')));
+        echo anchor($product->url, img(array('src' => $url, 'class' => 'img-responsive img-thumbnail center-block', 'width' => 360, 'height' => 360)));
 
         if (count($product->variations) > 1) {
 
@@ -38,4 +39,6 @@
     echo '<p>';
         echo '<span class="badge">' . $product->price->user_formatted->price_string . '</span>';
     echo '</p>';
-    echo '<hr class="hidden-sm hidden-md hidden-lg" />';
+
+?>
+</div>

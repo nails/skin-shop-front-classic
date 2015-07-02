@@ -12,7 +12,7 @@
             $productsPerRow['lg'] = 4;
             $productsPerRow['md'] = 4;
             $productsPerRow['sm'] = 2;
-            $productsPerRow['xs'] = 1;
+            $productsPerRow['xs'] = 2;
 
             foreach ($productsPerRow as $breakpoint => $value) {
 
