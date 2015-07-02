@@ -23,148 +23,272 @@
 
     echo '<div class="row">';
 
-        //  Featured Image & Gallery
-        echo '<div class="col-md-4">';
+        //  Right hand column
+        echo '<div class="col-md-8 col-md-push-4">';
 
-            //  Featured Image
-            $featuredImg = array('url' => '', 'thumb' => '');
+            $this->load->view($skin->path . 'views/front/_components/product_single_gallery_mobile');
 
-            if ($product->featured_img) {
+            // --------------------------------------------------------------------------
 
-                $featuredImg['url']   = cdn_serve($product->featured_img);
-                $featuredImg['thumb'] = cdn_thumb($product->featured_img, 800, 800);
-                echo '<meta itemprop="image" content="' . cdn_thumb($product->featured_img, 800, 800) . '" />';
+            //  Description
+            echo '<div class="product-description">';
+                echo '<span itemprop="description">';
+                    echo $product->description;
+                echo '</span>';
+            echo '</div>';
 
-            } else {
+            // --------------------------------------------------------------------------
 
-                $featuredImg['thumb'] = $skin->url . 'assets/img/product-no-image.png';
+            //  Social Likes
+
+            //  Defaults
+            $layout      = '';
+            $singleTitle = app_setting('social_layout_single_text', 'shop-' . $skin->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin->slug) : 'Share';
+            $counters    = app_setting('social_counters', 'shop-' . $skin->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
+            $twitterVia  = app_setting('social_twitter_via', 'shop-' . $skin->slug) ? app_setting('social_twitter_via', 'shop-' . $skin->slug) : '';
+
+            //  Layout
+            switch (app_setting('social_layout', 'shop-' . $skin->slug)) {
+
+                case 'HORIZONTAL':
+
+                    $layout = '';
+                    break;
+
+                case 'VERTICAL':
+
+                    $layout = 'social-likes_vertical';
+                    break;
+
+                case 'SINGLE':
+
+                    $layout = 'social-likes_single';
+                    break;
+            }
+
+            $enabled   = array();
+            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
+            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
+            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
+            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+
+            $enabled = array_filter($enabled);
+
+            if ($enabled) {
+
+                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $singleTitle . '" data-title="' . $product->label . '">';
+                foreach ($enabled as $enabled) {
+
+                    echo $enabled;
+                }
+                echo '</div>';
             }
 
             // --------------------------------------------------------------------------
 
-            //  Gallery
-            $gallery = array();
-            foreach ($product->gallery as $object_id) {
+            //  Collection only items?
+            if (!$product->is_external) {
 
-                $gallery[] = array(
-                    'url'   => cdn_serve($object_id),
-                    'thumb' => cdn_thumb($object_id, 800, 800)
-               );
-            }
+                foreach ($product->variations as $variant) {
 
-            // --------------------------------------------------------------------------
+                    if ($variant->shipping->collection_only) {
 
-            //  Extra small and Small breakpoints
-            echo '<div class="hidden-md hidden-lg clearfix">';
+                        echo '<p class="alert alert-warning">';
+                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b> are only available for collection.';
+                            if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
 
-                echo '<div class="row featured-image-xs-sm">';
-
-                    if (count($gallery) > 1) {
-
-                        echo '<div class="col-xs-9">';
-
-                    } else {
-
-                        echo '<div class="col-xs-12">';
+                                echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
+                            }
+                        echo '</p>';
+                        break;
                     }
+                }
+            }
 
-                        if (!empty($featuredImg['url'])) {
+            // --------------------------------------------------------------------------
 
-                            echo '<a href="' . $featuredImg['url'] . '" class="featured-img-link">';
+            //  Variants
+            $this->load->view($skin->path . 'views/front/_components/product_single_variants');
+
+            // --------------------------------------------------------------------------
+
+            //  Attributes
+            if (!empty($product->attributes)) {
+
+                echo '<table class="table table-bordered table-striped product-attributes">';
+                    echo '<thead>';
+                        echo '<tr>';
+                            echo '<th>Attribute</th>';
+                            echo '<th>Value</th>';
+                        echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
+
+                        foreach ($product->attributes as $attribute) {
+
+                            echo '<tr>';
+                                echo '<td>' . $attribute->label . '</td>';
+                                echo '<td>' . $attribute->value . '</td>';
+                            echo '</tr>';
                         }
 
-                        echo img(
-                            array(
-                                'src' => $featuredImg['thumb'],
-                                'class' => 'img-responsive img-thumbnail featured-img-img'
-                            )
-                        );
+                    echo '</tbody>';
 
-                        if (!empty($featuredImg['url'])) {
+                echo '</table>';
+            }
 
-                            echo '</a>';
-                        }
+            // --------------------------------------------------------------------------
 
-                    echo '</div>';
+            //  Related Products
+            if (!empty($relatedProducts)) {
 
-                    if (count($gallery) > 1) {
+                //  Reviews
+                echo '<div class="related-products">';
 
-                        echo '<div class="gallery-scroll gallery-xs-sm">';
+                    echo '<hr />';
+                    echo '<h4>Related Products</h4>';
 
-                            foreach ($gallery as $item) {
+                    echo '<div class="product-browser">';
 
-                                echo '<div class="text-center gallery-item">';
+                        echo '<div class="row">';
 
-                                if (!empty($item['url'])) {
+                            foreach ($relatedProducts as $related) {
 
-                                    echo '<a href="' . $item['url'] . '" class="gallery-link">';
-                                }
+                                echo '<div class="product col-xs-6 col-md-3">';
 
-                                echo img(
-                                    array(
-                                        'src' => $item['thumb'],
-                                        'class' => 'center-block img-responsive img-thumbnail gallery-img'
-                                    )
-                                );
+                                    echo '<div class="product-inner">';
 
-                                if (!empty($item['url'])) {
+                                        if ($related->featured_img) {
 
-                                    echo '</a>';
-                                }
+                                            $url = cdn_thumb($related->featured_img, 360, 360);
+
+                                        } else {
+
+                                            $url = $skin->url . 'assets/img/product-no-image.png';
+                                        }
+
+                                        echo '<div class="product-image">';
+
+                                            echo anchor(
+                                                $related->url,
+                                                img(
+                                                    array(
+                                                        'src' => $url,
+                                                        'class' => 'img-responsive img-thumbnail center-block'
+                                                    )
+                                                )
+                                            );
+
+                                            if (count($related->variations) > 1) {
+
+                                                if (app_setting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
+
+                                                    echo '<div class="ribbon corner">';
+                                                        echo '<div class="ribbon-wrapper">';
+                                                            echo '<div class="ribbon-text">' . count($related->variations) . ' options' . '</div>';
+                                                        echo '</div>';
+                                                    echo '</div>';
+
+                                                } else {
+
+                                                    echo '<div class="ribbon horizontal">';
+                                                        echo count($related->variations) . ' options available';
+                                                    echo '</div>';
+                                                }
+                                            }
+
+                                        echo '</div>';
+
+                                        echo '<p>' . anchor($related->url, $related->label) . '</p>';
+                                        echo '<p>';
+                                            echo '<span class="badge">' . $related->price->user_formatted->price_string . '</span>';
+                                        echo '</p>';
+
+                                    echo '</div>';
 
                                 echo '</div>';
                             }
 
                         echo '</div>';
 
-                    }
+                    echo '</div>';
 
                 echo '</div>';
+            }
 
-            echo '</div>';
+            // --------------------------------------------------------------------------
 
-            //  Medium and Large breakpoints
-            echo '<div class="hidden-sm hidden-xs clearfix">';
+            /**
+             * @todo Markup here because I think it looks OK and can be used when product
+             * reviews get implemented (if they get implemented)
+             */
+            if (!empty($productReviews)) {
 
-                echo '<div class="text-center featured-image-md-lg">';
+                //  Reviews
+                echo '<div class="product-reviews">';
 
-                    if (!empty($featuredImg['url'])) {
+                    echo '<hr />';
+                    echo '<h4>Customer Reviews</h4>';
 
-                        echo '<a href="' . $featuredImg['url'] . '" class="featured-img-link" target="_blank">';
-                    }
+                    foreach ($product_reviews as $review) {
 
-                    echo img(array('src' => $featuredImg['thumb'], 'class' => 'img-responsive img-thumbnail featured-img-img'));
+                        echo '<div class="well">';
+                            echo '<div class="row">';
+                                echo '<div class="col-xs-2">';
 
-                    if (!empty($featuredImg['url'])) {
+                                    if ($review->user->profile_img) {
 
-                        echo '</a>';
-                    }
+                                        $url = cdn_thumb($review->user->profile_img, 250, 250);
 
-                echo '</div>';
+                                    } else {
 
-                if (count($gallery) > 1) {
+                                        $url = cdn_blank_avatar(250, 250, $review->user->gender);
+                                    }
 
-                    echo '<div class="row text-center gallery-md-lg">';
-                    foreach ($gallery as $item) {
+                                    echo img(
+                                        array(
+                                            'src' => $url,
+                                            'class="img-responsive img-thumbnail img-circle"'
+                                        )
+                                    );
 
-                        echo '<div class="col-md-4 col-lg-4 gallery-item">';
-                        if (!empty($item['url'])) {
+                                echo '</div>';
+                                echo '<div class="col-xs-10">';
+                                    echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
+                                    echo '<p>';
 
-                            echo '<a href="' . $item['url'] . '" class="gallery-link" target="_blank">';
-                        }
+                                        foreach ($reviw->stars as $star) {
 
-                        echo img(array('src' => $item['thumb'], 'class' => 'img-responsive img-thumbnail gallery-img'));
+                                            if ($star->is_half) {
 
-                        if (!empty($item['url'])) {
+                                                echo '<span class="glyphicon glyphicon-star-empty"></span>';
 
-                            echo '</a>';
-                        }
+                                            } else {
+
+                                                echo '<span class="glyphicon glyphicon-star></span>';
+                                            }
+                                        }
+
+                                    echo '</p>';
+                                    echo '<hr />';
+                                    echo auto_typography($review->body);
+                                    echo '<p>';
+                                        echo '<small>';
+                                            echo '<em>' . toUserDatetime($review->created) . '</em>';
+                                        echo '</small>';
+                                    echo '</p>';
+                                echo '</div>';
+                            echo '</div>';
                         echo '</div>';
                     }
-                    echo '</div>';
-                }
+                echo '</div>';
+            }
+        echo '</div>';
 
-            echo '</div>';
+        //  Featured Image & Gallery
+        echo '<div class="col-md-4 col-md-pull-8">';
+
+            $this->load->view($skin->path . 'views/front/_components/product_single_gallery_desktop');
 
             // --------------------------------------------------------------------------
 
@@ -263,531 +387,6 @@
                 echo '</ul>';
             }
 
-        echo '</div>';
-
-        // --------------------------------------------------------------------------
-
-        //  Right hand column
-        echo '<div class="col-md-8">';
-
-            //  Description
-            echo '<div class="product-description">';
-                echo '<span itemprop="description">';
-                    echo $product->description;
-                echo '</span>';
-            echo '</div>';
-
-            // --------------------------------------------------------------------------
-
-            //  Social Likes
-
-            //  Defaults
-            $layout      = '';
-            $singleTitle = app_setting('social_layout_single_text', 'shop-' . $skin->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin->slug) : 'Share';
-            $counters    = app_setting('social_counters', 'shop-' . $skin->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
-            $twitterVia  = app_setting('social_twitter_via', 'shop-' . $skin->slug) ? app_setting('social_twitter_via', 'shop-' . $skin->slug) : '';
-
-            //  Layout
-            switch (app_setting('social_layout', 'shop-' . $skin->slug)) {
-
-                case 'HORIZONTAL':
-
-                    $layout = '';
-                    break;
-
-                case 'VERTICAL':
-
-                    $layout = 'social-likes_vertical';
-                    break;
-
-                case 'SINGLE':
-
-                    $layout = 'social-likes_single';
-                    break;
-            }
-
-            $enabled   = array();
-            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
-            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
-            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
-
-            $enabled = array_filter($enabled);
-
-            if ($enabled) {
-
-                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $singleTitle . '" data-title="' . $product->label . '">';
-                foreach ($enabled as $enabled) {
-
-                    echo $enabled;
-                }
-                echo '</div>';
-            }
-
-            // --------------------------------------------------------------------------
-
-            //  Collection only items?
-            if (!$product->is_external) {
-
-                foreach ($product->variations as $variant) {
-
-                    if ($variant->shipping->collection_only) {
-
-                        echo '<p class="alert alert-warning">';
-                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b> are only available for collection.';
-                            if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
-
-                                echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
-                            }
-                        echo '</p>';
-                        break;
-                    }
-                }
-            }
-
-            // --------------------------------------------------------------------------
-
-            //  Variants
-            echo '<div class="well well-sm">';
-
-                echo '<table class="table table-variants">';
-                    echo '<thead>';
-                        echo '<tr>';
-                            echo '<th class="col-xs-5">Item</th>';
-                            echo '<th class="col-xs-3">Price</th>';
-                            echo '<th class="col-xs-4">Quantity</th>';
-                        echo '</tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
-
-                    foreach ($product->variations as $variant) {
-
-                        if (!empty($variant->gallery)) {
-
-                            echo '<tr class="variant has-img" data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
-
-                        } else {
-
-                            echo '<tr class="variant" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
-                        }
-
-                            if ($product->is_external) {
-
-                                echo '<td>';
-                                    echo '<p itemprop="itemOffered">' . $variant->label . '</p>';
-                                    echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
-                                    if (!empty($variant->gallery)) {
-                                        echo '<meta itemprop="image" content="' . cdn_thumb($variant->gallery[0], 800, 800) . '" />';
-                                    }
-                                echo '</td>';
-                                echo '<td>';
-                                    echo '<p itemprop="price">' . $variant->price->price->user_formatted->value . '</p>';
-                                echo '</td>';
-                                echo '<td>';
-                                    echo '<p>';
-                                        echo anchor(
-                                            $product->external_vendor_url,
-                                            'Go to Seller <b class="glyphicon glyphicon-new-window"></b>',
-                                            'class="btn btn-xs btn-primary pull-right shop-bs-popover" target="_blank" data-toggle="popover" title="This item is sold by ' . $product->external_vendor_label . '" data-content="This link will take you to the seller\'s website in a new window. You can come back at anytime."');
-                                    echo '</p>';
-                                echo '</td>';
-
-                            } else {
-
-                                //  Calculate quantity ranges
-                                $maxPerOrder = $product->type->max_per_order;
-                                $available   = $variant->quantity_available;
-
-                                //  Number of items to show if the quantity is "unlimited"
-                                $unlimited = 10;
-
-                                if (is_null($available) && empty($maxPerOrder)) {
-
-                                    //  Unlimited quantity available, with no maximum per order
-                                    $range = array_combine(range(1, $unlimited), range(1, $unlimited));
-
-                                } elseif (is_null($available) && !empty($maxPerOrder)) {
-
-                                    //  Unlimited quantity available, with maximum per order
-                                    $range = array_combine(range(1, $maxPerOrder), range(1, $maxPerOrder));
-
-                                } elseif (is_numeric($available) && !empty($maxPerOrder)) {
-
-                                    //  Limited quantity available, with maximum per order
-                                    if ($available >= $maxPerOrder) {
-
-                                        //  There are more available than the maximum per order
-                                        $range = array_combine(range(1, $maxPerOrder), range(1, $maxPerOrder));
-
-                                    } else {
-
-                                        //  There are fewer available than the maximum per order
-                                        $range = array_combine(range(1, $available), range(1, $available));
-                                    }
-
-                                } elseif (is_numeric($available) && empty($maxPerOrder)) {
-
-                                    //  Limited quantity available, with no maximum per order
-                                    $range = array_combine(range(1, $available), range(1, $available));
-
-                                } else {
-
-                                    //  Shouldn't happen.
-                                    $range = array(0);
-                                }
-
-                                switch ($variant->stock_status) {
-
-                                    case 'IN_STOCK':
-
-                                        echo '<td>';
-                                            echo '<p>';
-
-                                                echo '<span itemprop="itemOffered">' . $variant->label . '</span>';
-                                                echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
-                                                if (!empty($product->gallery)) {
-                                                    echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
-                                                }
-
-                                                if ($variant->shipping->collection_only) {
-
-                                                    echo '&nbsp;&nbsp;<b class="glyphicon glyphicon-map-marker" title="Collection Only"></b>';
-                                                }
-
-                                            echo '</p>';
-                                        echo '</td>';
-                                        echo '<td>';
-
-                                            if (app_setting('price_exclude_tax', 'shop')) {
-
-                                                //  Product prices include taxes
-                                                echo '<p>';
-                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
-                                                echo '</p>';
-
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
-
-                                                    echo '<p class="text-muted">';
-                                                        echo '<small>';
-                                                            echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-                                                        echo '</small>';
-                                                    echo '</p>';
-                                                }
-
-                                            } else {
-
-                                                echo '<p>';
-                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
-                                                echo '</p>';
-
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
-
-                                                    echo '<p class="text-muted">';
-                                                        echo '<small>';
-                                                            echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-                                                        echo '</small>';
-                                                    echo '</p>';
-                                                }
-                                            }
-
-                                        echo '</td>';
-                                        echo '<td>';
-
-                                            if (!$this->shop_basket_model->isInBasket($variant->id)) {
-
-                                                echo form_open($shop_url . 'basket/add', 'method="GET"');
-                                                    echo form_hidden('return', $product->url);
-                                                    echo form_hidden('variant_id', $variant->id);
-                                                    echo form_dropdown('quantity', $range);
-                                                    echo form_submit('submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"');
-                                                echo form_close();
-
-                                            } else {
-
-                                                echo form_open($shop_url . 'basket/remove', 'method="GET"');
-                                                    echo form_hidden('return', $product->url);
-                                                    echo form_hidden('variant_id', $variant->id);
-                                                    echo $this->shop_basket_model->getVariantQuantity($variant->id);
-                                                    echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"');
-                                                    echo form_submit('submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"');
-                                                echo form_close();
-                                            }
-
-                                        echo '</td>';
-                                        break;
-
-                                    case 'TO_ORDER':
-
-                                        echo '<td>';
-                                            echo '<p>' . $variant->label . '</p>';
-                                            echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
-                                            if (!empty($product->gallery)) {
-                                                echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
-                                            }
-                                            echo '<p class="text-muted">';
-                                                echo '<small>';
-                                                    echo '<em>Lead time: ' . $variant->lead_time . '</em>';
-                                                echo '</small>';
-                                            echo '</p>';
-                                        echo '</td>';
-                                        echo '<td>';
-
-                                            if (app_setting('price_exclude_tax', 'shop')) {
-
-                                                //  Product prices include taxes
-                                                echo '<p>';
-                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
-                                                echo '</p>';
-
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
-
-                                                    echo '<p class="text-muted">';
-                                                        echo '<small>';
-                                                            echo '<em>Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax . '</em>';
-                                                        echo '</small>';
-                                                    echo '</p>';
-                                                }
-
-                                            } else {
-
-                                                echo '<p>';
-                                                    echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
-                                                echo '</p>';
-
-                                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
-
-                                                    echo '<p class="text-muted">';
-                                                        echo '<small>';
-                                                            echo '<em>Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax . '</em>';
-                                                        echo '</small>';
-                                                    echo '</p>';
-                                                }
-                                            }
-
-                                        echo '</td>';
-                                        echo '<td>';
-
-                                            if (!$this->shop_basket_model->isInBasket($variant->id)) {
-
-                                                echo form_open($shop_url . 'basket/add', 'method="GET"');
-                                                    echo form_hidden('return', $product->url);
-                                                    echo form_hidden('variant_id', $variant->id);
-                                                    echo form_dropdown('quantity', $range);
-                                                    echo form_submit('submit', 'Add to Basket', 'class="btn btn-xs btn-primary pull-right"');
-                                                echo form_close();
-
-                                            } else {
-
-                                                echo form_open($shop_url . 'basket/remove', 'method="GET"');
-                                                    echo form_hidden('return', $product->url);
-                                                    echo form_hidden('variant_id', $variant->id);
-                                                    echo $this->shop_basket_model->getVariantQuantity($variant->id);
-                                                    echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"');
-                                                    echo form_submit('submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"');
-                                                echo form_close();
-                                            }
-
-                                        echo '</td>';
-                                        break;
-
-                                    case 'OUT_OF_STOCK':
-
-                                        echo '<td>';
-                                            echo '<p><strike>' . $variant->label . '</strike></p>';
-                                            echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
-                                            if (!empty($product->gallery)) {
-                                                echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
-                                            }
-                                        echo '</td>';
-                                        echo '<td>';
-                                            echo '<p><strike><span itemprop="price">' . $variant->price->price->user_formatted->value . '</span></strike></p>';
-                                        echo '</td>';
-                                        echo '<td>';
-                                            echo '<p>';
-                                                echo '<em><span itemprop="availability">Out of Stock</span></em>';
-                                                echo anchor($shop_url . 'notify/' . $variant->id, 'Notify Me', 'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"');
-                                            echo '</p>';
-                                        echo '</td>';
-                                        break;
-                                }
-
-                            }
-
-                        echo '</tr>';
-
-                    }
-
-                    echo '</tbody>';
-                echo '</table>';
-
-            echo '</div>';
-
-            // --------------------------------------------------------------------------
-
-            //  Attributes
-            if (!empty($product->attributes)) {
-
-                echo '<table class="table table-bordered table-striped product-attributes">';
-                    echo '<thead>';
-                        echo '<tr>';
-                            echo '<th>Attribute</th>';
-                            echo '<th>Value</th>';
-                        echo '</tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
-
-                        foreach ($product->attributes as $attribute) {
-
-                            echo '<tr>';
-                                echo '<td>' . $attribute->label . '</td>';
-                                echo '<td>' . $attribute->value . '</td>';
-                            echo '</tr>';
-                        }
-
-                    echo '</tbody>';
-
-                echo '</table>';
-            }
-
-            // --------------------------------------------------------------------------
-
-            //  Related Products
-            if (!empty($relatedProducts)) {
-
-                //  Reviews
-                echo '<div class="related-products">';
-
-                    echo '<hr />';
-                    echo '<h4>Related Products</h4>';
-
-                    echo '<div class="row product-browser">';
-
-                    foreach ($relatedProducts as $related) {
-
-                        echo '<div class="product col-sm-3">';
-
-                            if ($related->featured_img) {
-
-                                $url = cdn_thumb($related->featured_img, 360, 360);
-
-                            } else {
-
-                                $url = $skin->url . 'assets/img/product-no-image.png';
-                            }
-
-                            echo '<div class="product-image">';
-
-                                echo anchor(
-                                    $related->url,
-                                    img(
-                                        array(
-                                            'src' => $url,
-                                            'class' => 'img-responsive img-thumbnail center-block'
-                                        )
-                                    )
-                                );
-
-                                if (count($related->variations) > 1) {
-
-                                    if (app_setting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
-
-                                        echo '<div class="ribbon corner">';
-                                            echo '<div class="ribbon-wrapper">';
-                                                echo '<div class="ribbon-text">' . count($related->variations) . ' options' . '</div>';
-                                            echo '</div>';
-                                        echo '</div>';
-
-                                    } else {
-
-                                        echo '<div class="ribbon horizontal">';
-                                            echo count($related->variations) . ' options available';
-                                        echo '</div>';
-                                    }
-                                }
-
-                            echo '</div>';
-
-                            echo '<p>' . anchor($related->url, $related->label) . '</p>';
-                            echo '<p>';
-                                echo '<span class="badge">' . $related->price->user_formatted->price_string . '</span>';
-                            echo '</p>';
-                            echo '<hr class="hidden-sm hidden-md hidden-lg" />';
-
-                        echo '</div>';
-                    }
-
-                    echo '</div>';
-
-                echo '</div>';
-            }
-
-            // --------------------------------------------------------------------------
-
-            /**
-             * @todo Markup here because I think it looks OK and can be used when product
-             * reviews get implemented (if they get implemented)
-             */
-            if (!empty($productReviews)) {
-
-                //  Reviews
-                echo '<div class="product-reviews">';
-
-                    echo '<hr />';
-                    echo '<h4>Customer Reviews</h4>';
-
-                    foreach ($product_reviews as $review) {
-
-                        echo '<div class="well">';
-                            echo '<div class="row">';
-                                echo '<div class="col-xs-2">';
-
-                                    if ($review->user->profile_img) {
-
-                                        $url = cdn_thumb($review->user->profile_img, 250, 250);
-
-                                    } else {
-
-                                        $url = cdn_blank_avatar(250, 250, $review->user->gender);
-                                    }
-
-                                    echo img(
-                                        array(
-                                            'src' => $url,
-                                            'class="img-responsive img-thumbnail img-circle"'
-                                        )
-                                    );
-
-                                echo '</div>';
-                                echo '<div class="col-xs-10">';
-                                    echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
-                                    echo '<p>';
-
-                                        foreach ($reviw->stars as $star) {
-
-                                            if ($star->is_half) {
-
-                                                echo '<span class="glyphicon glyphicon-star-empty"></span>';
-
-                                            } else {
-
-                                                echo '<span class="glyphicon glyphicon-star></span>';
-                                            }
-                                        }
-
-                                    echo '</p>';
-                                    echo '<hr />';
-                                    echo auto_typography($review->body);
-                                    echo '<p>';
-                                        echo '<small>';
-                                            echo '<em>' . toUserDatetime($review->created) . '</em>';
-                                        echo '</small>';
-                                    echo '</p>';
-                                echo '</div>';
-                            echo '</div>';
-                        echo '</div>';
-                    }
-                echo '</div>';
-            }
         echo '</div>';
 
     echo '</div>';

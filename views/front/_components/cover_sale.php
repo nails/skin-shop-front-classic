@@ -1,4 +1,4 @@
-<div class="row cover sale">
+<div class="row cover sale hidden-xs visible-sm visible-md visible-lg">
     <div class="col-xs-12">
         <?php
 
