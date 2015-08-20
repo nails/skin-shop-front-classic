@@ -1,6 +1,6 @@
 <?php
     //  Variants
-    echo '<div class="well well-sm">';
+    echo '<div class="well well-sm hidden-sm hidden-xs">';
 
         echo '<table class="table table-variants">';
             echo '<thead>';

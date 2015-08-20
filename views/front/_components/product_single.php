@@ -30,6 +30,11 @@
 
             // --------------------------------------------------------------------------
 
+            //  Variants (mobile)
+            $this->load->view($skin->path . 'views/front/_components/product_single_variants_mobile');
+
+            // --------------------------------------------------------------------------
+
             //  Description
             echo '<div class="product-description">';
                 echo '<span itemprop="description">';
@@ -107,7 +112,7 @@
 
             // --------------------------------------------------------------------------
 
-            //  Variants
+            //  Variants (Desktop)
             $this->load->view($skin->path . 'views/front/_components/product_single_variants');
 
             // --------------------------------------------------------------------------
