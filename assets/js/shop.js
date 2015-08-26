@@ -48,6 +48,7 @@ _nails_skin_shop_front_classic = function()
 		{
 			this._product_single_image_gallery_init();
 			this._product_single_image_zoomer_init();
+			this._product_single_mobile_add_basket();
 			this._popover_init();
 
 			$(window).on( 'resize', function()
@@ -385,6 +386,49 @@ _nails_skin_shop_front_classic = function()
 	this._product_single_image_variant_enter = function( image )
 	{
 		$( 'a.featured-img-link img' ).attr( 'src', image );
+	};
+
+	// --------------------------------------------------------------------------
+
+	this._product_single_mobile_add_basket = function()
+	{
+		//	Current breakpoint
+		var _breakpoint = this.get_current_bs_breakpoint();
+		var quantitySelect = $('#add-basket-variant-quantity');
+		var addBasketButton = $('#add-basket-submit');
+
+		//	Extra Small and Small breakpoints
+		if ( _breakpoint === 'xs' || _breakpoint === 'sm' )
+		{
+			$('#add-basket-variant-id').on('change', function(){
+
+				var quantity = $(this).find('option:selected').data('quantity');
+				if (typeof quantity !== 'undefined' && quantity > 0) {
+
+					quantitySelect.prop('disabled', false);
+					addBasketButton.removeClass('disabled', false);
+
+					//	Populate the select with the correct number of options
+					quantitySelect.empty();
+
+					for (var i = 1; i <= quantity; i++) {
+						quantitySelect.append(
+							$('<option>').attr('value', i).html(i)
+						);
+					}
+
+				} else {
+
+					quantitySelect.prop('disabled', true);
+					addBasketButton.addClass('disabled', true);
+
+					quantitySelect.empty();
+					quantitySelect.append(
+						$('<option>').html('Please Choose...')
+					);
+				}
+			}).trigger('change');
+		}
 	};
 
 	// --------------------------------------------------------------------------
