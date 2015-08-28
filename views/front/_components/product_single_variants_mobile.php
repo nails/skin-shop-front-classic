@@ -79,7 +79,6 @@
 
                         $range = count($range); 
 
-                        //  @todo: respect omit_variant_tax_pricing setting
                         //  @todo: gracefully handle a single variation
 
                         switch ($variant->stock_status) {
