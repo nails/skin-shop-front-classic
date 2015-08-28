@@ -155,7 +155,7 @@
 
                                     ?>
                                     <option value="<?=$variant->id?>" data-quantity="<?=$range?>" disabled="disabled">
-                                        <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?> - Out of Stock!
+                                        <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?> - Out of Stock
                                     </option>
                                     <?php
                                     break;
