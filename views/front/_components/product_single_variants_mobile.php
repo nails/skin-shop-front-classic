@@ -7,7 +7,7 @@
         ?>
         <div class="row">
             <div class="col-xs-12">
-                <a href="<?=$product->external_vendor_url?>" class="btn btn-xs btn-primary btn-block btn-basket" target="_blank">
+                <a href="<?=$product->external_vendor_url?>" class="btn btn-xs btn-primary btn-block btn-basket-lg" target="_blank">
                     Go to Seller <b class="glyphicon glyphicon-new-window"></b>
                 </a>
             </div>
@@ -79,31 +79,84 @@
 
                         $range = count($range); 
 
-                        //  @todo: price inc/ex tax
                         //  @todo: respect omit_variant_tax_pricing setting
-                        //  @todo: change primary image on variation change
                         //  @todo: gracefully handle a single variation
 
                         switch ($variant->stock_status) {
 
                                 case 'IN_STOCK':
 
-                                    ?>
-                                    <option value="<?=$variant->id?>" data-quantity="<?=$range?>">
-                                        <?=$variant->label?> - <?=$variant->price->price->user_formatted->value?>
-                                    </option>
+                                    if (!empty($variant->gallery)) { ?>
+                                        <option value="<?=$variant->id?>" data-quantity="<?=$range?>" data-image="<?=cdn_thumb($variant->gallery[0], 800, 800)?>">
                                     <?php
+                                    }
+                                    else { ?>
+                                        <option value="<?=$variant->id?>" data-quantity="<?=$range?>">
+                                    <?php
+                                    } 
+                                    ?>
+                                        <?=$variant->label?> - 
+                                        <?php if (app_setting('price_exclude_tax', 'shop')) {
+
+                                            //  Product prices include taxes
+                                            echo $variant->price->price->user_formatted->value;
+
+                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                                echo ' Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax;
+                                            }
+
+                                        } else {
+
+                                            echo $variant->price->price->user_formatted->value;
+
+                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+
+                                                echo ' Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax;
+
+                                            }
+
+                                        }
+                                        ?>
+                                    </option>
+                                    <?php 
+
                                     break;
 
                                 case 'TO_ORDER':
-                                    //  @todo
-                                    break;
+
+                                    ?>
+                                    <option data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '" value="<?=$variant->id?>" data-quantity="<?=$range?>">
+                                        <?=$variant->label?> - 
+                                        <?php if (app_setting('price_exclude_tax', 'shop')) {
+
+                                            //  Product prices include taxes
+                                            echo $variant->price->price->user_formatted->value;
+
+                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                                echo ' Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax;
+                                            }
+
+                                        } else {
+
+                                            echo $variant->price->price->user_formatted->value;
+
+                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+
+                                                echo ' Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax;
+
+                                            }
+
+                                        }
+                                        echo ' - Lead time: ' . $variant->lead_time;
+                                        ?>
+                                    </option>
+                                    <?php break;
 
                                 case 'OUT_OF_STOCK':
 
                                     ?>
                                     <option value="<?=$variant->id?>" data-quantity="<?=$range?>" disabled="disabled">
-                                        <?=$variant->label?> - Out of Stock!
+                                        <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?> - Out of Stock!
                                     </option>
                                     <?php
                                     break;
@@ -123,7 +176,7 @@
                 </select>
             </div>
         </div>
-        <input type="submit" name="submit" value="Add to Basket" id="add-basket-submit" class="btn btn-primary btn-basket btn-block disabled">
+        <input type="submit" name="submit" value="Add to Basket" id="add-basket-submit" class="btn btn-primary btn-basket-lg btn-block disabled">
         </form>
         <?php
 
