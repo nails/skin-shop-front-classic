@@ -7,9 +7,15 @@
         ?>
         <div class="row">
             <div class="col-xs-12">
-                <a href="<?=$product->external_vendor_url?>" class="btn btn-xs btn-primary btn-block btn-basket-lg" target="_blank">
-                    Go to Seller <b class="glyphicon glyphicon-new-window"></b>
-                </a>
+            <?php
+
+            anchor(
+                $product->external_vendor_url,
+                'Go to Seller <b class="glyphicon glyphicon-new-window"></b>',
+                'class="btn btn-xs btn-primary btn-block btn-basket-lg" target="_blank"'
+            );
+
+            ?>
             </div>
         </div>
         <?php
@@ -31,6 +37,9 @@
             <div class="col-xs-8">
                 <select id="add-basket-variant-id" class="form-control" name="variant_id">
                     <?php
+
+                    $appSettingExTax = app_setting('price_exclude_tax', 'shop');
+                    $appSettingOmitTax = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
 
                     foreach ($product->variations as $variant) {
 
@@ -77,88 +86,98 @@
 
                         }
 
-                        $range = count($range); 
-
+                        $range = count($range);
+                        $variantPrice = $variant->price->price;
+                        $priceTaxIncDiffer = $variantPrice->user->value != $variantPrice->user->value_inc_tax;
+                        $priceTaxExDiffer = $variantPrice->user->value != $variantPrice->user->value_ex_tax;
 
                         switch ($variant->stock_status) {
 
-                                case 'IN_STOCK':
+                            case 'IN_STOCK':
 
-                                    if (!empty($variant->gallery)) { ?>
-                                        <option value="<?=$variant->id?>" data-quantity="<?=$range?>" data-image="<?=cdn_thumb($variant->gallery[0], 800, 800)?>">
-                                    <?php
+                                if (!empty($variant->gallery)) {
+
+                                    echo '<option value="' . $variant->id . '" ';
+                                    echo 'data-quantity="' . $range . '" ';
+                                    echo 'data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
+
+                                } else {
+
+                                    echo '<option value="' . $variant->id . '" data-quantity="' . $range . '">';
+                                }
+
+                                echo $variant->label . ' - ';
+
+                                if ($appSettingExTax) {
+
+                                    //  Product prices include taxes
+                                    echo $variantPrice->user_formatted->value;
+
+                                    if (!$appSettingOmitTax && $priceTaxIncDiffer) {
+
+                                        echo ' Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax;
                                     }
-                                    else { ?>
-                                        <option value="<?=$variant->id?>" data-quantity="<?=$range?>">
-                                    <?php
-                                    } 
-                                    ?>
-                                        <?=$variant->label?> - 
-                                        <?php if (app_setting('price_exclude_tax', 'shop')) {
 
-                                            //  Product prices include taxes
-                                            echo $variant->price->price->user_formatted->value;
+                                } else {
 
-                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
-                                                echo ' Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax;
-                                            }
+                                    echo $variantPrice->user_formatted->value;
 
-                                        } else {
+                                    if (!$appSettingOmitTax && $priceTaxExDiffer) {
 
-                                            echo $variant->price->price->user_formatted->value;
+                                        echo ' Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax;
+                                    }
 
-                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                }
+                                ?>
+                                </option>
+                                <?php
 
-                                                echo ' Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax;
+                                break;
 
-                                            }
+                            case 'TO_ORDER':
 
-                                        }
-                                        ?>
-                                    </option>
-                                    <?php 
+                                echo '<option value="' . $variant->id . '" ';
+                                echo 'data-quantity="' . $range . '" ';
+                                echo 'data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
 
-                                    break;
+                                echo $variant->label;
 
-                                case 'TO_ORDER':
+                                if ($appSettingExTax) {
 
-                                    ?>
-                                    <option data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '" value="<?=$variant->id?>" data-quantity="<?=$range?>">
-                                        <?=$variant->label?> - 
-                                        <?php if (app_setting('price_exclude_tax', 'shop')) {
+                                    //  Product prices include taxes
+                                    echo $variantPrice->user_formatted->value;
 
-                                            //  Product prices include taxes
-                                            echo $variant->price->price->user_formatted->value;
+                                    if (!$appSettingOmitTax && $priceTaxIncDiffer) {
+                                        echo ' Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax;
+                                    }
 
-                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
-                                                echo ' Inc. Tax: ' . $variant->price->price->user_formatted->value_inc_tax;
-                                            }
+                                } else {
 
-                                        } else {
+                                    echo $variantPrice->user_formatted->value;
 
-                                            echo $variant->price->price->user_formatted->value;
+                                    if (!$appSettingOmitTax && $priceTaxExDiffer) {
 
-                                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                        echo ' Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax;
 
-                                                echo ' Ex. Tax: ' . $variant->price->price->user_formatted->value_ex_tax;
+                                    }
 
-                                            }
+                                }
 
-                                        }
-                                        echo ' - Lead time: ' . $variant->lead_time;
-                                        ?>
-                                    </option>
-                                    <?php break;
+                                echo ' - Lead time: ' . $variant->lead_time;
 
-                                case 'OUT_OF_STOCK':
+                                echo '</option>';
+                                break;
 
-                                    ?>
-                                    <option value="<?=$variant->id?>" data-quantity="<?=$range?>" disabled="disabled">
-                                        <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?> - Out of Stock
-                                    </option>
-                                    <?php
-                                    break;
-                            }
+                            case 'OUT_OF_STOCK':
+
+                                ?>
+                                <option value="<?=$variant->id?>" data-quantity="<?=$range?>" disabled="disabled">
+                                    <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?>
+                                    - Out of Stock
+                                </option>
+                                <?php
+                                break;
+                        }
 
                         ?>
                         </div>
@@ -174,10 +193,15 @@
                 </select>
             </div>
         </div>
-        <input type="submit" name="submit" value="Add to Basket" id="add-basket-submit" class="btn btn-primary btn-basket-lg btn-block disabled">
-        </form>
         <?php
 
+        echo form_submit(
+            'submit',
+            'Add to Basket',
+            'id="add-basket-submit" class="btn btn-primary btn-basket-lg btn-block disabled"'
+        );
+
+        echo form_close();
     }
 
     ?>
