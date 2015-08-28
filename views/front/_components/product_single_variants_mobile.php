@@ -79,7 +79,6 @@
 
                         $range = count($range); 
 
-                        //  @todo: gracefully handle a single variation
 
                         switch ($variant->stock_status) {
 
