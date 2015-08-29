@@ -63,7 +63,7 @@
 
             if (count($gallery) > 1) {
 
-                echo '<div class="gallery-scroll gallery-xs-sm">';
+                echo '<div class="col-xs-3 gallery-scroll gallery-xs-sm">';
 
                     foreach ($gallery as $item) {
 
