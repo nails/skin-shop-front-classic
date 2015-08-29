@@ -113,7 +113,7 @@
             // --------------------------------------------------------------------------
 
             //  Variants (Desktop)
-            $this->load->view($skin->path . 'views/front/_components/product_single_variants');
+            $this->load->view($skin->path . 'views/front/_components/product_single_variants_desktop');
 
             // --------------------------------------------------------------------------
 

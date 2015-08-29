@@ -83,7 +83,6 @@
 
                             //  Shouldn't happen.
                             $range = array(0);
-
                         }
 
                         $range = count($range);
@@ -115,7 +114,7 @@
 
                                     if (!$appSettingOmitTax && $priceTaxIncDiffer) {
 
-                                        echo ' Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax;
+                                        echo ' (Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax . ')';
                                     }
 
                                 } else {
@@ -124,10 +123,10 @@
 
                                     if (!$appSettingOmitTax && $priceTaxExDiffer) {
 
-                                        echo ' Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax;
+                                        echo ' (Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax . ')';
                                     }
-
                                 }
+
                                 ?>
                                 </option>
                                 <?php
@@ -148,7 +147,8 @@
                                     echo $variantPrice->user_formatted->value;
 
                                     if (!$appSettingOmitTax && $priceTaxIncDiffer) {
-                                        echo ' Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax;
+
+                                        echo ' (Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax . ')';
                                     }
 
                                 } else {
@@ -157,10 +157,8 @@
 
                                     if (!$appSettingOmitTax && $priceTaxExDiffer) {
 
-                                        echo ' Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax;
-
+                                        echo ' (Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax . ')';
                                     }
-
                                 }
 
                                 echo ' - Lead time: ' . $variant->lead_time;
