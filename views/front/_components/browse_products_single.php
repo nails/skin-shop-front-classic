@@ -3,7 +3,7 @@
 
     if ($product->featured_img) {
 
-        $url = cdn_thumb($product->featured_img, 360, 360);
+        $url = cdnCrop($product->featured_img, 360, 360);
 
     } else {
 

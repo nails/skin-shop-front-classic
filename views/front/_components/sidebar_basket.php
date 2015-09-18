@@ -45,11 +45,11 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
 
                             if ($item->variant->featured_img) {
 
-                                $imgUrl = cdn_thumb($item->variant->featured_img, 50, 50);
+                                $imgUrl = cdnCrop($item->variant->featured_img, 50, 50);
 
                             } elseif ($item->product->featured_img) {
 
-                                $imgUrl = cdn_thumb($item->product->featured_img, 50, 50);
+                                $imgUrl = cdnCrop($item->product->featured_img, 50, 50);
 
                             } else {
 

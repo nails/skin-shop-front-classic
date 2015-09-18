@@ -18,11 +18,11 @@
 
                     if ($variant->featured_img) {
 
-                        $url = cdn_thumb($variant->featured_img, 800, 800);
+                        $url = cdnCrop($variant->featured_img, 800, 800);
 
                     } elseif ($product->featured_img) {
 
-                        $url = cdn_thumb($product->featured_img, 800, 800);
+                        $url = cdnCrop($product->featured_img, 800, 800);
 
                     } else {
 

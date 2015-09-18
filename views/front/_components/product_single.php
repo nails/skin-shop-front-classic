@@ -75,7 +75,7 @@
             $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
             $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
             $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdn_serve($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
 
             $enabled = array_filter($enabled);
 
@@ -165,7 +165,7 @@
 
                                         if ($related->featured_img) {
 
-                                            $url = cdn_thumb($related->featured_img, 360, 360);
+                                            $url = cdnCrop($related->featured_img, 360, 360);
 
                                         } else {
 
@@ -243,11 +243,11 @@
 
                                     if ($review->user->profile_img) {
 
-                                        $url = cdn_thumb($review->user->profile_img, 250, 250);
+                                        $url = cdnCrop($review->user->profile_img, 250, 250);
 
                                     } else {
 
-                                        $url = cdn_blank_avatar(250, 250, $review->user->gender);
+                                        $url = cdnBlankAvatar(250, 250, $review->user->gender);
                                     }
 
                                     echo img(

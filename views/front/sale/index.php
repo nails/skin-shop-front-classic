@@ -39,7 +39,7 @@
                     echo '<div class="row">';
                 }
 
-                $background = $sale->cover_id ? 'style="background-image: url(' . cdn_thumb($sale->cover_id, 800, 800) . ')"' : '';
+                $background = $sale->cover_id ? 'style="background-image: url(' . cdnCrop($sale->cover_id, 800, 800) . ')"' : '';
 
                 echo '<div class="col-sm-6">';
                     echo '<div class="panel panel-default sale" ' . $background . '>';

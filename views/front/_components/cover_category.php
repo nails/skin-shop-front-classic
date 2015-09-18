@@ -4,7 +4,7 @@
 
             if (!empty($category->cover_id)) {
 
-                $url    = cdn_scale($category->cover_id, 1000, 500);
+                $url    = cdnScale($category->cover_id, 1000, 500);
                 $style  = 'style="background-image:url(' . $url . ');background-size:cover;"';
 
             } else {

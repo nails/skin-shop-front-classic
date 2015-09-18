@@ -98,7 +98,7 @@
 
                                     echo '<option value="' . $variant->id . '" ';
                                     echo 'data-quantity="' . $range . '" ';
-                                    echo 'data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
+                                    echo 'data-image="' . cdnCrop($variant->gallery[0], 800, 800) . '">';
 
                                 } else {
 
@@ -137,7 +137,7 @@
 
                                 echo '<option value="' . $variant->id . '" ';
                                 echo 'data-quantity="' . $range . '" ';
-                                echo 'data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '">';
+                                echo 'data-image="' . cdnCrop($variant->gallery[0], 800, 800) . '">';
 
                                 echo $variant->label;
 

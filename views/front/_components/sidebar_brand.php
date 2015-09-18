@@ -4,7 +4,7 @@
     if (!empty($brand->logo_id)) {
 
         echo '<div class="brand-logo">';
-            echo '<img src="' . cdn_scale($brand->logo_id, 350, 350). '" class="img-responsive img-thumbnail" />';
+            echo '<img src="' . cdnScale($brand->logo_id, 350, 350). '" class="img-responsive img-thumbnail" />';
         echo '</div>';
     }
 

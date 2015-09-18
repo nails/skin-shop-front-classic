@@ -39,7 +39,7 @@
                     echo '<div class="row">';
                 }
 
-                $background = $collection->cover_id ? 'style="background-image: url(' . cdn_thumb($collection->cover_id, 800, 800) . ')"' : '';
+                $background = $collection->cover_id ? 'style="background-image: url(' . cdnCrop($collection->cover_id, 800, 800) . ')"' : '';
 
                 echo '<div class="col-sm-6">';
                     echo '<div class="panel panel-default collection" ' . $background . '>';

@@ -4,7 +4,7 @@
 
             if (!empty($sale->cover_id)) {
 
-                $url    = cdn_scale($sale->cover_id, 1000, 500);
+                $url    = cdnScale($sale->cover_id, 1000, 500);
                 $style  = 'style="background-image:url(' . $url . ');background-size:cover;"';
 
             } else {

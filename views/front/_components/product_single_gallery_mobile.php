@@ -5,9 +5,9 @@
 
     if ($product->featured_img) {
 
-        $featuredImg['url']   = cdn_serve($product->featured_img);
-        $featuredImg['thumb'] = cdn_thumb($product->featured_img, 800, 800);
-        echo '<meta itemprop="image" content="' . cdn_thumb($product->featured_img, 800, 800) . '" />';
+        $featuredImg['url']   = cdnServe($product->featured_img);
+        $featuredImg['thumb'] = cdnCrop($product->featured_img, 800, 800);
+        echo '<meta itemprop="image" content="' . cdnCrop($product->featured_img, 800, 800) . '" />';
 
     } else {
 
@@ -21,8 +21,8 @@
     foreach ($product->gallery as $object_id) {
 
         $gallery[] = array(
-            'url'   => cdn_serve($object_id),
-            'thumb' => cdn_thumb($object_id, 800, 800)
+            'url'   => cdnServe($object_id),
+            'thumb' => cdnCrop($object_id, 800, 800)
        );
     }
 

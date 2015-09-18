@@ -16,7 +16,7 @@
 
                 if (!empty($variant->gallery)) {
 
-                    echo '<tr class="variant has-img" data-image="' . cdn_thumb($variant->gallery[0], 800, 800) . '" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
+                    echo '<tr class="variant has-img" data-image="' . cdnCrop($variant->gallery[0], 800, 800) . '" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
 
                 } else {
 
@@ -29,7 +29,7 @@
                             echo '<p itemprop="itemOffered">' . $variant->label . '</p>';
                             echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
                             if (!empty($variant->gallery)) {
-                                echo '<meta itemprop="image" content="' . cdn_thumb($variant->gallery[0], 800, 800) . '" />';
+                                echo '<meta itemprop="image" content="' . cdnCrop($variant->gallery[0], 800, 800) . '" />';
                             }
                         echo '</td>';
                         echo '<td>';
@@ -98,7 +98,7 @@
                                         echo '<span itemprop="itemOffered">' . $variant->label . '</span>';
                                         echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
                                         if (!empty($product->gallery)) {
-                                            echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                            echo '<meta itemprop="image" content="' . cdnCrop($product->gallery[0], 800, 800) . '" />';
                                         }
 
                                         if ($variant->shipping->collection_only) {
@@ -174,7 +174,7 @@
                                     echo '<p>' . $variant->label . '</p>';
                                     echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
                                     if (!empty($product->gallery)) {
-                                        echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                        echo '<meta itemprop="image" content="' . cdnCrop($product->gallery[0], 800, 800) . '" />';
                                     }
                                     echo '<p class="text-muted">';
                                         echo '<small>';
@@ -248,7 +248,7 @@
                                     echo '<p><strike>' . $variant->label . '</strike></p>';
                                     echo '<meta itemprop="sku" content="' . $variant->sku . '" />';
                                     if (!empty($product->gallery)) {
-                                        echo '<meta itemprop="image" content="' . cdn_thumb($product->gallery[0], 800, 800) . '" />';
+                                        echo '<meta itemprop="image" content="' . cdnCrop($product->gallery[0], 800, 800) . '" />';
                                     }
                                 echo '</td>';
                                 echo '<td>';
