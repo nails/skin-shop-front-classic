@@ -6,7 +6,7 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
 
     if ($basketCount) {
 
-        $this->load->helper('inflector');
+        \Nails\Factory::helper('inflector');
         $basket    = getBasket();
         $returnUrl = uri_string();
 
