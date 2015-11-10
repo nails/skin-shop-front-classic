@@ -134,6 +134,22 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
                                 <?=$basket->totals->user_formatted->tax?>
                             </span>
                         </p>
+                        <?php
+
+                        if (!empty($basket->totals->base->grand_discount)) {
+
+                            ?>
+                            <p>
+                                Discount
+                                <span class="pull-right">
+                                    <?=$basket->totals->user_formatted->grand_discount?>
+                                </span>
+                            </p>
+                            <?php
+
+                        }
+
+                        ?>
                         <p>
                             Total
                             <span class="pull-right">
