@@ -6,7 +6,7 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
 
     if ($basketCount) {
 
-        \Nails\Factory::helper('inflector');
+        nailsFactory('helper', 'inflector');
         $basket    = getBasket();
         $returnUrl = uri_string();
 
@@ -84,7 +84,13 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
                                         echo $item->quantity;
                                         echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id . '&return=' . $returnUrl, '<b class="increment glyphicon glyphicon-plus-sign"></b>');
                                     echo '</span>';
-                                    echo '<br />Price: <span class="pull-right">' . $item->variant->price->price->user_formatted->value . '</span>';
+                                    echo '<br />Price: <span class="pull-right">';
+                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                        echo $item->price->user_formatted->value_ex_tax;
+                                    } else {
+                                        echo $item->price->user_formatted->value_inc_tax;
+                                    }
+                                    echo '</span>';
                                     if ($item->variant->ship_collection_only) {
                                         echo '<br />This item is collect only';
                                     }
@@ -104,6 +110,22 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
                                 <?=$basket->totals->user_formatted->item?>
                             </span>
                         </p>
+                        <?php
+
+                        if (!empty($basket->totals->base->grand_discount)) {
+
+                            ?>
+                            <p class="text-success">
+                                Discount
+                                <span class="pull-right">
+                                    -<?=$basket->totals->user_formatted->grand_discount?>
+                                </span>
+                            </p>
+                            <?php
+
+                        }
+
+                        ?>
                         <p>
                             Shipping
                             <span class="pull-right">
@@ -134,22 +156,6 @@ if (!app_setting('hide_sidebar_basket_btn', 'shop-' . $skin->slug)) {
                                 <?=$basket->totals->user_formatted->tax?>
                             </span>
                         </p>
-                        <?php
-
-                        if (!empty($basket->totals->base->grand_discount)) {
-
-                            ?>
-                            <p>
-                                Discount
-                                <span class="pull-right">
-                                    <?=$basket->totals->user_formatted->grand_discount?>
-                                </span>
-                            </p>
-                            <?php
-
-                        }
-
-                        ?>
                         <p>
                             Total
                             <span class="pull-right">

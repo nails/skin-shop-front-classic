@@ -37,7 +37,16 @@
 
     echo '<p>' . anchor($product->url, $product->label) . '</p>';
     echo '<p>';
-        echo '<span class="badge">' . $product->price->user_formatted->price_string . '</span>';
+        echo '<span class="badge">';
+        if (app_setting('price_exclude_tax', 'shop')) {
+
+            echo $product->price->user_formatted->price_string_ex_tax;
+
+        } else {
+
+            echo $product->price->user_formatted->price_string_inc_tax;
+        }
+        '</span>';
     echo '</p>';
 
 ?>
