@@ -110,14 +110,14 @@
                                 echo '</td>';
                                 echo '<td>';
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
 
                                         //  Product prices include taxes
                                         echo '<p>';
                                             echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                         echo '</p>';
 
-                                        if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                        if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
                                             echo '<p class="text-muted">';
                                                 echo '<small>';
@@ -132,7 +132,7 @@
                                             echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                         echo '</p>';
 
-                                        if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                        if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
                                             echo '<p class="text-muted">';
                                                 echo '<small>';
@@ -184,14 +184,14 @@
                                 echo '</td>';
                                 echo '<td>';
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
 
                                         //  Product prices include taxes
                                         echo '<p>';
                                             echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                         echo '</p>';
 
-                                        if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
+                                        if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_inc_tax) {
 
                                             echo '<p class="text-muted">';
                                                 echo '<small>';
@@ -206,7 +206,7 @@
                                             echo '<span itemprop="price">' . $variant->price->price->user_formatted->value . '</span>';
                                         echo '</p>';
 
-                                        if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
+                                        if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $variant->price->price->user->value != $variant->price->price->user->value_ex_tax) {
 
                                             echo '<p class="text-muted">';
                                                 echo '<small>';

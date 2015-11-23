@@ -2,8 +2,8 @@
     <meta itemprop="url" content="<?=$product->url?>">
     <div itemprop="seller" itemscope itemtype="http://schema.org/Organisation">
         <meta itemprop="name" content="<?=lang( 'site_title' )?>">
-        <meta itemprop="address" content="<?=app_setting('invoice_address', 'shop')?>">
-        <meta itemprop="vatID" content="<?=app_setting('invoice_vat_no', 'shop')?>">
+        <meta itemprop="address" content="<?=appSetting('invoice_address', 'shop')?>">
+        <meta itemprop="vatID" content="<?=appSetting('invoice_vat_no', 'shop')?>">
     </div>
 <?php
 
@@ -53,7 +53,7 @@
             $twitterVia  = appSetting('social_twitter_via', 'shop-' . $skin->slug) ? appSetting('social_twitter_via', 'shop-' . $skin->slug) : '';
 
             //  Layout
-            switch (app_setting('social_layout', 'shop-' . $skin->slug)) {
+            switch (appSetting('social_layout', 'shop-' . $skin->slug)) {
 
                 case 'HORIZONTAL':
 
@@ -100,7 +100,7 @@
 
                         echo '<p class="alert alert-warning">';
                             echo 'Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b> are only available for collection.';
-                            if (app_setting('warehouse_collection_delivery_enquiry', 'shop')) {
+                            if (appSetting('warehouse_collection_delivery_enquiry', 'shop')) {
 
                                 echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
                             }
@@ -186,7 +186,7 @@
 
                                             if (count($related->variations) > 1) {
 
-                                                if (app_setting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
+                                                if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
 
                                                     echo '<div class="ribbon corner">';
                                                         echo '<div class="ribbon-wrapper">';
