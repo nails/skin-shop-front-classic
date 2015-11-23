@@ -38,8 +38,8 @@
                 <select id="add-basket-variant-id" class="form-control" name="variant_id">
                     <?php
 
-                    $appSettingExTax = app_setting('price_exclude_tax', 'shop');
-                    $appSettingOmitTax = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+                    $appSettingExTax = appSetting('price_exclude_tax', 'shop');
+                    $appSettingOmitTax = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
 
                     foreach ($product->variations as $variant) {
 

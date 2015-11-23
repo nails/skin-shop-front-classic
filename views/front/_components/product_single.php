@@ -48,9 +48,9 @@
 
             //  Defaults
             $layout      = '';
-            $singleTitle = app_setting('social_layout_single_text', 'shop-' . $skin->slug) ? app_setting('social_layout_single_text', 'shop-' . $skin->slug) : 'Share';
-            $counters    = app_setting('social_counters', 'shop-' . $skin->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
-            $twitterVia  = app_setting('social_twitter_via', 'shop-' . $skin->slug) ? app_setting('social_twitter_via', 'shop-' . $skin->slug) : '';
+            $singleTitle = appSetting('social_layout_single_text', 'shop-' . $skin->slug) ? appSetting('social_layout_single_text', 'shop-' . $skin->slug) : 'Share';
+            $counters    = appSetting('social_counters', 'shop-' . $skin->slug) ? 'data-zeroes="yes"' : 'data-counters="no"';
+            $twitterVia  = appSetting('social_twitter_via', 'shop-' . $skin->slug) ? appSetting('social_twitter_via', 'shop-' . $skin->slug) : '';
 
             //  Layout
             switch (app_setting('social_layout', 'shop-' . $skin->slug)) {
@@ -72,10 +72,10 @@
             }
 
             $enabled   = array();
-            $enabled[] = app_setting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
-            $enabled[] = app_setting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
-            $enabled[] = app_setting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-            $enabled[] = app_setting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+            $enabled[] = appSetting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
+            $enabled[] = appSetting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
+            $enabled[] = appSetting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
+            $enabled[] = appSetting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
 
             $enabled = array_filter($enabled);
 
