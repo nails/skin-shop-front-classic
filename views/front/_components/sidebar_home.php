@@ -167,5 +167,38 @@
 
     }
 
+    if (!empty($shop_pages)) {
+
+        ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Pages
+                    <span class="pull-right clickable">
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                    </span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled rsaquo-list">
+                <?php
+
+                foreach ($shop_pages as $aPage) {
+
+                    ?>
+                    <li>
+                        <?=anchor($aPage['url'], $aPage['title'])?>
+                    </li>
+                    <?php
+                }
+
+                ?>
+                </ul>
+            </div>
+        </div>
+        <?php
+
+    }
+
 ?>
 </div>
