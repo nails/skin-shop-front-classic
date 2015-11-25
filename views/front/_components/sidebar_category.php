@@ -7,75 +7,74 @@
     ?>
     <ul class="list-group">
         <li class="list-group-item">
-            <?php
+            <p>
+                <strong>Categories</strong>
+            </p>
+            <ul class="list-unstyled rsaquo-list category-nav">
+                <li class="level-' . $indent . '">
+                    <?=anchor($shop_url, $shop_name)?>
+                </li>
+                <?php
 
-                echo '<p>';
-                    echo '<strong>Categories</strong>';
-                echo '</p>';
+                $indent = 1;
 
-                $indent = 0;
+                foreach ($category->breadcrumbs as $crumb) {
 
-                echo '<ul class="list-unstyled rsaquo-list category-nav">';
+                    if ($crumb->id == $category->id) {
 
-                    //  Home first
-                    echo '<li class="level-' . $indent . '">';
-                        echo anchor($shop_url, $shop_name);
-                    echo '</li>';
+                        ?>
+                        <li class="level-<?=$indent?> current">
+                            <strong><?=$crumb->label?></strong>
+                        </li>
+                        <?php
+
+                    } else {
+
+                        ?>
+                        <li class="level-<?=$indent?> current">
+                            <?=anchor($this->shop_category_model->formatUrl($crumb->slug), $crumb->label)?>
+                        </li>
+                        <?php
+                    }
 
                     $indent++;
+                }
 
-                    foreach ($category->breadcrumbs as $crumb) {
+                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
 
-                        if ($crumb->id == $category->id) {
+                foreach ($category->children as $crumb) {
 
-                            echo '<li class="level-' . $indent . ' current">';
-                                echo '<strong>' . $crumb->label . '</strong>';
-                            echo '</li>';
+                    if ($hideEmpty && empty($crumb->product_count)) {
 
-                        } else {
-
-                            echo '<li class="level-' . $indent . '">';
-                                echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
-                            echo '</li>';
-                        }
-
-                        $indent++;
+                        continue;
                     }
 
-                    $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
+                    echo '<li class="level-' . $indent . '">';
+                        echo anchor($this->shop_category_model->formatUrl($crumb->slug), $crumb->label);
+                    echo '</li>';
+                }
 
-                    foreach ($category->children as $crumb) {
+                //  Bring the indent back down a level
+                $indent--;
 
-                        if ($hideEmpty && empty($crumb->product_count)) {
+                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
 
-                            continue;
-                        }
+                foreach ($category_siblings as $crumb) {
 
-                        echo '<li class="level-' . $indent . '">';
-                            echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
-                        echo '</li>';
+                    if ($hideEmpty && empty($crumb->product_count)) {
+
+                        continue;
                     }
 
-                    //  Bring the indent back down a level
-                    $indent--;
+                    ?>
+                    <li class="level-<?=$indent?> current">
+                        <?=anchor($this->shop_category_model->formatUrl($crumb->slug), $crumb->label)?>
+                    </li>
+                    <?php
+                }
 
-                    $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
-
-                    foreach ($category_siblings as $crumb) {
-
-                        if ($hideEmpty && empty($crumb->product_count)) {
-
-                            continue;
-                        }
-
-                        echo '<li class="level-' . $indent . '">';
-                            echo anchor($this->shop_category_model->format_url($crumb->slug), $crumb->label);
-                        echo '</li>';
-                    }
-
-                echo '</ul>';
-
-            ?>
+                ?>
+            </ul>
         </li>
     </ul>
     <?php

@@ -1,48 +1,39 @@
 <div class="product col-xs-12" itemscope itemtype="http://schema.org/Product">
     <meta itemprop="url" content="<?=$product->url?>">
     <div itemprop="seller" itemscope itemtype="http://schema.org/Organisation">
-        <meta itemprop="name" content="<?=lang( 'site_title' )?>">
+        <meta itemprop="name" content="<?=lang('site_title')?>">
         <meta itemprop="address" content="<?=appSetting('invoice_address', 'shop')?>">
         <meta itemprop="vatID" content="<?=appSetting('invoice_vat_no', 'shop')?>">
     </div>
-<?php
+    <div class="product-label">
+        <h1 class="text-center hidden-md hidden-lg">
+            <span itemprop="name">
+                <?=$product->label?>
+            </span>
+        </h1>
+        <h1 class="hidden-xs hidden-sm">
+            <?=$product->label?>
+        </h1>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-8 col-md-push-4">
+            <?php
 
-    echo '<div class="product-label">';
-        echo '<h1 class="text-center hidden-md hidden-lg">';
-            echo '<span itemprop="name">';
-                echo $product->label;
-            echo '</span>';
-        echo '</h1>';
-
-        echo '<h1 class="hidden-xs hidden-sm">';
-            echo $product->label;
-        echo '</h1>';
-    echo '</div>';
-
-    echo '<hr />';
-
-    echo '<div class="row">';
-
-        //  Right hand column
-        echo '<div class="col-md-8 col-md-push-4">';
-
+            //  Gallery
             $this->load->view($skin->path . 'views/front/_components/product_single_gallery_mobile');
-
-            // --------------------------------------------------------------------------
 
             //  Variants (mobile)
             $this->load->view($skin->path . 'views/front/_components/product_single_variants_mobile');
 
-            // --------------------------------------------------------------------------
-
             //  Description
-            echo '<div class="product-description">';
-                echo '<span itemprop="description">';
-                    echo $product->description;
-                echo '</span>';
-            echo '</div>';
-
-            // --------------------------------------------------------------------------
+            ?>
+            <div class="product-description">
+                <span itemprop="description">
+                    <?=$product->description?>
+                </span>
+            </div>
+            <?php
 
             //  Social Likes
 
@@ -71,19 +62,33 @@
                     break;
             }
 
-            $enabled   = array();
-            $enabled[] = appSetting('social_facebook_enabled', 'shop-' . $skin->slug) ? '<div class="facebook" title="Share link on Facebook">Facebook</div>' : '';
-            $enabled[] = appSetting('social_twitter_enabled', 'shop-' . $skin->slug) ? '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>' : '';
-            $enabled[] = appSetting('social_googleplus_enabled', 'shop-' . $skin->slug) ? '<div class="plusone" title="Share link on Google+">Google+</div>' : '';
-            $enabled[] = appSetting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img ? '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>' : '';
+            $enabled = array();
+            if (appSetting('social_facebook_enabled', 'shop-' . $skin->slug)) {
+                $enabled[] =  '<div class="facebook" title="Share link on Facebook">Facebook</div>';
+            }
+            if (appSetting('social_twitter_enabled', 'shop-' . $skin->slug)) {
+                $enabled[] =  '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>';
+            }
+            if (appSetting('social_googleplus_enabled', 'shop-' . $skin->slug)) {
+                $enabled[] = '<div class="plusone" title="Share link on Google+">Google+</div>';
+            }
+            if (appSetting('social_pinterest_enabled', 'shop-' . $skin->slug) && $product->featured_img) {
+                $enabled[] = '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>';
+            }
 
             $enabled = array_filter($enabled);
 
+            $aAttr = array(
+                'class="product-social social-likes ' . $layout . '"',
+                $counters,
+                'data-url="' . $product->url . '"',
+                'data-single-title="' . $singleTitle . '"',
+                'data-title="' . $product->label . '"'
+            );
+
             if ($enabled) {
-
-                echo '<div class="product-social social-likes ' . $layout . '" ' . $counters . ' data-url="' . $product->url . '" data-single-title="' . $singleTitle . '" data-title="' . $product->label . '">';
+                echo '<div ' . implode(' ', $aAttr) . '>';
                 foreach ($enabled as $enabled) {
-
                     echo $enabled;
                 }
                 echo '</div>';
@@ -98,13 +103,24 @@
 
                     if ($variant->shipping->collection_only) {
 
-                        echo '<p class="alert alert-warning">';
-                            echo 'Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b> are only available for collection.';
+                        ?>
+                        <p class="alert alert-warning">
+                            Items marked with <b class="glyphicon glyphicon-map-marker" title="Collection Only"></b>
+                            are only available for collection.
+                            <?php
+
                             if (appSetting('warehouse_collection_delivery_enquiry', 'shop')) {
 
-                                echo anchor($shop_url . 'enquire/delivery/' . $product->id, 'Delivery Enquiry', 'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"');
+                                echo anchor(
+                                    $shop_url . 'enquire/delivery/' . $product->id,
+                                    'Delivery Enquiry',
+                                    'class="btn btn-primary btn-sm pull-right fancybox" data-width="750" data-height="575" data-fancybox-type="iframe"'
+                                );
                             }
-                        echo '</p>';
+                            ?>
+                        </p>
+                        <?php
+
                         break;
                     }
                 }
@@ -120,26 +136,31 @@
             //  Attributes
             if (!empty($product->attributes)) {
 
-                echo '<table class="table table-bordered table-striped product-attributes">';
-                    echo '<thead>';
-                        echo '<tr>';
-                            echo '<th>Attribute</th>';
-                            echo '<th>Value</th>';
-                        echo '</tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
+                ?>
+                <table class="table table-bordered table-striped product-attributes">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 
                         foreach ($product->attributes as $attribute) {
 
-                            echo '<tr>';
-                                echo '<td>' . $attribute->label . '</td>';
-                                echo '<td>' . $attribute->value . '</td>';
-                            echo '</tr>';
+                            ?>
+                            <tr>
+                                <td><?=$attribute->label?></td>
+                                <td><?=$attribute->value?></td>
+                            </tr>
+                            <?php
                         }
 
-                    echo '</tbody>';
-
-                echo '</table>';
+                        ?>
+                    </tbody>
+                </table>
+                <?php
             }
 
             // --------------------------------------------------------------------------
@@ -147,21 +168,20 @@
             //  Related Products
             if (!empty($relatedProducts)) {
 
-                //  Reviews
-                echo '<div class="related-products">';
-
-                    echo '<hr />';
-                    echo '<h4>Related Products</h4>';
-
-                    echo '<div class="product-browser">';
-
-                        echo '<div class="row">';
+                ?>
+                <div class="related-products">
+                    <hr />
+                    <h4>Related Products</h4>
+                    <div class="product-browser">
+                        <div class="row">
+                            <?php
 
                             foreach ($relatedProducts as $related) {
 
-                                echo '<div class="product col-xs-6 col-md-3">';
-
-                                    echo '<div class="product-inner">';
+                                ?>
+                                <div class="product col-xs-6 col-md-3">
+                                    <div class="product-inner">
+                                        <?php
 
                                         if ($related->featured_img) {
 
@@ -172,7 +192,9 @@
                                             $url = $skin->url . 'assets/img/product-no-image.png';
                                         }
 
-                                        echo '<div class="product-image">';
+                                        ?>
+                                        <div class="product-image">
+                                            <?php
 
                                             echo anchor(
                                                 $related->url,
@@ -188,37 +210,57 @@
 
                                                 if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
 
-                                                    echo '<div class="ribbon corner">';
-                                                        echo '<div class="ribbon-wrapper">';
-                                                            echo '<div class="ribbon-text">' . count($related->variations) . ' options' . '</div>';
-                                                        echo '</div>';
-                                                    echo '</div>';
+                                                    ?>
+                                                    <div class="ribbon corner">
+                                                        <div class="ribbon-wrapper">
+                                                            <div class="ribbon-text">
+                                                                <?=count($related->variations)?> options
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
 
                                                 } else {
 
-                                                    echo '<div class="ribbon horizontal">';
-                                                        echo count($related->variations) . ' options available';
-                                                    echo '</div>';
+                                                    ?>
+                                                    <div class="ribbon horizontal">
+                                                        <?=count($related->variations)?> options available
+                                                    </div>
+                                                    <?php
                                                 }
                                             }
 
-                                        echo '</div>';
+                                            ?>
+                                        </div>
+                                        <p>
+                                            <?=anchor($related->url, $related->label)?>
+                                        </p>
+                                        <p>
+                                            <span class="badge">
+                                                <?php
 
-                                        echo '<p>' . anchor($related->url, $related->label) . '</p>';
-                                        echo '<p>';
-                                            echo '<span class="badge">' . $related->price->user_formatted->price_string . '</span>';
-                                        echo '</p>';
+                                                if (appSetting('price_exclude_tax', 'shop')) {
 
-                                    echo '</div>';
+                                                    echo $related->price->user_formatted->price_string_ex_tax;
 
-                                echo '</div>';
+                                                } else {
+
+                                                    echo $related->price->user_formatted->price_string_inc_tax;
+                                                }
+
+                                                ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <?php
                             }
 
-                        echo '</div>';
-
-                    echo '</div>';
-
-                echo '</div>';
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
             }
 
             // --------------------------------------------------------------------------
@@ -229,17 +271,19 @@
              */
             if (!empty($productReviews)) {
 
-                //  Reviews
-                echo '<div class="product-reviews">';
-
-                    echo '<hr />';
-                    echo '<h4>Customer Reviews</h4>';
+                ?>
+                <div class="product-reviews">
+                    <hr />
+                    <h4>Customer Reviews</h4>
+                    <?php
 
                     foreach ($product_reviews as $review) {
 
-                        echo '<div class="well">';
-                            echo '<div class="row">';
-                                echo '<div class="col-xs-2">';
+                        ?>
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <?php
 
                                     if ($review->user->profile_img) {
 
@@ -257,10 +301,14 @@
                                         )
                                     );
 
-                                echo '</div>';
-                                echo '<div class="col-xs-10">';
-                                    echo '<h5>' . $review->user->first_name . ' ' . $review->user->last_name . '</h5>';
-                                    echo '<p>';
+                                    ?>
+                                </div>
+                                <div class="col-xs-10">
+                                    <h5>
+                                        <?=$review->user->first_name . ' ' . $review->user->last_name?>
+                                    </h5>
+                                    <p>
+                                        <?php
 
                                         foreach ($reviw->stars as $star) {
 
@@ -274,46 +322,65 @@
                                             }
                                         }
 
-                                    echo '</p>';
-                                    echo '<hr />';
-                                    echo auto_typography($review->body);
-                                    echo '<p>';
-                                        echo '<small>';
-                                            echo '<em>' . toUserDatetime($review->created) . '</em>';
-                                        echo '</small>';
-                                    echo '</p>';
-                                echo '</div>';
-                            echo '</div>';
-                        echo '</div>';
-                    }
-                echo '</div>';
-            }
-        echo '</div>';
+                                        ?>
+                                    </p>
+                                    <hr />
+                                    <?=auto_typography($review->body)?>
+                                    <p>
+                                        <small>
+                                            <em>
+                                                <?=toUserDatetime($review->created)?>
+                                            </em>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
 
-        //  Featured Image & Gallery
-        echo '<div class="col-md-4 col-md-pull-8">';
+                    }
+
+                    ?>
+                </div>
+                <?php
+            }
+
+            ?>
+        </div>
+        <div class="col-md-4 col-md-pull-8">
+            <?php
 
             $this->load->view($skin->path . 'views/front/_components/product_single_gallery_desktop');
-
-            // --------------------------------------------------------------------------
 
             //  Tags
             if (!empty($product->tags)) {
 
-                echo '<hr />';
-                echo '<h4>Tags</h4>';
-                echo '<ul class="list-inline">';
+                ?>
 
-                foreach ($product->tags as $tag) {
+                <hr />
+                <h4>Tags</h4>
+                <ul class="list-inline">
+                    <?php
 
-                    echo '<li>';
-                        $url   = $this->shop_tag_model->format_url($tag->slug);
-                        $label = '<span class="badge">' . $tag->label . '</span>';
-                        echo anchor($url, $label);
-                    echo '</li>';
-                }
+                    foreach ($product->tags as $tag) {
 
-                echo '</ul>';
+                        ?>
+                        <li>
+                            <?php
+
+                            $url   = $this->shop_tag_model->formatUrl($tag->slug);
+                            $label = '<span class="badge">' . $tag->label . '</span>';
+                            echo anchor($url, $label);
+
+                            ?>
+                        </li>
+                        <?php
+                    }
+
+                    ?>
+                </ul>
+                <?php
+
             }
 
             // --------------------------------------------------------------------------
@@ -321,18 +388,24 @@
             //  Categories
             if (!empty($product->categories)) {
 
-                echo '<hr />';
-                echo '<h4>Categories</h4>';
-                echo '<ul class="list-unstyled">';
+                ?>
+                <hr />
+                <h4>Categories</h4>
+                <ul class="list-unstyled">
+                    <?php
 
-                foreach ($product->categories as $category) {
+                    foreach ($product->categories as $category) {
 
-                    echo '<li>';
-                        echo anchor($this->shop_category_model->format_url($category->slug), $category->label);
-                    echo '</li>';
-                }
+                        ?>
+                        <li>
+                            <?=anchor($this->shop_category_model->formatUrl($category->slug), $category->label)?>
+                        </li>
+                        <?php
+                    }
 
-                echo '</ul>';
+                    ?>
+                </ul>
+                <?php
             }
 
             // --------------------------------------------------------------------------
@@ -340,18 +413,24 @@
             //  Brands
             if (!empty($product->brands)) {
 
-                echo '<hr />';
-                echo '<h4>Brands</h4>';
-                echo '<ul class="list-unstyled">';
+                ?>
+                <hr />
+                <h4>Brands</h4>
+                <ul class="list-unstyled">
+                    <?php
 
-                foreach ($product->brands as $brand) {
+                    foreach ($product->brands as $brand) {
 
-                    echo '<li>';
-                        echo anchor($this->shop_brand_model->format_url($brand->slug), $brand->label);
-                    echo '</li>';
-                }
+                        ?>
+                        <li>
+                            <?=anchor($this->shop_brand_model->formatUrl($brand->slug), $brand->label)?>
+                        </li>
+                        <?php
+                    }
 
-                echo '</ul>';
+                    ?>
+                </ul>
+                <?php
             }
 
             // --------------------------------------------------------------------------
@@ -359,18 +438,24 @@
             //  Ranges
             if (!empty($product->collections)) {
 
-                echo '<hr />';
-                echo '<h4>Collections</h4>';
-                echo '<ul class="list-unstyled">';
+                ?>
+                <hr />
+                <h4>Collections</h4>
+                <ul class="list-unstyled">
+                    <?php
 
-                foreach ($product->collections as $collection) {
+                    foreach ($product->collections as $collection) {
 
-                    echo '<li>';
-                        echo anchor($this->shop_collection_model->format_url($collection->slug), $collection->label);
-                    echo '</li>';
-                }
+                        ?>
+                        <li>
+                            <?=anchor($this->shop_collection_model->formatUrl($collection->slug), $collection->label)?>
+                        </li>
+                        <?php
+                    }
 
-                echo '</ul>';
+                    ?>
+                </ul>
+                <?php
             }
 
             // --------------------------------------------------------------------------
@@ -378,23 +463,27 @@
             //  Ranges
             if (!empty($product->ranges)) {
 
-                echo '<hr />';
-                echo '<h4>Ranges</h4>';
-                echo '<ul class="list-unstyled">';
+                ?>
+                <hr />
+                <h4>Ranges</h4>
+                <ul class="list-unstyled">
+                    <?php
 
-                foreach ($product->ranges as $range) {
+                    foreach ($product->ranges as $range) {
 
-                    echo '<li>';
-                        echo anchor($this->shop_range_model->format_url($range->slug), $range->label);
-                    echo '</li>';
-                }
+                        ?>
+                        <li>
+                            <?=anchor($this->shop_range_model->formatUrl($range->slug), $range->label)?>
+                        </li>
+                        <?php
+                    }
 
-                echo '</ul>';
+                    ?>
+                </ul>
+                <?php
             }
 
-        echo '</div>';
-
-    echo '</div>';
-
-?>
+            ?>
+        </div>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="product-inner">
-<?php
+    <?php
 
     if ($product->featured_img) {
 
@@ -10,35 +10,65 @@
         $url = $skin->url . 'assets/img/product-no-image.png';
     }
 
-    echo '<div class="product-image">';
-        echo anchor($product->url, img(array('src' => $url, 'class' => 'img-responsive img-thumbnail center-block', 'width' => 360, 'height' => 360)));
+    ?>
+    <div class="product-image">
+        <?php
+
+        echo anchor(
+            $product->url,
+            img(
+                array(
+                    'src' => $url,
+                    'class' => 'img-responsive img-thumbnail center-block',
+                    'width' => 360,
+                    'height' => 360
+                )
+            )
+        );
 
         if (count($product->variations) > 1) {
 
             if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
 
-                echo '<div class="ribbon corner">';
-                    echo '<div class="ribbon-wrapper">';
-                        echo '<div class="ribbon-text">';
-                            echo count($product->variations) . ' options';
-                        echo '</div>';
-                    echo '</div>';
-                echo '</div>';
+                ?>
+                <div class="ribbon corner">
+                    <div class="ribbon-wrapper">
+                        <div class="ribbon-text">
+                            <?=count($product->variations)?> options
+                        </div>
+                    </div>
+                </div>
+                <?php
 
             } else {
 
-                echo '<div class="ribbon horizontal">';
-                    echo count($product->variations) . ' options available';
-                echo '</div>';
+                ?>
+                <div class="ribbon horizontal">
+                    <?=count($product->variations)?> options available
+                </div>
+                <?php
             }
         }
 
-    echo '</div>';
+        ?>
+    </div>
+    <p>
+        <?=anchor($product->url, $product->label)?>
+    </p>
+    <p>
+        <span class="badge">
+            <?php
 
-    echo '<p>' . anchor($product->url, $product->label) . '</p>';
-    echo '<p>';
-        echo '<span class="badge">' . $product->price->user_formatted->price_string . '</span>';
-    echo '</p>';
+            if (appSetting('price_exclude_tax', 'shop')) {
 
-?>
+                echo $product->price->user_formatted->price_string_ex_tax;
+
+            } else {
+
+                echo $product->price->user_formatted->price_string_inc_tax;
+            }
+
+            ?>
+        </span>
+    </p>
 </div>
