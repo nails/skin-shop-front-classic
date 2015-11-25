@@ -85,10 +85,8 @@
                             $range = array(0);
                         }
 
-                        $range = count($range);
+                        $range        = count($range);
                         $variantPrice = $variant->price->price;
-                        $priceTaxIncDiffer = $variantPrice->user->value != $variantPrice->user->value_inc_tax;
-                        $priceTaxExDiffer = $variantPrice->user->value != $variantPrice->user->value_ex_tax;
 
                         switch ($variant->stock_status) {
 
@@ -110,18 +108,18 @@
                                 if ($appSettingExTax) {
 
                                     //  Product prices include taxes
-                                    echo $variantPrice->user_formatted->value;
+                                    echo $variantPrice->user_formatted->value_ex_tax;
 
-                                    if (!$appSettingOmitTax && $priceTaxIncDiffer) {
+                                    if (!$appSettingOmitTax) {
 
                                         echo ' (Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax . ')';
                                     }
 
                                 } else {
 
-                                    echo $variantPrice->user_formatted->value;
+                                    echo $variantPrice->user_formatted->value_inc_tax;
 
-                                    if (!$appSettingOmitTax && $priceTaxExDiffer) {
+                                    if (!$appSettingOmitTax) {
 
                                         echo ' (Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax . ')';
                                     }
@@ -144,18 +142,18 @@
                                 if ($appSettingExTax) {
 
                                     //  Product prices include taxes
-                                    echo $variantPrice->user_formatted->value;
+                                    echo $variantPrice->user_formatted->value_ex_tax;
 
-                                    if (!$appSettingOmitTax && $priceTaxIncDiffer) {
+                                    if (!$appSettingOmitTax) {
 
                                         echo ' (Inc. Tax: ' . $variantPrice->user_formatted->value_inc_tax . ')';
                                     }
 
                                 } else {
 
-                                    echo $variantPrice->user_formatted->value;
+                                    echo $variantPrice->user_formatted->value_inc_tax;
 
-                                    if (!$appSettingOmitTax && $priceTaxExDiffer) {
+                                    if (!$appSettingOmitTax) {
 
                                         echo ' (Ex. Tax: ' . $variantPrice->user_formatted->value_ex_tax . ')';
                                     }
@@ -170,8 +168,17 @@
 
                                 ?>
                                 <option value="<?=$variant->id?>" data-quantity="<?=$range?>" disabled="disabled">
-                                    <?=$variant->label?> - <?=$variant->price->price->user_formatted->value;?>
-                                    - Out of Stock
+                                    <?php
+
+                                    echo $variant->label . ' - ';
+                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                        echo $variant->price->price->user_formatted->value_ex_tax;
+                                    } else {
+                                        echo $variant->price->price->user_formatted->value_inc_tax;
+                                    }
+                                    echo ' - Out of Stock';
+
+                                    ?>
                                 </option>
                                 <?php
                                 break;
