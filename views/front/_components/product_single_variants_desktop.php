@@ -52,7 +52,7 @@
                     <p itemprop="price">
                     <?php
 
-                    if (app_setting('price_exclude_tax', 'shop')) {
+                    if (appSetting('price_exclude_tax', 'shop')) {
                         echo $variant->price->price->user_formatted->value_ex_tax;
                     } else {
                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -152,14 +152,14 @@
                         <td>
                             <?php
 
-                            if (app_setting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'shop')) {
 
                                 ?>
                                 <p>
                                     <span itemprop="price">
                                     <?php
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -170,7 +170,7 @@
                                 </p>
                                 <?php
 
-                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -190,7 +190,7 @@
                                     <span itemprop="price">
                                     <?php
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -201,7 +201,7 @@
                                 </p>
                                 <?php
 
-                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -272,14 +272,14 @@
                         <td>
                             <?php
 
-                            if (app_setting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'shop')) {
 
                                 ?>
                                 <p>
                                     <span itemprop="price">
                                     <?php
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -290,7 +290,7 @@
                                 </p>
                                 <?php
 
-                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -310,7 +310,7 @@
                                     <span itemprop="price">
                                     <?php
 
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -321,7 +321,7 @@
                                 </p>
                                 <?php
 
-                                if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -389,7 +389,7 @@
                                     <span itemprop="price">
                                         <?php
 
-                                        if (app_setting('price_exclude_tax', 'shop')) {
+                                        if (appSetting('price_exclude_tax', 'shop')) {
                                             echo $variant->price->price->user_formatted->value_ex_tax;
                                         } else {
                                             echo $variant->price->price->user_formatted->value_inc_tax;
@@ -405,11 +405,15 @@
                                 <em>
                                     <span itemprop="availability">Out of Stock</span>
                                 </em>
-                                <?=anchor(
+                                <?php
+
+                                echo anchor(
                                     $shop_url . 'notify/' . $variant->id,
                                     'Notify Me',
                                     'class="btn btn-xs btn-default pull-right fancybox" data-width="750" data-height="350" data-fancybox-type="iframe"'
-                                )?>
+                                );
+
+                                ?>
                             </p>
                         </td>
                         <?php

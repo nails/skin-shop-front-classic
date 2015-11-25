@@ -171,7 +171,7 @@
                                     <?php
 
                                     echo $variant->label . ' - ';
-                                    if (app_setting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
