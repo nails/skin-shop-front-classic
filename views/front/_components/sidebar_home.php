@@ -22,7 +22,7 @@
 
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
+                    $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->name);
 
                     foreach ($categories as $category) {
 
@@ -64,7 +64,7 @@
 
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = appSetting('hide_empty_brands', 'shop-' . $skin->slug);
+                    $hideEmpty = appSetting('hide_empty_brands', 'shop-' . $skin->name);
 
                     foreach ($brands as $brand) {
 
@@ -104,7 +104,7 @@
 
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = appSetting('hide_empty_ranges', 'shop-' . $skin->slug);
+                    $hideEmpty = appSetting('hide_empty_ranges', 'shop-' . $skin->name);
 
                     foreach ($ranges as $range) {
 
@@ -144,7 +144,7 @@
 
                 echo '<ul class="list-unstyled rsaquo-list">';
 
-                    $hideEmpty = appSetting('hide_empty_collections', 'shop-' . $skin->slug);
+                    $hideEmpty = appSetting('hide_empty_collections', 'shop-' . $skin->name);
 
                     foreach ($collections as $collection) {
 

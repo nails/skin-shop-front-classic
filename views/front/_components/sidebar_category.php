@@ -40,7 +40,7 @@
                     $indent++;
                 }
 
-                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
+                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->name);
 
                 foreach ($category->children as $crumb) {
 
@@ -57,7 +57,7 @@
                 //  Bring the indent back down a level
                 $indent--;
 
-                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->slug);
+                $hideEmpty = appSetting('hide_empty_categories', 'shop-' . $skin->name);
 
                 foreach ($category_siblings as $crumb) {
 

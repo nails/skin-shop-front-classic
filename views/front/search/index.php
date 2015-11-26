@@ -1,17 +1,16 @@
-<div class="nails-shop-skin-front-classic browse search">
-<?php
-
-    echo '<div class="row">';
-
-        echo '<div class="col-md-9 col-md-push-3">';
+<div class="nails-skin-shop-front-classic browse search">
+    <div class="row">
+        <div class="col-md-9 col-md-push-3">
+            <?php
 
             $this->load->view($skin->path . 'views/front/_components/browse_products');
 
-        echo '</div>';
+            ?>
+        </div>
+        <?php
 
         $this->load->view($skin->path . 'views/front/_components/sidebar_search');
 
-    echo '</div>';
-
-?>
+        ?>
+    </div>
 </div>

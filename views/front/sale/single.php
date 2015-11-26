@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-front-classic browse sale single">
+<div class="nails-skin-shop-front-classic browse sale single">
 <?php
 
     $this->load->view($skin->path . 'views/front/_components/cover_sale');

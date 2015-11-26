@@ -170,7 +170,7 @@
                                 </p>
                                 <?php
 
-                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -201,7 +201,7 @@
                                 </p>
                                 <?php
 
-                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -290,7 +290,7 @@
                                 </p>
                                 <?php
 
-                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name)) {
 
                                     ?>
                                     <p class="text-muted">
@@ -321,7 +321,7 @@
                                 </p>
                                 <?php
 
-                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug)) {
+                                if (!appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name)) {
 
                                     ?>
                                     <p class="text-muted">

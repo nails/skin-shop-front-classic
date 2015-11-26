@@ -1,19 +1,21 @@
-<div class="nails-shop-skin-front-classic browse tag single">
-<?php
+<div class="nails-skin-shop-front-classic browse tag single">
+    <?php
 
     $this->load->view($skin->path . 'views/front/_components/cover_tag');
 
-    echo '<div class="row">';
-
-        echo '<div class="col-md-9 col-md-push-3">';
+    ?>
+    <div class="row">
+        <div class="col-md-9 col-md-push-3">
+            <?php
 
             $this->load->view($skin->path . 'views/front/_components/browse_products');
 
-        echo '</div>';
+            ?>
+        </div>
+        <?php
 
         $this->load->view($skin->path . 'views/front/_components/sidebar_tag');
 
-    echo '</div>';
-
-?>
+        ?>
+    </div>
 </div>

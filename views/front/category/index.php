@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-front-classic browse category">
+<div class="nails-skin-shop-front-classic browse category">
     <div class="row">
     <?php
 

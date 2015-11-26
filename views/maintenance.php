@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-front-classic maintenance">
+<div class="nails-skin-shop-front-classic maintenance">
     <div class="row">
         <div class="col-md-12">
         <?php
