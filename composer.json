@@ -25,7 +25,8 @@
         "nails" :
         {
             "type": "skin",
-            "subType": "shop-front"
+            "forModule": "nailsapp/module-shop",
+            "subType": "front"
         }
     }
 }
