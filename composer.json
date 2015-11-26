@@ -24,11 +24,11 @@
     {
         "nails" :
         {
+            "name": "Classic Front of House Skin",
             "type": "skin",
             "forModule": "nailsapp/module-shop",
             "subType": "front",
             "data": {
-                "name": "Classic Front of House Skin",
                 "assets": [
                     "bower_components/social-likes/social-likes_classic.css",
                     "css/styles.css",
