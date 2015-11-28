@@ -38,7 +38,7 @@ _nails_skin_shop_front_classic = function()
         // --------------------------------------------------------------------------
 
         //  Product sorter
-        if ($('.nails-skin-skin-front-classic .product-sort').length > 0) {
+        if ($('.nails-skin-shop-front-classic .product-sort').length > 0) {
 
             this.browseSorterInit();
         }
@@ -51,7 +51,7 @@ _nails_skin_shop_front_classic = function()
         // --------------------------------------------------------------------------
 
         //  Sidebar filter
-        if ($('.nails-skin-skin-front-classic .sidebar-filter').length > 0) {
+        if ($('.nails-skin-shop-front-classic .sidebar-filter').length > 0) {
 
             this.browseSidebarFilterInit();
         }
@@ -59,7 +59,7 @@ _nails_skin_shop_front_classic = function()
         // --------------------------------------------------------------------------
 
         //  Single product page malarky
-        if ($('.nails-skin-skin-front-classic.browse.product.single').length > 0) {
+        if ($('.nails-skin-shop-front-classic.browse.product.single').length > 0) {
 
             //  Mobile JS
             if (breakpoint === 'xs' || breakpoint === 'sm') {
@@ -81,7 +81,7 @@ _nails_skin_shop_front_classic = function()
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-skin-skin-front-classic.processing').length > 0) {
+        if ($('.nails-skin-shop-front-classic.processing').length > 0) {
 
             this._processing_init();
         }
@@ -146,7 +146,7 @@ _nails_skin_shop_front_classic = function()
      */
     this.browseSidebarFilterInit = function()
     {
-        $('.nails-skin-skin-front-classic .sidebar-filter .filter-list').hover(
+        $('.nails-skin-shop-front-classic .sidebar-filter .filter-list').hover(
             function()
             {
                 var _orig_max_height = parseInt($(this).css('max-height'), 10);
@@ -173,9 +173,9 @@ _nails_skin_shop_front_classic = function()
      */
     this.browseSorterInit = function()
     {
-        $('.nails-skin-skin-front-classic .product-sort select').on('change', function()
+        $('.nails-skin-shop-front-classic .product-sort select').on('change', function()
         {
-            $('.nails-skin-skin-front-classic .product-sort').addClass('submitting');
+            $('.nails-skin-shop-front-classic .product-sort').addClass('submitting');
             $(this).closest('form').submit();
         });
     };
