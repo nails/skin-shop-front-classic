@@ -155,7 +155,7 @@ if (!appSetting('hide_sidebar_basket_btn', 'shop-' . $skin->name)) {
                             <span class="pull-right">
                             <?php
 
-                            if ($basket->shipping->option === 'COLLECT') {
+                            if ($basket->shipping->option === 'COLLECTION') {
 
                                 echo 'Collection';
 
