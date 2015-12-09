@@ -39,7 +39,7 @@
                     <?php
 
                     $appSettingExTax = appSetting('price_exclude_tax', 'shop');
-                    $appSettingOmitTax = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name);
+                    $appSettingOmitTax = shopSkinSetting('omit_variant_tax_pricing', 'front');
 
                     foreach ($product->variations as $variant) {
 

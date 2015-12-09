@@ -28,7 +28,7 @@
 
         if (count($product->variations) > 1) {
 
-            if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->name) == 'corner') {
+            if (shopSkinSetting('browse_product_ribbon_mode', 'front') == 'corner') {
 
                 ?>
                 <div class="ribbon corner">

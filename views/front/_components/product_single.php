@@ -39,12 +39,12 @@
 
             //  Defaults
             $layout      = '';
-            $singleTitle = appSetting('social_layout_single_text', 'shop-' . $skin->name) ? appSetting('social_layout_single_text', 'shop-' . $skin->name) : 'Share';
-            $counters    = appSetting('social_counters', 'shop-' . $skin->name) ? 'data-zeroes="yes"' : 'data-counters="no"';
-            $twitterVia  = appSetting('social_twitter_via', 'shop-' . $skin->name) ? appSetting('social_twitter_via', 'shop-' . $skin->name) : '';
+            $singleTitle = shopSkinSetting('social_layout_single_text', 'front') ? appSetting('social_layout_single_text', 'front') : 'Share';
+            $counters    = shopSkinSetting('social_counters', 'front') ? 'data-zeroes="yes"' : 'data-counters="no"';
+            $twitterVia  = shopSkinSetting('social_twitter_via', 'front') ? appSetting('social_twitter_via', 'front') : '';
 
             //  Layout
-            switch (appSetting('social_layout', 'shop-' . $skin->name)) {
+            switch (shopSkinSetting('social_layout', 'front')) {
 
                 case 'HORIZONTAL':
 
@@ -63,16 +63,16 @@
             }
 
             $enabled = array();
-            if (appSetting('social_facebook_enabled', 'shop-' . $skin->name)) {
+            if (shopSkinSetting('social_facebook_enabled', 'front')) {
                 $enabled[] =  '<div class="facebook" title="Share link on Facebook">Facebook</div>';
             }
-            if (appSetting('social_twitter_enabled', 'shop-' . $skin->name)) {
+            if (shopSkinSetting('social_twitter_enabled', 'front')) {
                 $enabled[] =  '<div class="twitter" data-via="' . $twitterVia . '" title="Share link on Twitter">Twitter</div>';
             }
-            if (appSetting('social_googleplus_enabled', 'shop-' . $skin->name)) {
+            if (shopSkinSetting('social_googleplus_enabled', 'front')) {
                 $enabled[] = '<div class="plusone" title="Share link on Google+">Google+</div>';
             }
-            if (appSetting('social_pinterest_enabled', 'shop-' . $skin->name) && $product->featured_img) {
+            if (shopSkinSetting('social_pinterest_enabled', 'front') && $product->featured_img) {
                 $enabled[] = '<div class="pinterest" data-media="' . cdnServe($product->featured_img) . '" title="Share image on Pinterest">Pinterest</div>';
             }
 
@@ -208,7 +208,7 @@
 
                                             if (count($related->variations) > 1) {
 
-                                                if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->name) == 'corner') {
+                                                if (shopSkinSetting('browse_product_ribbon_mode', 'front') == 'corner') {
 
                                                     ?>
                                                     <div class="ribbon corner">

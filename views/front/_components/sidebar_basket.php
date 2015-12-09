@@ -1,6 +1,6 @@
 <?php
 
-if (!appSetting('hide_sidebar_basket_btn', 'shop-' . $skin->name)) {
+if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
 
     $basketCount = getBasketCount();
 
