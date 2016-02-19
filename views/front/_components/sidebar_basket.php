@@ -105,7 +105,7 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
                                 <span class="pull-right">
                                     <?php
 
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $item->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $item->price->user_formatted->value_inc_tax;

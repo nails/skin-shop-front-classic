@@ -25,7 +25,7 @@
             $crumbs[] = array(
                 'id'    => NULL,
                 'label' => 'Collections',
-                'url'   => appSetting('page_collection_listing', 'shop') ? $shop_url . 'collection' : NULL
+                'url'   => appSetting('page_collection_listing', 'nailsapp/module-shop') ? $shop_url . 'collection' : NULL
             );
 
             $crumbs[] = array(

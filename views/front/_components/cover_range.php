@@ -25,7 +25,7 @@
             $crumbs[] = array(
                 'id'    => NULL,
                 'label' => 'Ranges',
-                'url'   => appSetting('page_range_listing', 'shop') ? $shop_url . 'range' : NULL
+                'url'   => appSetting('page_range_listing', 'nailsapp/module-shop') ? $shop_url . 'range' : NULL
             );
 
             $crumbs[] = array(

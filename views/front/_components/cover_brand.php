@@ -25,7 +25,7 @@
             $crumbs[] = array(
                 'id'    => null,
                 'label' => 'Brands',
-                'url'   => appSetting('page_brand_listing', 'shop') ? $shop_url . 'brand' : null
+                'url'   => appSetting('page_brand_listing', 'nailsapp/module-shop') ? $shop_url . 'brand' : null
             );
 
             $crumbs[] = array(

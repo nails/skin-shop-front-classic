@@ -52,7 +52,7 @@
                     <p itemprop="price">
                     <?php
 
-                    if (appSetting('price_exclude_tax', 'shop')) {
+                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                         echo $variant->price->price->user_formatted->value_ex_tax;
                     } else {
                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -152,14 +152,14 @@
                         <td>
                             <?php
 
-                            if (appSetting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
 
                                 ?>
                                 <p>
                                     <span itemprop="price">
                                     <?php
 
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -190,7 +190,7 @@
                                     <span itemprop="price">
                                     <?php
 
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -272,14 +272,14 @@
                         <td>
                             <?php
 
-                            if (appSetting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
 
                                 ?>
                                 <p>
                                     <span itemprop="price">
                                     <?php
 
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -310,7 +310,7 @@
                                     <span itemprop="price">
                                     <?php
 
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;
@@ -389,7 +389,7 @@
                                     <span itemprop="price">
                                         <?php
 
-                                        if (appSetting('price_exclude_tax', 'shop')) {
+                                        if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                             echo $variant->price->price->user_formatted->value_ex_tax;
                                         } else {
                                             echo $variant->price->price->user_formatted->value_inc_tax;

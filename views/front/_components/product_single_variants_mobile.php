@@ -38,7 +38,7 @@
                 <select id="add-basket-variant-id" class="form-control" name="variant_id">
                     <?php
 
-                    $appSettingExTax = appSetting('price_exclude_tax', 'shop');
+                    $appSettingExTax = appSetting('price_exclude_tax', 'nailsapp/module-shop');
                     $appSettingOmitTax = shopSkinSetting('omit_variant_tax_pricing', 'front');
 
                     foreach ($product->variations as $variant) {
@@ -171,7 +171,7 @@
                                     <?php
 
                                     echo $variant->label . ' - ';
-                                    if (appSetting('price_exclude_tax', 'shop')) {
+                                    if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
                                         echo $variant->price->price->user_formatted->value_ex_tax;
                                     } else {
                                         echo $variant->price->price->user_formatted->value_inc_tax;

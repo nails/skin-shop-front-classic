@@ -2,8 +2,8 @@
     <meta itemprop="url" content="<?=$product->url?>">
     <div itemprop="seller" itemscope itemtype="http://schema.org/Organisation">
         <meta itemprop="name" content="<?=lang('site_title')?>">
-        <meta itemprop="address" content="<?=appSetting('invoice_address', 'shop')?>">
-        <meta itemprop="vatID" content="<?=appSetting('invoice_vat_no', 'shop')?>">
+        <meta itemprop="address" content="<?=appSetting('invoice_address', 'nailsapp/module-shop')?>">
+        <meta itemprop="vatID" content="<?=appSetting('invoice_vat_no', 'nailsapp/module-shop')?>">
     </div>
     <div class="product-label">
         <h1 class="text-center hidden-md hidden-lg">
@@ -39,9 +39,9 @@
 
             //  Defaults
             $layout      = '';
-            $singleTitle = shopSkinSetting('social_layout_single_text', 'front') ? appSetting('social_layout_single_text', 'front') : 'Share';
+            $singleTitle = shopSkinSetting('social_layout_single_text', 'front') ? shopSkinSetting('social_layout_single_text', 'front') : 'Share';
             $counters    = shopSkinSetting('social_counters', 'front') ? 'data-zeroes="yes"' : 'data-counters="no"';
-            $twitterVia  = shopSkinSetting('social_twitter_via', 'front') ? appSetting('social_twitter_via', 'front') : '';
+            $twitterVia  = shopSkinSetting('social_twitter_via', 'front') ? shopSkinSetting('social_twitter_via', 'front') : '';
 
             //  Layout
             switch (shopSkinSetting('social_layout', 'front')) {
@@ -109,7 +109,7 @@
                             are only available for collection.
                             <?php
 
-                            if (appSetting('warehouse_collection_delivery_enquiry', 'shop')) {
+                            if (appSetting('warehouse_collection_delivery_enquiry', 'nailsapp/module-shop')) {
 
                                 echo anchor(
                                     $shop_url . 'enquire/delivery/' . $product->id,
@@ -239,7 +239,7 @@
                                             <span class="badge">
                                                 <?php
 
-                                                if (appSetting('price_exclude_tax', 'shop')) {
+                                                if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
 
                                                     echo $related->price->user_formatted->price_string_ex_tax;
 
