@@ -134,22 +134,6 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
                                 <?=$basket->totals->user_formatted->item?>
                             </span>
                         </p>
-                        <?php
-
-                        if (!empty($basket->totals->base->grand_discount)) {
-
-                            ?>
-                            <p class="text-success">
-                                Discount
-                                <span class="pull-right">
-                                    -<?=$basket->totals->user_formatted->grand_discount?>
-                                </span>
-                            </p>
-                            <?php
-
-                        }
-
-                        ?>
                         <p>
                             Shipping
                             <span class="pull-right">
@@ -177,9 +161,25 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
                         <p>
                             Tax
                             <span class="pull-right">
-                                <?=$basket->totals->user_formatted->tax?>
+                                <?=$basket->totals->user_formatted->tax_combined?>
                             </span>
                         </p>
+                        <?php
+
+                        if (!empty($basket->totals->base->grand_discount)) {
+
+                            ?>
+                            <p class="text-success">
+                                Discount
+                                <span class="pull-right">
+                                    -<?=$basket->totals->user_formatted->grand_discount?>
+                                </span>
+                            </p>
+                            <?php
+
+                        }
+
+                        ?>
                         <p>
                             Total
                             <span class="pull-right">
