@@ -8,10 +8,9 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
     <table class="table table-variants">
         <thead>
             <tr>
-                <th class="col-xs-5">Item</th>
+                <th class="col-xs-7">Item</th>
                 <th class="col-xs-1 text-center">Price</th>
-                <th class="col-xs-2 text-center">Shipping</th>
-                <th class="col-xs-5">Quantity</th>
+                <th class="col-xs-4">Quantity</th>
             </tr>
         </thead>
         <tbody>
@@ -63,19 +62,6 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
                             echo $variant->price->price->user_formatted->value_ex_tax;
                         } else {
                             echo $variant->price->price->user_formatted->value_inc_tax;
-                        }
-
-                        ?>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p itemprop="shipping">
-                        <?php
-
-                        if ($bPriceExcludeTax) {
-                            echo $variant->price->shipping->user_formatted->value_ex_tax;
-                        } else {
-                            echo $variant->price->shipping->user_formatted->value_inc_tax;
                         }
 
                         ?>
@@ -237,19 +223,6 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
 
                             ?>
                         </td>
-                        <td class="text-center">
-                            <p itemprop="shipping">
-                                <?php
-
-                                if ($bPriceExcludeTax) {
-                                    echo $variant->price->shipping->user_formatted->value_ex_tax;
-                                } else {
-                                    echo $variant->price->shipping->user_formatted->value_inc_tax;
-                                }
-
-                                ?>
-                            </p>
-                        </td>
                         <td>
                             <?php
 
@@ -370,19 +343,6 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
 
                             ?>
                         </td>
-                        <td class="text-center">
-                            <p itemprop="shipping">
-                                <?php
-
-                                if ($bPriceExcludeTax) {
-                                    echo $variant->price->shipping->user_formatted->value_ex_tax;
-                                } else {
-                                    echo $variant->price->shipping->user_formatted->value_inc_tax;
-                                }
-
-                                ?>
-                            </p>
-                        </td>
                         <td>
                             <?php
 
@@ -446,21 +406,6 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
                                 </strike>
                             </p>
                         </td>
-                        <td class="text-center">
-                            <strike>
-                                <p itemprop="shipping">
-                                    <?php
-
-                                    if ($bPriceExcludeTax) {
-                                        echo $variant->price->shipping->user_formatted->value_ex_tax;
-                                    } else {
-                                        echo $variant->price->shipping->user_formatted->value_inc_tax;
-                                    }
-
-                                    ?>
-                                </p>
-                            </strike>
-                        </td>
                         <td>
                             <p>
                                 <em>
@@ -489,3 +434,24 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
         </tbody>
     </table>
 </div>
+<p class="text-muted">
+    <em>
+        <?php
+
+        echo 'Shipping available from ';
+
+        if ($bPriceExcludeTax) {
+            echo $shipping_range->min->user_formatted->value_ex_tax;
+        } else {
+            echo $shipping_range->min->user_formatted->value_inc_tax;
+        }
+
+        echo ' when using our ' . $shipping_range->option->label . ' service. ';
+
+        if (!empty($shop_pages['delivery'])) {
+            echo anchor($shop_pages['delivery']['url'], 'Learn more') . '.';
+        }
+
+        ?>
+    </em>
+</p>
