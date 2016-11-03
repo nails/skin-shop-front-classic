@@ -32,14 +32,13 @@ _nails_skin_shop_front_classic = function()
 
         // --------------------------------------------------------------------------
 
-        //  Not ehte breakpoint so that Js can fire conditionally for the device being used
+        //  Note the breakpoint so that JS can fire conditionally for the device being used
         breakpoint = this.bsCurrentBreakpoint();
 
         // --------------------------------------------------------------------------
 
         //  Product sorter
         if ($('.nails-skin-shop-front-classic .product-sort').length > 0) {
-
             this.browseSorterInit();
         }
 
@@ -52,7 +51,6 @@ _nails_skin_shop_front_classic = function()
 
         //  Sidebar filter
         if ($('.nails-skin-shop-front-classic .sidebar-filter').length > 0) {
-
             this.browseSidebarFilterInit();
         }
 
@@ -82,13 +80,12 @@ _nails_skin_shop_front_classic = function()
         // --------------------------------------------------------------------------
 
         if ($('.nails-skin-shop-front-classic.processing').length > 0) {
-
             this._processing_init();
         }
 
         // --------------------------------------------------------------------------
 
-        $(window).load(function()
+        $(window).on('load', function()
         {
             if ($('.product-browser').length > 0) {
 
@@ -109,6 +106,7 @@ _nails_skin_shop_front_classic = function()
                 });
             }
         });
+
     };
 
     // --------------------------------------------------------------------------
@@ -162,7 +160,7 @@ _nails_skin_shop_front_classic = function()
                 var _orig_max_height = $(this).attr('data-orig-max-height');
                 $(this).stop().animate({ 'max-height' : _orig_max_height });
             }
-       );
+        );
     };
 
     // --------------------------------------------------------------------------
@@ -433,7 +431,7 @@ _nails_skin_shop_front_classic = function()
 
                     quantitySelect.append(
                         $('<option>').attr('value', i).html(i)
-                   );
+                    );
                 }
 
             } else {
@@ -444,7 +442,7 @@ _nails_skin_shop_front_classic = function()
                 quantitySelect.empty();
                 quantitySelect.append(
                     $('<option>').html('Please Choose...')
-               );
+                );
             }
         }).trigger('change');
     };
