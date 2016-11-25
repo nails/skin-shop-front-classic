@@ -8,9 +8,9 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
     <table class="table table-variants">
         <thead>
             <tr>
-                <th class="col-xs-7">Item</th>
+                <th class="col-xs-7 col-md-6">Item</th>
                 <th class="col-xs-1 text-center">Price</th>
-                <th class="col-xs-4">Quantity</th>
+                <th class="col-xs-4 col-md-5 col-lg-4">Quantity</th>
             </tr>
         </thead>
         <tbody>
@@ -240,7 +240,7 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
                                 echo form_open($shop_url . 'basket/remove', 'method="GET"');
                                 echo form_hidden('return', $product->url);
                                 echo form_hidden('variant_id', $variant->id);
-                                echo $this->shop_basket_model->getVariantQuantity($variant->id);
+                                echo '<span class="quantity-span">' . $this->shop_basket_model->getVariantQuantity($variant->id) . '</span>';
                                 echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-xs btn-success pull-right btn-basket"');
                                 echo form_submit('submit', 'Remove', 'class="btn btn-xs btn-danger pull-right btn-remove"');
                                 echo form_close();
@@ -407,7 +407,7 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
                             </p>
                         </td>
                         <td>
-                            <p>
+                            <p class="v-center-nested-items">
                                 <em>
                                     <span itemprop="availability">Out of Stock</span>
                                 </em>
