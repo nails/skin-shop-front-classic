@@ -6,11 +6,28 @@
         <meta itemprop="vatID" content="<?=appSetting('invoice_vat_no', 'nailsapp/module-shop')?>">
     </div>
     <div class="product-label">
-        <h1 class="text-center hidden-md hidden-lg">
-            <span itemprop="name">
-                <?=$product->label?>
-            </span>
-        </h1>
+        <div class="text-center hidden-md hidden-lg">
+            <h1>
+                <span itemprop="name">
+                    <?=$product->label?>
+                </span>
+            </h1>
+            <hr>
+            <h4>
+                <?php
+
+                if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
+
+                    echo $product->price->user_formatted->price_string_ex_tax;
+
+                } else {
+
+                    echo $product->price->user_formatted->price_string_inc_tax;
+                }
+
+                ?>
+            </h4>
+        </div>
         <h1 class="hidden-xs hidden-sm">
             <?=$product->label?>
         </h1>
