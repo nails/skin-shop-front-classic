@@ -452,6 +452,10 @@ $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'front');
             echo anchor($shop_pages['delivery']['url'], 'Learn more') . '.';
         }
 
+        if (function_exists('cmsAreaWithData')) {
+            echo cmsAreaWithData(appSetting('area_product_footer', 'nailsapp/module-shop'));
+        }
+
         ?>
     </em>
 </p>
