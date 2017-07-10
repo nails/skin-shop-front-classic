@@ -6,7 +6,7 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
 
     if ($basketCount) {
 
-        nailsFactory('helper', 'inflector');
+        \Nails\Factory::helper('inflector');
         $basket    = getBasket();
         $returnUrl = uri_string();
 
@@ -76,7 +76,7 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
 
                             if ($item->product_label != $item->variant_label) {
                                 ?>
-                                <br />
+                                <br/>
                                 <small>
                                     <em><?=$item->variant_label?></em>
                                 </small>
@@ -101,7 +101,7 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
 
                                     ?>
                                 </span>
-                                <br />Price:
+                                <br/>Price:
                                 <span class="pull-right">
                                     <?php
 
@@ -189,12 +189,12 @@ if (!shopSkinSetting('hide_sidebar_basket_btn', 'front')) {
                     </li>
                     <li class="row basket-buttons">
                         <p>
-                        <?php
+                            <?php
 
-                        echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-sm btn-block btn-default"');
-                        echo anchor($shop_url . 'checkout', 'Checkout', 'class="btn btn-block btn-primary"');
+                            echo anchor($shop_url . 'basket', 'View Basket', 'class="btn btn-sm btn-block btn-default"');
+                            echo anchor($shop_url . 'checkout', 'Checkout', 'class="btn btn-block btn-primary"');
 
-                        ?>
+                            ?>
                         </p>
                     </li>
                 </ul>
