@@ -67,11 +67,11 @@
 
                 if ($this->input->get('s')) {
 
-                    echo '<strong>Sorry,</strong> no products were found for "' . $this->input->get('s') . '".';
+                    echo 'Sorry, no products were found for "' . $this->input->get('s') . '".';
 
                 } else {
 
-                    echo '<strong>Sorry,</strong> no products were found.';
+                    echo 'Sorry, no products were found.';
                 }
 
             echo '</p>';
