@@ -169,7 +169,16 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "nailsapp/module-cdn": {
+                    "permitted-image-dimensions": [
+                        "50x50",
+                        "250x250",
+                        "350x350",
+                        "800x800",
+                        "1000x500"
+                    ]
+                }
             }
         }
     }
