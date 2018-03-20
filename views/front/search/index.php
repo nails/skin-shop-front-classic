@@ -3,13 +3,14 @@
         <div class="col-md-9 col-md-push-3">
             <?php
 
-            $this->load->view($skin->path . 'views/front/_components/browse_products');
+            $oView = \Nails\Factory::service('View');
+            $oView->load($skin->path . 'views/front/_components/browse_products');
 
             ?>
         </div>
         <?php
 
-        $this->load->view($skin->path . 'views/front/_components/sidebar_search');
+        $oView->load($skin->path . 'views/front/_components/sidebar_search');
 
         ?>
     </div>

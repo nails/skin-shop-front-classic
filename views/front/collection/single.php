@@ -1,19 +1,15 @@
 <div class="nails-skin-shop-front-classic browse collection single">
 <?php
 
-    $this->load->view($skin->path . 'views/front/_components/cover_collection');
+$oView = \Nails\Factory::service('View');
 
-    echo '<div class="row">';
-
-        echo '<div class="col-md-9 col-md-push-3">';
-
-            $this->load->view($skin->path . 'views/front/_components/browse_products');
-
-        echo '</div>';
-
-        $this->load->view($skin->path . 'views/front/_components/sidebar_collection');
-
-    echo '</div>';
+$oView->load($skin->path . 'views/front/_components/cover_collection');
+echo '<div class="row">';
+echo '<div class="col-md-9 col-md-push-3">';
+$oView->load($skin->path . 'views/front/_components/browse_products');
+echo '</div>';
+$oView->load($skin->path . 'views/front/_components/sidebar_collection');
+echo '</div>';
 
 ?>
 </div>

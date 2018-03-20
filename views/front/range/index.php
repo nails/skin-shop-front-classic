@@ -4,21 +4,22 @@
             <h1><?=$shop_name . ': Ranges'?></h1>
             <?php
 
-                //  Prepare the breadcrumbs
-                $crumbs   = array();
-                $crumbs[] = array(
-                    'id'    => null,
-                    'label' => 'Ranges',
-                    'url'   => $shop_url . 'range'
-               );
+            //  Prepare the breadcrumbs
+            $crumbs   = array();
+            $crumbs[] = array(
+                'id'    => null,
+                'label' => 'Ranges',
+                'url'   => $shop_url . 'range'
+           );
 
-                $this->load->view(
-                    $skin->path . 'views/front/_components/browse_breadcrumb',
-                    array(
-                        'crumbs' => $crumbs,
-                        'active_id' => null
-                    )
-                );
+            $oView = \Nails\Factory::service('View');
+            $oView->load(
+                $skin->path . 'views/front/_components/browse_breadcrumb',
+                array(
+                    'crumbs' => $crumbs,
+                    'active_id' => null
+                )
+            );
 
             ?>
         </div>

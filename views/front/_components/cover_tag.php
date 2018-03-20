@@ -36,7 +36,9 @@
 
             $view = $skin->path . 'views/front/_components/browse_breadcrumb';
             $data = array('crumbs' => $crumbs, 'active_id' => $tag->id);
-            $this->load->view($view, $data);
+
+            $oView = \Nails\Factory::service('View');
+            $oView->load($view, $data);
 
             // --------------------------------------------------------------------------
 

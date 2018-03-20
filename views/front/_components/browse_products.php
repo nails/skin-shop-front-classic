@@ -21,7 +21,8 @@
 
             // --------------------------------------------------------------------------
 
-            $this->load->view($skin->path . 'views/front/_components/browse_sorter');
+            $oView = \Nails\Factory::service('View');
+            $oView->load($skin->path . 'views/front/_components/browse_sorter');
 
             // --------------------------------------------------------------------------
 
@@ -35,7 +36,7 @@
 
                 echo '<div class="product ' . implode(' ', $class) . '">';
 
-                    $this->load->view($skin->path . 'views/front/_components/browse_products_single', array('product' => $product));
+                    $oView->load($skin->path . 'views/front/_components/browse_products_single', array('product' => $product));
 
                 echo '</div>';
 
@@ -58,8 +59,8 @@
             // --------------------------------------------------------------------------
 
             echo '<hr />';
-            $this->load->view($skin->path . 'views/front/_components/browse_sorter');
-            $this->load->view($skin->path . 'views/front/_components/browse_pagination');
+            $oView->load($skin->path . 'views/front/_components/browse_sorter');
+            $oView->load($skin->path . 'views/front/_components/browse_pagination');
 
         } else {
 

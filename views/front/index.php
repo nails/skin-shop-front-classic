@@ -2,10 +2,11 @@
     <div class="row">
     <?php
 
-        $this->load->view($skin->path . 'views/front/_components/sidebar_home');
-        echo '<div class="col-md-9">';
-            $this->load->view($skin->path . 'views/front/_components/browse_products');
-        echo '</div>';
+    $oView = \Nails\Factory::service('View');
+    $oView->load($skin->path . 'views/front/_components/sidebar_home');
+    echo '<div class="col-md-9">';
+    $oView->load($skin->path . 'views/front/_components/browse_products');
+    echo '</div>';
 
     ?>
     </div>

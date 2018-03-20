@@ -4,21 +4,22 @@
             <h1><?=$shop_name . ': Tags'?></h1>
             <?php
 
-                //  Prepare the breadcrumbs
-                $crumbs   = array();
-                $crumbs[] = array(
-                    'id'    => null,
-                    'label' => 'Tags',
-                    'url'   => $shop_url . 'tag'
-                );
+            //  Prepare the breadcrumbs
+            $crumbs   = array();
+            $crumbs[] = array(
+                'id'    => null,
+                'label' => 'Tags',
+                'url'   => $shop_url . 'tag'
+            );
 
-                $this->load->view(
-                    $skin->path . 'views/front/_components/browse_breadcrumb',
-                    array(
-                        'crumbs' => $crumbs,
-                        'active_id' => null
-                    )
-                );
+            $oView = \Nails\Factory::service('View');
+            $oView->load(
+                $skin->path . 'views/front/_components/browse_breadcrumb',
+                array(
+                    'crumbs' => $crumbs,
+                    'active_id' => null
+                )
+            );
 
             ?>
         </div>

@@ -37,11 +37,13 @@
         <div class="col-md-8 col-md-push-4">
             <?php
 
+            $oView = \Nails\Factory::service('View');
+
             //  Gallery
-            $this->load->view($skin->path . 'views/front/_components/product_single_gallery_mobile');
+            $oView->load($skin->path . 'views/front/_components/product_single_gallery_mobile');
 
             //  Variants (mobile)
-            $this->load->view($skin->path . 'views/front/_components/product_single_variants_mobile');
+            $oView->load($skin->path . 'views/front/_components/product_single_variants_mobile');
 
             //  Description
             ?>
@@ -146,7 +148,7 @@
             // --------------------------------------------------------------------------
 
             //  Variants (Desktop)
-            $this->load->view($skin->path . 'views/front/_components/product_single_variants_desktop');
+            $oView->load($skin->path . 'views/front/_components/product_single_variants_desktop');
 
             // --------------------------------------------------------------------------
 
@@ -367,7 +369,7 @@
         <div class="col-md-4 col-md-pull-8">
             <?php
 
-            $this->load->view($skin->path . 'views/front/_components/product_single_gallery_desktop');
+            $oView->load($skin->path . 'views/front/_components/product_single_gallery_desktop');
 
             //  Tags
             if (!empty($product->tags)) {
